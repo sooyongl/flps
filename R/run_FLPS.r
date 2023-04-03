@@ -80,6 +80,31 @@ runFLPS <- function(inp_data = NULL,
   return(o)
 }
 
+#' @export print.flps
+#' @export
 print.flps <- function(obj) {
-  print(obj$flps_fit)
+  rstan::show(obj$flps_fit)
+}
+
+#' @export
+summary <- function (x, ...) {
+  UseMethod("summary")
+}
+
+#' @export summary.flps
+#' @export
+summary.flps <- function(obj, type = "all") {
+  type <- match.arg(type, c("all","measurement","structure","casual"))
+
+  out <- rstan::summary(obj$flps_fit)
+
+  if(type == "all") {
+    out$summary
+  } else if(type == "measurement") {
+    out$summary[grepl("^(lambda|tau|eta)\\[",rownames(out$summary)), ]
+  } else if(type == "structure") {
+    out$summary[grepl("^(b0)$|(b1|a1)|betaU|betaY",rownames(out$summary)), ]
+  } else if(type == "casual") {
+    out$summary[grepl("^(b0)$|(b1)",rownames(out$summary)), ]
+  }
 }
