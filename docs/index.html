@@ -81,7 +81,7 @@
 <p>Install the latest release from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"sooyongl/flps"</span><span class="op">)</span></span></code></pre></div>
-<p>The documentation is available at (…)</p>
+<p>The documentation is available at <a href="https://sooyongl.github.io/flps/" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="basic-working-example">Basic working example<a class="anchor" aria-label="anchor" href="#basic-working-example"></a>
@@ -115,18 +115,18 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">##               Y Z            X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   1: -0.4330534 1 -0.008305128  1.0284558  1  1  1  1  1  1  0  1  1   1</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   2: -0.6644784 1  0.432836254  1.2121487  1  0  1  0  1  1  1  0  1   1</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   3:  1.0098029 1 -0.308463756  0.6607198  1  1  1  1  1  0  0  0  1   0</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   4: -0.1393475 1 -0.893797649 -1.8706669  1  0  1  1  0  0  0  0  1   1</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   5:  1.3176301 1 -1.581849086 -0.3999409  0  0  1  0  0  0  0  1  1   0</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                                                    </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 196: -0.1245758 0 -1.552931331 -2.2896061 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 197:  0.8742926 0 -2.043462164 -0.6438803 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 198:  0.4904238 0 -1.002213540 -0.3043799 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 199: -0.5427682 0  0.187801699  1.5806214 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 200:  0.1677528 0 -0.533701416  0.3118214 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">##               Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   1:  1.7726499 1  0.1793591 -0.1339627  0  1  0  1  1  1  1  0  1   1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   2: -0.1592046 1 -0.7585487 -0.4683049  1  0  0  1  1  1  0  0  0   0</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   3: -0.5428223 1 -0.5108447 -0.6776410  1  0  0  0  0  0  0  0  1   1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   4: -1.2374792 1 -0.5074413  0.4336264  1  1  1  1  1  1  1  0  0   1</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   5: -0.1376694 1 -1.1565499 -0.3100630  0  0  1  1  1  0  1  0  0   1</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                                                  </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 196: -0.7119943 0  0.5735908  0.4257563 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 197:  0.4722451 0  0.5944321  0.4997790 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 198: -1.6659408 0  1.0867065  0.3386805 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 199:  2.7139583 0 -0.5198940  0.3586834 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 200:  0.4116134 0 -0.6648635 -0.2775411 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>

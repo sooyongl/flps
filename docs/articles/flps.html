@@ -96,7 +96,7 @@ extension of principal stratification.</p>
 <p>Install the latest release from CRAN:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"sooyongl/flps"</span><span class="op">)</span></span></code></pre></div>
-<p>The documentation is available at (…)</p>
+<p>The documentation is available at <a href="https://sooyongl.github.io/flps/" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="basic-working-example">Basic working example<a class="anchor" aria-label="anchor" href="#basic-working-example"></a>
@@ -133,18 +133,18 @@ FLPS. It is used in <code>runFLPS</code> function.</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;               Y Z           X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span><span class="co">#&gt;   1: -0.4391548 1  1.47519430  1.5306121  1  0  1  1  1  0  1  1  1   1</span></span>
-<span><span class="co">#&gt;   2:  0.2480697 1 -0.45833235  0.2777024  0  1  1  1  1  0  1  0  1   1</span></span>
-<span><span class="co">#&gt;   3: -0.4810831 1 -0.77012221 -0.7409010  1  0  1  0  1  0  1  1  1   0</span></span>
-<span><span class="co">#&gt;   4:  0.6519892 1  0.09944502  0.7744198  0  0  1  1  1  0  0  1  1   1</span></span>
-<span><span class="co">#&gt;   5: -0.8415835 1  0.22061888 -1.0385754  0  0  0  0  1  0  0  0  0   1</span></span>
+<span><span class="co">#&gt;                Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span><span class="co">#&gt;   1: -0.64301446 1 -1.1084408 -1.2137453  1  0  0  1  0  0  0  0  0   0</span></span>
+<span><span class="co">#&gt;   2: -0.43712462 1  0.6316912  2.3093351  0  1  1  1  1  1  1  1  1   0</span></span>
+<span><span class="co">#&gt;   3:  1.00918549 1  0.3433319  0.6449750  0  0  0  1  0  1  0  1  0   0</span></span>
+<span><span class="co">#&gt;   4: -0.20493260 1 -0.2976417 -0.7337823  0  0  0  0  0  1  0  1  0   0</span></span>
+<span><span class="co">#&gt;   5:  0.61954242 1  1.2718838 -0.5375266  0  0  1  1  0  0  1  1  0   0</span></span>
 <span><span class="co">#&gt;  ---                                                                   </span></span>
-<span><span class="co">#&gt; 196:  0.3894205 0 -0.78035286 -1.3834048 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 197: -0.5320905 0 -0.76989664  0.4927217 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 198: -0.9189026 0  0.87593933  0.4608165 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 199: -0.3893721 0 -0.47121611  0.4715868 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 200:  0.7245036 0 -1.13596638 -1.5268911 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<span><span class="co">#&gt; 196:  0.04867428 0  0.5440352  1.8212679 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 197: -1.73288988 0  0.1712118  0.6420071 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 198:  0.40703974 0  0.2926635  0.4072857 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 199:  0.17493616 0  0.2443378 -1.1869523 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 200:  0.20830792 0 -0.5850860  0.5804493 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>

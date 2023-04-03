@@ -18,7 +18,8 @@ Install the latest release from CRAN:
 devtools::install_github("sooyongl/flps")
 ```
 
-The documentation is available at (…)
+The documentation is available at
+[here](https://sooyongl.github.io/flps/).
 
 ## Basic working example
 
@@ -55,18 +56,18 @@ inp_data <- flps::makeInpData(
 data.table::data.table(inp_data)
 ```
 
-    ##               Y Z            X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
-    ##   1: -0.4330534 1 -0.008305128  1.0284558  1  1  1  1  1  1  0  1  1   1
-    ##   2: -0.6644784 1  0.432836254  1.2121487  1  0  1  0  1  1  1  0  1   1
-    ##   3:  1.0098029 1 -0.308463756  0.6607198  1  1  1  1  1  0  0  0  1   0
-    ##   4: -0.1393475 1 -0.893797649 -1.8706669  1  0  1  1  0  0  0  0  1   1
-    ##   5:  1.3176301 1 -1.581849086 -0.3999409  0  0  1  0  0  0  0  1  1   0
-    ##  ---                                                                    
-    ## 196: -0.1245758 0 -1.552931331 -2.2896061 NA NA NA NA NA NA NA NA NA  NA
-    ## 197:  0.8742926 0 -2.043462164 -0.6438803 NA NA NA NA NA NA NA NA NA  NA
-    ## 198:  0.4904238 0 -1.002213540 -0.3043799 NA NA NA NA NA NA NA NA NA  NA
-    ## 199: -0.5427682 0  0.187801699  1.5806214 NA NA NA NA NA NA NA NA NA  NA
-    ## 200:  0.1677528 0 -0.533701416  0.3118214 NA NA NA NA NA NA NA NA NA  NA
+    ##               Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+    ##   1:  1.7726499 1  0.1793591 -0.1339627  0  1  0  1  1  1  1  0  1   1
+    ##   2: -0.1592046 1 -0.7585487 -0.4683049  1  0  0  1  1  1  0  0  0   0
+    ##   3: -0.5428223 1 -0.5108447 -0.6776410  1  0  0  0  0  0  0  0  1   1
+    ##   4: -1.2374792 1 -0.5074413  0.4336264  1  1  1  1  1  1  1  0  0   1
+    ##   5: -0.1376694 1 -1.1565499 -0.3100630  0  0  1  1  1  0  1  0  0   1
+    ##  ---                                                                  
+    ## 196: -0.7119943 0  0.5735908  0.4257563 NA NA NA NA NA NA NA NA NA  NA
+    ## 197:  0.4722451 0  0.5944321  0.4997790 NA NA NA NA NA NA NA NA NA  NA
+    ## 198: -1.6659408 0  1.0867065  0.3386805 NA NA NA NA NA NA NA NA NA  NA
+    ## 199:  2.7139583 0 -0.5198940  0.3586834 NA NA NA NA NA NA NA NA NA  NA
+    ## 200:  0.4116134 0 -0.6648635 -0.2775411 NA NA NA NA NA NA NA NA NA  NA
 
 -   Fit your FLPS model
 

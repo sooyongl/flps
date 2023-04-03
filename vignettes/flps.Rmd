@@ -37,7 +37,7 @@ Install the latest release from CRAN:
 devtools::install_github("sooyongl/flps")
 ```
 
-The documentation is available at (...)
+The documentation is available at [here](https://sooyongl.github.io/flps/).
 
 ## Basic working example
 
