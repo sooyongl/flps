@@ -1,12 +1,12 @@
 #' Load rstan model
 #'
-#' @param lv_model a character specifying a latent model
+#' @param lv_type a character specifying a latent model
 #' @return A string for Stan syntax
 #' @examples
 #' stan_model <- rstan_path(lv_type = "rasch")
 loadRstan <- function(lv_type = "2PL") {
 
-  if(!dir.exists(file.path("inst", "stan")))
+  if(!dir.exists(system.file("stan", package = "flps")))
     stop("The stan code does not exist!")
 
   if(tolower(lv_type) %in% c("rasch","2pl", "3pl")) {

@@ -1,5 +1,5 @@
 #' Set latent variable model information
-#'
+#' @noRd
 genLVinfo <- function(sim_info) {
 
   nitem   <- sim_info$nitem

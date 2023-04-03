@@ -7,7 +7,7 @@
 loadRstan(lv_type = "2PL")
 }
 \arguments{
-\item{lv_model}{a character specifying a latent model}
+\item{lv_type}{a character specifying a latent model}
 }
 \value{
 A string for Stan syntax

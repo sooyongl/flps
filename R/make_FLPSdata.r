@@ -28,8 +28,6 @@ infoSetting <- function(...) {
 #' Convert a matrix to a FLPS data
 #'
 #' @param inp_data A matrix or a data frame
-#' @param custom_data A list. should be provided with custome_stan
-#' @param custom_stan A string. should be provided with custome_data
 #' @param outcome A character indicating the name of an outcome variable
 #' @param group A character indicating the name of a treatment/control group variable
 #' @param covariate A character indicating the names of covariates variables

@@ -1,13 +1,13 @@
 {
     "dialog-state": {
-        "query": "nsec",
+        "query": "mvtnorm",
         "path": "",
         "regex": false,
         "caseSensitive": false,
         "wholeWord": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 100,
+        "resultsCount": 3,
         "errorCount": 0,
         "replaceErrors": "",
         "projectRelative": true

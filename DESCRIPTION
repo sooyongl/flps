@@ -26,14 +26,15 @@ Imports:
     mirt,
     MASS,
     utils,
-    stats
+    stats,
+    mvtnorm
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
     rmarkdown
 License: GPL (>= 3)
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Collate: 
@@ -48,4 +49,4 @@ Collate:
 	'z_utils.r'
 	'z_validate.r'
 	'zzz.r'
-URL: https://github.com/sooyongl/flps
+URL: https://sooyongl.github.io/flps/

@@ -13,8 +13,10 @@
 #' @import Rcpp
 #' @import rstan
 #' @import methods
+#' @importFrom stats runif rnorm rmultinom rlnorm quantile var cov cor
 #' @importFrom utils read.csv packageVersion head tail
 #' @importFrom MASS mvrnorm
+#' @importFrom mvtnorm rmvnorm
 #' @keywords package
 NULL
 

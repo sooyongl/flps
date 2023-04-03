@@ -56,18 +56,18 @@ inp_data <- flps::makeInpData(
 data.table::data.table(inp_data)
 ```
 
-    ##               Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
-    ##   1:  1.7726499 1  0.1793591 -0.1339627  0  1  0  1  1  1  1  0  1   1
-    ##   2: -0.1592046 1 -0.7585487 -0.4683049  1  0  0  1  1  1  0  0  0   0
-    ##   3: -0.5428223 1 -0.5108447 -0.6776410  1  0  0  0  0  0  0  0  1   1
-    ##   4: -1.2374792 1 -0.5074413  0.4336264  1  1  1  1  1  1  1  0  0   1
-    ##   5: -0.1376694 1 -1.1565499 -0.3100630  0  0  1  1  1  0  1  0  0   1
-    ##  ---                                                                  
-    ## 196: -0.7119943 0  0.5735908  0.4257563 NA NA NA NA NA NA NA NA NA  NA
-    ## 197:  0.4722451 0  0.5944321  0.4997790 NA NA NA NA NA NA NA NA NA  NA
-    ## 198: -1.6659408 0  1.0867065  0.3386805 NA NA NA NA NA NA NA NA NA  NA
-    ## 199:  2.7139583 0 -0.5198940  0.3586834 NA NA NA NA NA NA NA NA NA  NA
-    ## 200:  0.4116134 0 -0.6648635 -0.2775411 NA NA NA NA NA NA NA NA NA  NA
+    ##                 Y Z           X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+    ##   1: -0.002611468 1  0.90744790  1.5779526  1  0  1  0  0  1  1  1  1   1
+    ##   2:  2.086529291 1 -1.80016638  0.1821458  1  1  0  0  0  1  0  1  0   0
+    ##   3: -0.601860875 1  0.94258573 -0.3488853  1  1  0  1  0  1  0  1  0   0
+    ##   4:  0.755511330 1  0.08701257  0.2454388  1  1  0  1  1  0  1  1  1   0
+    ##   5:  1.019806352 1 -0.55140690 -0.4461404  0  1  0  0  1  1  0  0  0   1
+    ##  ---                                                                     
+    ## 196:  1.195159718 0 -1.59344311 -2.7175960 NA NA NA NA NA NA NA NA NA  NA
+    ## 197:  0.183609571 0  0.11719486 -0.2373423 NA NA NA NA NA NA NA NA NA  NA
+    ## 198:  0.574084691 0  0.63512354  0.3048086 NA NA NA NA NA NA NA NA NA  NA
+    ## 199:  0.797686049 0  0.30126864  1.1631879 NA NA NA NA NA NA NA NA NA  NA
+    ## 200: -0.770394718 0  0.32392566 -0.5996783 NA NA NA NA NA NA NA NA NA  NA
 
 -   Fit your FLPS model
 
@@ -83,6 +83,12 @@ res <- runFLPS(
   covariate = c("X"),
   lv_type = "rasch",
   lv_model = "F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10",
-  stan_options = list(iter = 4000, warmup = 2000, cores = 1, chains = 4)
+  stan_options = list(iter = 1000, warmup = 500, cores = 1, chains = 2)
 )
+```
+
+The summary of results can be shown by `summary()`.
+
+``` r
+summary.flps(res, type = "casual")
 ```

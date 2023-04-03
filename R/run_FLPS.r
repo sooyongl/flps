@@ -1,8 +1,8 @@
 #' Conduct fully latent principal stratification
 #'
 #' @param inp_data A matrix or a data frame
-#' @param custom_data A list. should be provided with custom_stan
-#' @param custom_stan A string. should be provided with custom_data
+#' @param custom_data A list. should be provided with \code{custom_stan}
+#' @param custom_stan A string. should be provided with \code{custom_data}
 #' @param outcome A character indicating the name of an outcome variable
 #' @param group A character indicating the name of a treatment/control group variable
 #' @param covariate A character indicating the names of covariates variables
@@ -80,23 +80,28 @@ runFLPS <- function(inp_data = NULL,
   return(o)
 }
 
+#' Print results
+#'
+#' @param obj an object of class \code{flps}
+#'
 #' @export print.flps
 #' @export
 print.flps <- function(obj) {
   rstan::show(obj$flps_fit)
 }
 
-#' @export
-summary <- function (x, ...) {
-  UseMethod("summary")
-}
 
+#' Summarize the results
+#'
+#' @param object an object of class \code{flps}
+#' @param type a string for the part of FLPS model
+#'
 #' @export summary.flps
 #' @export
-summary.flps <- function(obj, type = "all") {
+summary.flps <- function(object, type = "all") {
   type <- match.arg(type, c("all","measurement","structure","casual"))
 
-  out <- rstan::summary(obj$flps_fit)
+  out <- rstan::summary(object$flps_fit)
 
   if(type == "all") {
     out$summary

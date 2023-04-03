@@ -83,7 +83,7 @@ The summary of results can be shown by `summary()`.
 
 ```{r}
 
-summary(res, type = "casual")
+summary.flps(res, type = "casual")
 
 ```
 

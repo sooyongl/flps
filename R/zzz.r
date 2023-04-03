@@ -30,6 +30,6 @@
     stop("Install the latest version of rstan")
   }
 
-  print("It is a demo")
+  packageStartupMessage("It is a demo")
 
 }

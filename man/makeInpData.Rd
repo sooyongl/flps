@@ -31,6 +31,14 @@ makeInpData(
 
 \item{R2eta}{a numeric indicating Predictive power of latent variable}
 
+\item{omega}{a numeric indicating the size of effect of latent factor on
+the outcome.}
+
+\item{tau0}{a numeric indicating the size of difference in the outcome
+between the treatment and the control.}
+
+\item{tau1}{a numeric indicating the principal effect}
+
 \item{linear}{a logical}
 
 \item{ydist}{a character}
@@ -75,7 +83,7 @@ sdat <- makeInpData(
   tau1 = -0.06,
   lambda = 10,
   R2eta = 0.5,
-  nsec = 10,
+  nitem = 10,
   linear = T,
   lvmodel = "sem"
 )

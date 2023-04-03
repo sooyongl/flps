@@ -7,6 +7,11 @@
 #' @param N a numeric indicating sample size.
 #' @param R2Y a numeric indicating predictive power of covariates.
 #' @param R2eta a numeric indicating Predictive power of latent variable
+#' @param omega a numeric indicating the size of effect of latent factor on
+#' the outcome.
+#' @param tau0 a numeric indicating the size of difference in the outcome
+#'  between the treatment and the control.
+#' @param tau1 a numeric indicating the principal effect
 #' @param linear a logical
 #' @param ydist a character
 #' @param lambda a numeric indicating the mean of Worked problems/person.
@@ -34,7 +39,7 @@
 #'   linear = T,
 #'   ydist = "n",
 #'   lambda = .6,
-#'   nsec = 10,
+#'   nitem = 10,
 #'   nfac = 1,
 #'   lvmodel = "2PL"
 #' )
@@ -78,6 +83,11 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nf
 #' @param N a numeric indicating sample size.
 #' @param R2Y a numeric indicating predictive power of covariates.
 #' @param R2eta a numeric indicating Predictive power of latent variable
+#' @param omega a numeric indicating the size of effect of latent factor on
+#' the outcome.
+#' @param tau0 a numeric indicating the size of difference in the outcome
+#'  between the treatment and the control.
+#' @param tau1 a numeric indicating the principal effect
 #' @param linear a logical
 #' @param ydist a character
 #' @param lambda a numeric indicating the mean of Worked problems/person.
@@ -106,7 +116,7 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nf
 #'   tau1 = -0.06,
 #'   lambda = 10,
 #'   R2eta = 0.5,
-#'   nsec = 10,
+#'   nitem = 10,
 #'   linear = T,
 #'   lvmodel = "sem"
 #' )

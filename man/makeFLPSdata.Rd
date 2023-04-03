@@ -29,10 +29,6 @@ makeFLPSdata(
 \item{lv_type}{A character indicating the type of latent variable models}
 
 \item{...}{Additional arguments for latent variable models information (e.g., nclass = 2).}
-
-\item{custom_data}{A list. should be provided with custome_stan}
-
-\item{custom_stan}{A string. should be provided with custome_data}
 }
 \value{
 a S3 class for a corresponding measurement model

@@ -31,6 +31,14 @@ makeSimData(
 
 \item{R2eta}{a numeric indicating Predictive power of latent variable}
 
+\item{omega}{a numeric indicating the size of effect of latent factor on
+the outcome.}
+
+\item{tau0}{a numeric indicating the size of difference in the outcome
+between the treatment and the control.}
+
+\item{tau1}{a numeric indicating the principal effect}
+
 \item{linear}{a logical}
 
 \item{ydist}{a character}
@@ -74,7 +82,7 @@ sdat <- makeSimData(
   linear = T,
   ydist = "n",
   lambda = .6,
-  nsec = 10,
+  nitem = 10,
   nfac = 1,
   lvmodel = "2PL"
 )

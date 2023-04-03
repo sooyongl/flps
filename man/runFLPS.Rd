@@ -20,9 +20,9 @@ runFLPS(
 \arguments{
 \item{inp_data}{A matrix or a data frame}
 
-\item{custom_data}{A list. should be provided with custom_stan}
+\item{custom_data}{A list. should be provided with \code{custom_stan}}
 
-\item{custom_stan}{A string. should be provided with custom_data}
+\item{custom_stan}{A string. should be provided with \code{custom_data}}
 
 \item{outcome}{A character indicating the name of an outcome variable}
 
