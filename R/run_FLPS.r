@@ -80,6 +80,32 @@ runFLPS <- function(inp_data = NULL,
   return(o)
 }
 
-print.flps <- function(obj) {
-  print(obj$flps_fit)
+a1<-function(a) {
+  match.arg(a, choices = c("a","b","c"))
+}
+
+a1()
+
+print.flps <- function(obj, type = "all") {
+  type <- match.arg(type, c("all","measurement","structure","casual"))
+
+  if(type == "all") {
+    print(obj$flps_fit)
+  }
+
+  if(type == "measurement") {
+    # print(obj$flps_fit)
+    summary(obj$flps_fit, pars = "^(lambda|tau|eta)")
+  }
+
+  if(type == "structure") {
+    # print(obj$flps_fit)
+    summary(obj$flps_fit, pars = "(b0|b1|a1)$|betaU|betaY")
+  }
+
+  if(type == "casual") {
+    # print(obj$flps_fit)
+    summary(obj$flps_fit, pars = "(b0|b1)$")
+  }
+
 }
