@@ -49,14 +49,7 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/sooyongl/flps/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -115,18 +108,18 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">##               Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   1:  1.7726499 1  0.1793591 -0.1339627  0  1  0  1  1  1  1  0  1   1</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   2: -0.1592046 1 -0.7585487 -0.4683049  1  0  0  1  1  1  0  0  0   0</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   3: -0.5428223 1 -0.5108447 -0.6776410  1  0  0  0  0  0  0  0  1   1</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   4: -1.2374792 1 -0.5074413  0.4336264  1  1  1  1  1  1  1  0  0   1</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   5: -0.1376694 1 -1.1565499 -0.3100630  0  0  1  1  1  0  1  0  0   1</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                                                  </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 196: -0.7119943 0  0.5735908  0.4257563 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 197:  0.4722451 0  0.5944321  0.4997790 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 198: -1.6659408 0  1.0867065  0.3386805 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 199:  2.7139583 0 -0.5198940  0.3586834 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 200:  0.4116134 0 -0.6648635 -0.2775411 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">##                 Y Z           X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   1: -0.002611468 1  0.90744790  1.5779526  1  0  1  0  0  1  1  1  1   1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   2:  2.086529291 1 -1.80016638  0.1821458  1  1  0  0  0  1  0  1  0   0</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   3: -0.601860875 1  0.94258573 -0.3488853  1  1  0  1  0  1  0  1  0   0</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   4:  0.755511330 1  0.08701257  0.2454388  1  1  0  1  1  0  1  1  1   0</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   5:  1.019806352 1 -0.55140690 -0.4461404  0  1  0  0  1  1  0  0  0   1</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                                                     </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 196:  1.195159718 0 -1.59344311 -2.7175960 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 197:  0.183609571 0  0.11719486 -0.2373423 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 198:  0.574084691 0  0.63512354  0.3048086 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 199:  0.797686049 0  0.30126864  1.1631879 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 200: -0.770394718 0  0.32392566 -0.5996783 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>
@@ -139,22 +132,18 @@
 <span>  covariate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span>,</span>
 <span>  lv_type <span class="op">=</span> <span class="st">"rasch"</span>,</span>
 <span>  lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span>
-<span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">4000</span>, warmup <span class="op">=</span> <span class="fl">2000</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>The summary of results can be shown by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/summary.flps.html">summary.flps</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"casual"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
-<h2 data-toc-skip>Links</h2>
-<ul class="list-unstyled">
-<li><a href="https://github.com/sooyongl/flps/" class="external-link">Browse source code</a></li>
-</ul>
-</div>
-
-<div class="license">
+    <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 3)</li>

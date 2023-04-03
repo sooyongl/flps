@@ -32,13 +32,7 @@ the given information."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/sooyongl/flps/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -48,7 +42,7 @@ the given information."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate a matrix style data for simulation</h1>
-    <small class="dont-index">Source: <a href="https://github.com/sooyongl/flps/blob/HEAD/R/sim_make_data.r" class="external-link"><code>R/sim_make_data.r</code></a></small>
+    
     <div class="hidden name"><code>makeInpData.Rd</code></div>
     </div>
 
@@ -91,6 +85,20 @@ the given information.</p>
 
 <dt>R2eta</dt>
 <dd><p>a numeric indicating Predictive power of latent variable</p></dd>
+
+
+<dt>omega</dt>
+<dd><p>a numeric indicating the size of effect of latent factor on
+the outcome.</p></dd>
+
+
+<dt>tau0</dt>
+<dd><p>a numeric indicating the size of difference in the outcome
+between the treatment and the control.</p></dd>
+
+
+<dt>tau1</dt>
+<dd><p>a numeric indicating the principal effect</p></dd>
 
 
 <dt>linear</dt>
@@ -160,11 +168,11 @@ when nfac &gt; 1.</p></dd>
 <span class="r-in"><span>  tau1 <span class="op">=</span> <span class="op">-</span><span class="fl">0.06</span>,</span></span>
 <span class="r-in"><span>  lambda <span class="op">=</span> <span class="fl">10</span>,</span></span>
 <span class="r-in"><span>  R2eta <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
-<span class="r-in"><span>  nsec <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>  nitem <span class="op">=</span> <span class="fl">10</span>,</span></span>
 <span class="r-in"><span>  linear <span class="op">=</span> <span class="cn">T</span>,</span></span>
 <span class="r-in"><span>  lvmodel <span class="op">=</span> <span class="st">"sem"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in makeInpData(N = 100, R2Y = 0.2, omega = 0.2, tau0 = 0.13, tau1 = -0.06,     lambda = 10, R2eta = 0.5, nsec = 10, linear = T, lvmodel = "sem"):</span> unused argument (nsec = 10)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rep(0, nitem * nfac):</span> invalid 'times' argument</span>
 </code></pre></div>
     </div>
   </div>

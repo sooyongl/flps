@@ -49,14 +49,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/sooyongl/flps/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -72,7 +65,7 @@
       <h1 data-toc-skip>flps</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/sooyongl/flps/blob/HEAD/vignettes/flps.Rmd" class="external-link"><code>vignettes/flps.Rmd</code></a></small>
+      
       <div class="hidden name"><code>flps.Rmd</code></div>
 
     </div>
@@ -80,7 +73,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sooyongl/flps" class="external-link">flps</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sooyongl.github.io/flps/" class="external-link">flps</a></span><span class="op">)</span></span></code></pre></div>
 <!-- badges: start -->
 <p><a href="https://CRAN.R-project.org/package=flps" class="external-link"><img src="https://www.r-pkg.org/badges/version/flps" alt="CRAN status"></a>
 <!-- badges: end --></p>
@@ -133,18 +126,18 @@ FLPS. It is used in <code>runFLPS</code> function.</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span><span class="co">#&gt;   1: -0.64301446 1 -1.1084408 -1.2137453  1  0  0  1  0  0  0  0  0   0</span></span>
-<span><span class="co">#&gt;   2: -0.43712462 1  0.6316912  2.3093351  0  1  1  1  1  1  1  1  1   0</span></span>
-<span><span class="co">#&gt;   3:  1.00918549 1  0.3433319  0.6449750  0  0  0  1  0  1  0  1  0   0</span></span>
-<span><span class="co">#&gt;   4: -0.20493260 1 -0.2976417 -0.7337823  0  0  0  0  0  1  0  1  0   0</span></span>
-<span><span class="co">#&gt;   5:  0.61954242 1  1.2718838 -0.5375266  0  0  1  1  0  0  1  1  0   0</span></span>
-<span><span class="co">#&gt;  ---                                                                   </span></span>
-<span><span class="co">#&gt; 196:  0.04867428 0  0.5440352  1.8212679 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 197: -1.73288988 0  0.1712118  0.6420071 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 198:  0.40703974 0  0.2926635  0.4072857 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 199:  0.17493616 0  0.2443378 -1.1869523 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 200:  0.20830792 0 -0.5850860  0.5804493 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<span><span class="co">#&gt;                Y Z          X        eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span><span class="co">#&gt;   1: -0.30474129 1  1.3200750  1.48394969  0  1  0  1  0  0  1  0  1   1</span></span>
+<span><span class="co">#&gt;   2:  1.34788812 1 -0.5223368  1.22241871  0  0  1  1  1  1  1  1  1   1</span></span>
+<span><span class="co">#&gt;   3:  1.66974019 1  0.3585505  0.68474924  1  0  1  1  1  0  0  0  1   0</span></span>
+<span><span class="co">#&gt;   4: -0.79665239 1  0.6313018 -0.01422646  0  0  0  0  0  1  0  0  1   0</span></span>
+<span><span class="co">#&gt;   5: -0.76151228 1  0.5202390  0.50019135  1  1  0  1  1  0  0  0  1   1</span></span>
+<span><span class="co">#&gt;  ---                                                                    </span></span>
+<span><span class="co">#&gt; 196: -0.48498156 0 -0.3028137 -1.09262510 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 197:  0.02274369 0  0.6307434  1.45733463 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 198: -0.62862011 0 -0.2101867 -1.94776298 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 199: -0.09795856 0 -1.3306026 -0.20970078 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 200:  0.87538374 0 -0.6672761 -0.35138250 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>
@@ -159,8 +152,12 @@ internally coverts <code>inp_data</code> into the data format for
 <span>  covariate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span><span class="op">)</span>,</span>
 <span>  lv_type <span class="op">=</span> <span class="st">"rasch"</span>,</span>
 <span>  lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span>
-<span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">4000</span>, warmup <span class="op">=</span> <span class="fl">2000</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>The summary of results can be shown by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/summary.flps.html">summary.flps</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"casual"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>
