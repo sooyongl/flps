@@ -80,32 +80,31 @@ runFLPS <- function(inp_data = NULL,
   return(o)
 }
 
-a1<-function(a) {
-  match.arg(a, choices = c("a","b","c"))
+#' @export print.flps
+#' @export
+print.flps <- function(obj) {
+  rstan::show(obj$flps_fit)
 }
 
-a1()
+#' @export
+summary <- function (x, ...) {
+  UseMethod("summary")
+}
 
-print.flps <- function(obj, type = "all") {
+#' @export summary.flps
+#' @export
+summary.flps <- function(obj, type = "all") {
   type <- match.arg(type, c("all","measurement","structure","casual"))
 
+  out <- rstan::summary(obj$flps_fit)
+
   if(type == "all") {
-    print(obj$flps_fit)
+    out$summary
+  } else if(type == "measurement") {
+    out$summary[grepl("^(lambda|tau|eta)\\[",rownames(out$summary)), ]
+  } else if(type == "structure") {
+    out$summary[grepl("^(b0)$|(b1|a1)|betaU|betaY",rownames(out$summary)), ]
+  } else if(type == "casual") {
+    out$summary[grepl("^(b0)$|(b1)",rownames(out$summary)), ]
   }
-
-  if(type == "measurement") {
-    # print(obj$flps_fit)
-    summary(obj$flps_fit, pars = "^(lambda|tau|eta)")
-  }
-
-  if(type == "structure") {
-    # print(obj$flps_fit)
-    summary(obj$flps_fit, pars = "(b0|b1|a1)$|betaU|betaY")
-  }
-
-  if(type == "casual") {
-    # print(obj$flps_fit)
-    summary(obj$flps_fit, pars = "(b0|b1)$")
-  }
-
 }

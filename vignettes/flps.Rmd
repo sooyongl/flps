@@ -78,7 +78,7 @@ data.table::data.table(inp_data)
 
 Now, provide information about your model. `runFLPS` internally coverts `inp_data` into the data format for `rstan` given the information, and runs FLPS.
 
-```{r}
+```{r eval = F}
 res <- runFLPS(
   inp_data = inp_data,
   outcome = "Y",
@@ -86,6 +86,17 @@ res <- runFLPS(
   covariate = c("X"),
   lv_type = "rasch",
   lv_model = "F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10",
-  stan_options = list(iter = 4000, warmup = 2000, cores = 1, chains = 4)
+  stan_options = list(iter = 1000, warmup = 500, cores = 1, chains = 2)
 )
 ```
+
+
+The summary of results can be shown by `summary()`.
+
+```{r}
+
+summary(res, type = "casual")
+
+```
+
+
