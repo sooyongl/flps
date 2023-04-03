@@ -1,0 +1,2 @@
+"0","knitr::opts_chunk$set(echo = TRUE, eval = F)"
+"0","library(flps)"

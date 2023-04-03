@@ -1,0 +1,79 @@
+---
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = F)
+library(flps)
+```
+
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/flps)](https://CRAN.R-project.org/package=flps)
+<!-- badges: end -->
+
+
+
+## Fully Latent Principal Stratification (FLPS)
+
+Fully Latent Principal Stratification (**FLPS**) is an extension of principal stratification.
+
+## Install
+
+Install the latest release from CRAN:
+
+```{r}
+devtools::install_github("sooyongl/flps")
+```
+
+The documentation is available at (...)
+
+## Basic working example
+
+### Running with the package
+
+- Generate a simulated rectangular data.
+- This data will be converted to a list of data for [`rstan`](https://github.com/stan-dev/rstan) package.
+- For latent variable models, Rasch, 2PL, GPCM, and sem (one-factor CFA) are available.
+
+
+```{r eval = T}
+inp_data <- flps::makeInpData(
+  N       = 200,  # sample size
+  R2Y     = 0.2,  # r^2 of outcome
+  R2eta   = 0.5,  # r^2 of eta by one covariates
+  omega   = 0.2,  # the effect of eta
+  tau0    = 0.13, # direct effect
+  tau1    = -0.06,# interaction effect between Z and eta
+  lambda  = 0.8,  # the proportion of administered items
+  nitem    = 10,   # the total number of items
+  nfac    = 1,    # the number of latent factors
+  lvmodel = 'rasch' # tag for latent variable model; case-sensitive (use lower-case letters)
+)
+
+
+```
+
+`makeInpData()` creates input data for running FLPS.
+
+- `inp_data`: a data frame containing all the data for FLPS. It is used in `runFLPS` function.
+
+```{r eval = T}
+# Input data matrix
+head(inp_data,5)
+```
+
+- Fit your FLPS model
+
+Now, provide information about your model. `runFLPS` internally coverts `inp_data` into the data format for `rstan` given the information, and runs FLPS.
+
+```{r}
+res <- runFLPS(
+  inp_data = inp_data,
+  outcome = "Y",
+  group = "Z",
+  covariate = c("X"),
+  lv_type = "rasch",
+  lv_model = paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+")),
+  stan_options = list(iter = 4000, warmup = 2000, cores = 1, chains = 4)
+)
+```

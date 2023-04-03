@@ -1,0 +1,51 @@
+Package: flps
+Type: Package
+Title: Fully-Latent Principal Stratification
+Version: 0.1.0
+Date: 2023-4-01
+Authors@R: 
+    c(person(given = "Sooyong",
+             family = "Lee",
+             role = c("aut", "cre"),
+             email = "sooyongl09@utexas.edu"),
+	  person(given = "Adam",
+             family = "Sales",
+             role = "aut"),
+      person(given = "Tiffany",
+             family = "Whittaker",
+             role = "aut"),
+      person(given = "Hyeon-Ah",
+             family = "Kang",
+             role = "aut")
+    )
+Description: Simulation and analysis of Fully-Latent Principal Stratification (FLPS) with measurement models.
+Imports: 
+    rstan,
+	  Rcpp,
+	  methods,
+    mirt,
+    MASS,
+    utils,
+    stats
+Suggests: 
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+VignetteBuilder: knitr
+Collate: 
+  'flps-package.r'
+	'load_rstan.r'
+	'make_FLPSdata.r'
+	'run_FLPS.r'
+	'sim_gen_measurement.r'
+	'sim_gen_structure.r'
+	'sim_gen_standata.r'
+	'sim_make_data.r'
+	'z_utils.r'
+	'z_validate.r'
+	'zzz.r'
+URL: https://github.com/sooyongl/flps

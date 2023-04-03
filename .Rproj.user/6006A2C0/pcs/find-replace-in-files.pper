@@ -1,0 +1,15 @@
+{
+    "dialog-state": {
+        "query": "nsec",
+        "path": "",
+        "regex": false,
+        "caseSensitive": false,
+        "wholeWord": false,
+        "filePatterns": [],
+        "excludeFilePatterns": [],
+        "resultsCount": 100,
+        "errorCount": 0,
+        "replaceErrors": "",
+        "projectRelative": true
+    }
+}
