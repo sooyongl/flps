@@ -11,12 +11,12 @@ Authors@R:
 	  person(given = "Adam",
              family = "Sales",
              role = "aut"),
-      person(given = "Tiffany",
-             family = "Whittaker",
-             role = "aut"),
-      person(given = "Hyeon-Ah",
-             family = "Kang",
-             role = "aut")
+    person(given = "Hyeon-Ah",
+           family = "Kang",
+           role = "aut"),
+    person(given = "Tiffany",
+           family = "Whittaker",
+           role = "aut")
     )
 Description: Simulation and analysis of Fully-Latent Principal Stratification (FLPS) with measurement models.
 License: GPL-3 + file LICENSE
