@@ -33,6 +33,7 @@ infoSetting <- function(...) {
 #' @param covariate A character indicating the names of covariates variables
 #' @param lv_model A description of the latent variable model, which is similar to the lavaan model syntax.
 #' @param lv_type  A character indicating the type of latent variable models
+#' @param custom a logical indicating whether the cumsom data is used.
 #' @param ... Additional arguments for latent variable models information (e.g., nclass = 2).
 #'
 #' @returns a S3 class for a corresponding measurement model

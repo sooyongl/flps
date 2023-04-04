@@ -4,12 +4,14 @@
 \alias{summary.flps}
 \title{Summarize the results}
 \usage{
-summary.flps(object, type = "all")
+\method{summary}{flps}(object, type = "all", ...)
 }
 \arguments{
 \item{object}{an object of class \code{flps}}
 
 \item{type}{a string for the part of FLPS model}
+
+\item{...}{additional options for future development}
 }
 \description{
 Summarize the results

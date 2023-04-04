@@ -18,10 +18,10 @@ makeSimData(
   nfac,
   lvmodel,
   fcovmat,
-  item.missing,
-  misspec,
-  cov.res,
-  relsize
+  item.missing = T,
+  misspec = F,
+  cov.res = 0,
+  relsize = 0.6
 )
 }
 \arguments{
@@ -76,15 +76,15 @@ the given information.
 }
 \examples{
 sdat <- makeSimData(
-  N = 100,
-  R2Y = 0.2,
-  R2eta = 0.5,
-  linear = T,
-  ydist = "n",
-  lambda = .6,
-  nitem = 10,
-  nfac = 1,
-  lvmodel = "2PL"
-)
+N       = 200,  # sample size
+R2Y     = 0.2,  # r^2 of outcome
+R2eta   = 0.5,  # r^2 of eta by one covariates
+omega   = 0.2,  # the effect of eta
+tau0    = 0.13, # direct effect
+tau1    = -0.06,# interaction effect between Z and eta
+lambda  = 0.8,  # the proportion of administered items
+nitem    = 10,   # the total number of items
+nfac    = 1,    # the number of latent factors
+lvmodel = '2pl' )
 
 }

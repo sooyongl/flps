@@ -33,19 +33,19 @@
 #'
 #' @examples
 #' sdat <- makeSimData(
-#'   N = 100,
-#'   R2Y = 0.2,
-#'   R2eta = 0.5,
-#'   linear = T,
-#'   ydist = "n",
-#'   lambda = .6,
-#'   nitem = 10,
-#'   nfac = 1,
-#'   lvmodel = "2PL"
-#' )
+#' N       = 200,  # sample size
+#' R2Y     = 0.2,  # r^2 of outcome
+#' R2eta   = 0.5,  # r^2 of eta by one covariates
+#' omega   = 0.2,  # the effect of eta
+#' tau0    = 0.13, # direct effect
+#' tau1    = -0.06,# interaction effect between Z and eta
+#' lambda  = 0.8,  # the proportion of administered items
+#' nitem    = 10,   # the total number of items
+#' nfac    = 1,    # the number of latent factors
+#' lvmodel = '2pl' )
 #'
 #' @export
-makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nfac,lvmodel, fcovmat, item.missing, misspec, cov.res, relsize){
+makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nfac,lvmodel, fcovmat, item.missing=T, misspec=F, cov.res=0, relsize=0.6){
 
   mc <- match.call(expand.dots = TRUE)
   mc[[1L]] <- quote(list); # mc <- as.list(match.call()[-1])
@@ -54,6 +54,30 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nf
   sim_info <- structure(eval(mc), class = tolower(lvmodel))
   # sim_info<-structure(sim_condition,class=tolower(sim_condition$lvmodel))
   # Data = sim_info
+
+  if(!"nfac" %in% names(sim_info)) {
+    sim_info$nfac <- 1
+  }
+
+  if(!"linear" %in% names(sim_info)) {
+    sim_info$linear <- T
+  }
+
+  if(!"yidst" %in% names(sim_info)) {
+    sim_info$yidst <- 'n'
+  }
+
+  if(!"relsize" %in% names(sim_info)) {
+    sim_info$relsize <- 0.6
+  }
+
+  if(!"cov.res" %in% names(sim_info)) {
+    sim_info$cov.res <- 0
+  }
+
+  if(!"misspec" %in% names(sim_info)) {
+    sim_info$misspec <- F
+  }
 
   if(!"fcovmat" %in% names(sim_info)) {
     sim_info$fcovmat <- NULL
@@ -78,7 +102,7 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nf
 #' Generate a matrix style data for simulation
 #'
 #' @description
-#' \code{\link{makeInpDat}} is a function for generating a data based on
+#' \code{\link{makeInpData}} is a function for generating a data based on
 #' the given information.
 #' @param N a numeric indicating sample size.
 #' @param R2Y a numeric indicating predictive power of covariates.
@@ -109,22 +133,21 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nf
 #'
 #' @examples
 #' sdat <- makeInpData(
-#'   N = 100,
-#'   R2Y = 0.2,
-#'   omega = 0.2,
-#'   tau0 = 0.13,
-#'   tau1 = -0.06,
-#'   lambda = 10,
-#'   R2eta = 0.5,
-#'   nitem = 10,
-#'   linear = T,
-#'   lvmodel = "sem"
-#' )
+#' N       = 200,  # sample size
+#' R2Y     = 0.2,  # r^2 of outcome
+#' R2eta   = 0.5,  # r^2 of eta by one covariates
+#' omega   = 0.2,  # the effect of eta
+#' tau0    = 0.13, # direct effect
+#' tau1    = -0.06,# interaction effect between Z and eta
+#' lambda  = 0.8,  # the proportion of administered items
+#' nitem    = 10,   # the total number of items
+#' nfac    = 1,    # the number of latent factors
+#' lvmodel = '2pl' )
 #' @export
 makeInpData <- function(N, R2Y, R2eta, omega, tau0, tau1,
                         linear=T, ydist='n',lambda,
                         nitem, nfac = 1, lvmodel,
-                        fcovmat, item.missing, misspec, cov.res, relsize){
+                        fcovmat, item.missing=T, misspec=F, cov.res=0, relsize=0.6){
 
   mc <- match.call(expand.dots = TRUE)
   mc[[1L]] <- quote(list); # mc <- as.list(match.call()[-1])
@@ -133,6 +156,18 @@ makeInpData <- function(N, R2Y, R2eta, omega, tau0, tau1,
   sim_info <- structure(eval(mc), class = tolower(lvmodel))
   # sim_info<-structure(sim_condition,class=tolower(sim_condition$lvmodel))
   # Data = sim_info
+
+  if(!"nfac" %in% names(sim_info)) {
+    sim_info$nfac <- 1
+  }
+
+  if(!"linear" %in% names(sim_info)) {
+    sim_info$linear <- T
+  }
+
+  if(!"yidst" %in% names(sim_info)) {
+    sim_info$yidst <- 'n'
+  }
 
   if(!"relsize" %in% names(sim_info)) {
     sim_info$relsize <- 0.6

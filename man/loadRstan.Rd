@@ -15,6 +15,3 @@ A string for Stan syntax
 \description{
 Load rstan model
 }
-\examples{
-stan_model <- rstan_path(lv_type = "rasch")
-}

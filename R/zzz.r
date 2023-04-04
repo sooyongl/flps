@@ -33,3 +33,9 @@
   packageStartupMessage("It is a demo")
 
 }
+
+#' #' @noRd
+#' .onLoad <- function(...) {
+#'   .S3method("summary","flps")
+#'   .S3method("print","flps")
+#' }

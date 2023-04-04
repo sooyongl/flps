@@ -1,13 +1,13 @@
 {
     "dialog-state": {
-        "query": "mvtnorm",
+        "query": "generateLV",
         "path": "",
         "regex": false,
         "caseSensitive": false,
         "wholeWord": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 3,
+        "resultsCount": 21,
         "errorCount": 0,
         "replaceErrors": "",
         "projectRelative": true

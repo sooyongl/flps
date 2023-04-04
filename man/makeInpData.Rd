@@ -18,10 +18,10 @@ makeInpData(
   nfac = 1,
   lvmodel,
   fcovmat,
-  item.missing,
-  misspec,
-  cov.res,
-  relsize
+  item.missing = T,
+  misspec = F,
+  cov.res = 0,
+  relsize = 0.6
 )
 }
 \arguments{
@@ -71,20 +71,19 @@ when nfac > 1.}
 a list containing all the data related to population values and running FLPS.
 }
 \description{
-\code{\link{makeInpDat}} is a function for generating a data based on
+\code{\link{makeInpData}} is a function for generating a data based on
 the given information.
 }
 \examples{
 sdat <- makeInpData(
-  N = 100,
-  R2Y = 0.2,
-  omega = 0.2,
-  tau0 = 0.13,
-  tau1 = -0.06,
-  lambda = 10,
-  R2eta = 0.5,
-  nitem = 10,
-  linear = T,
-  lvmodel = "sem"
-)
+N       = 200,  # sample size
+R2Y     = 0.2,  # r^2 of outcome
+R2eta   = 0.5,  # r^2 of eta by one covariates
+omega   = 0.2,  # the effect of eta
+tau0    = 0.13, # direct effect
+tau1    = -0.06,# interaction effect between Z and eta
+lambda  = 0.8,  # the proportion of administered items
+nitem    = 10,   # the total number of items
+nfac    = 1,    # the number of latent factors
+lvmodel = '2pl' )
 }

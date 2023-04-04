@@ -19,6 +19,7 @@ Authors@R:
              role = "aut")
     )
 Description: Simulation and analysis of Fully-Latent Principal Stratification (FLPS) with measurement models.
+License: GPL-3 + file LICENSE
 Imports: 
     rstan,
 	  Rcpp,
@@ -33,7 +34,6 @@ Suggests:
     knitr,
     rmarkdown,
 	data.table
-License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: false
 RoxygenNote: 7.2.3

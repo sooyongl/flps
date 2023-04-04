@@ -28,6 +28,8 @@ makeFLPSdata(
 
 \item{lv_type}{A character indicating the type of latent variable models}
 
+\item{custom}{a logical indicating whether the cumsom data is used.}
+
 \item{...}{Additional arguments for latent variable models information (e.g., nclass = 2).}
 }
 \value{

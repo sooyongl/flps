@@ -61,7 +61,7 @@ genMeasurement <- function(sim_info) {
   ss <- cbind(studentM, section)
   grad <- sapply(1:dim(ss)[1], function(n) lv.resp[ss[n,1], ss[n,2]] )
 
-  names(lv.resp) <- paste0("v", 1:ncol(lv.resp))
+  colnames(lv.resp) <- paste0("v", 1:ncol(lv.resp))
 
   res <- list(
     lv.par   = lv.par,
