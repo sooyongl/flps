@@ -50,7 +50,7 @@ runFLPS <- function(inp_data = NULL,
 
   if (!is.null(inp_data) && is.null(custom_data)) {
     flps_data_class <- makeFLPSdata(inp_data, outcome, group, covariate,
-                                    lv_model, lv_type, ...)
+                                    lv_model, lv_type)
 
     flps_model <- loadRstan(flps_data_class$lv_type)
   }
@@ -59,10 +59,26 @@ runFLPS <- function(inp_data = NULL,
   if(class(flps_model) != "stanmodel") {
     flps_model <- rstan::stan_model(model_code = flps_model)
   }
+
+  # STVAL
+  # init.rlnorm <- function(n, m, v) {
+  #   a1 <- rlnorm(n, m, v)
+  #   a1[abs(a1) > 5] = 1
+  #   a1
+  # }
+  #
+  # initf1 <- function() {
+  #   list(lambda_free =
+  #          array(init.rlnorm(sdat$nsec, 0,1), dim = c(sdat$nsec,1)))
+  # }
+  # stan_options$init <- initf1
+
   ## S3
   stan_options <- stanOptions(stan_options,
                               data = flps_data_class$stan_data,
                               object = flps_model)
+
+
   flps_fit <-  do.call(rstan::sampling, stan_options)
 
   # class output ------------------------------------------------------------
@@ -104,12 +120,52 @@ summary.flps <- function(object, type = "all") {
   out <- rstan::summary(object$flps_fit)
 
   if(type == "all") {
-    out$summary
+    out1 <- out$summary
+
+    # rname <- rownames(out1)
+    # rname <- sub("lambda", "loading", rname)
+    # rname <- sub("tau", "intcpt", rname)
+    # rname <- sub("^eta", "fsc", rname)
+    #
+    # rname <- sub("^betaU", "XF", rname)
+    # rname <- sub("^betaY", "XY", rname)
+    #
+    # rname <- sub("^b0$", "tau", rname)
+    # rname <- sub("^b1", "tau", rname)
+    # rname <- sub("^b00$", "intcptY", rname)
+    # rname <- sub("^a1", "omega", rname)
+
   } else if(type == "measurement") {
-    out$summary[grepl("^(lambda|tau|eta)\\[",rownames(out$summary)), ]
+    out1 <- out$summary[grepl("^(loading|intcpt|fsc)\\[",rownames(out$summary)), ]
+
+    # rname <- rownames(out1)
+    # rname <- sub("lambda", "loading", rname)
+    # rname <- sub("tau", "intcpt", rname)
+    # rname <- sub("^eta", "fsc", rname)
+
   } else if(type == "structure") {
-    out$summary[grepl("^(b0)$|(b1|a1)|betaU|betaY",rownames(out$summary)), ]
+    out1 <- out$summary[grepl("^(tau0)$|(tau1|omega)|XY|XF",rownames(out$summary)), ]
+
+    rname <- rownames(out1)
+
+    # rname <- sub("^betaU", "XF", rname)
+    # rname <- sub("^betaY", "XY", rname)
+    #
+    # rname <- sub("^b0$", "tau0", rname)
+    # rname <- sub("^b1", "tau1", rname)
+    # rname <- sub("^b00$", "intcptY", rname)
+    # rname <- sub("^a1", "omega", rname)
+
   } else if(type == "casual") {
-    out$summary[grepl("^(b0)$|(b1)",rownames(out$summary)), ]
+    out1 <- out$summary[grepl("^(tau0)$|(tau1)",rownames(out$summary)), ]
+
+    # rname <- rownames(out1)
+    #
+    # rname <- sub("^b0$", "tau0", rname)
+    # rname <- sub("^b1", "tau1", rname)
   }
+
+
+  # rownames(out1) <- rname
+  return(out1)
 }

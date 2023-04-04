@@ -46,7 +46,7 @@ genStanData <- function(Data) {
     # index
     studentM     = studentM,
     section      = section,
-    lambda_prior = obv_lambda(obs.v.partial = lv.resp[1:(N/2), ], a_idx),
+    loading_prior = obv_lambda(obs.v.partial = lv.resp[1:(N/2), ], a_idx),
     factoridx    = a_idx,
     firstitem    = fi_idx,
     # data

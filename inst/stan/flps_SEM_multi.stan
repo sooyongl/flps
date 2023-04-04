@@ -6,7 +6,7 @@ data{
   int<lower=1> nitem;
   int<lower=1> nfac;
   // prior information
-  matrix[nitem, nfac] lambda_prior;
+  matrix[nitem, nfac] loading_prior;
 
   // indices
   int<lower=1,upper=nstud> studentM[nitemWorked];
@@ -25,38 +25,38 @@ data{
 
 parameters{
   // IRT model
-  vector[nfac] eta[nstud];
+  vector[nfac] fsc[nstud];
   cholesky_factor_corr[nfac] L;
 
-  matrix[nitem, nfac] lambda_free;
-  real tau[nitem];
+  matrix[nitem, nfac] loading_free;
+  real intcpt[nitem];
 
-  matrix[ncov, nfac] betaU;
-  vector[ncov] betaY;
+  matrix[ncov, nfac] XF;
+  vector[ncov] XY;
 
-  real b00;
-  vector[nfac] a1;
-  real b0;
+  real intcptY;
+  vector[nfac] omega;
+  real tau0;
 
-  vector[nfac] b1;
+  vector[nfac] tau1;
   real<lower=0> sigR;
   real<lower=0> sigY[2];
 }
 
 transformed parameters {
-  matrix[nitem, nfac] lambda;
+  matrix[nitem, nfac] loading;
 
   // Factor loading constraints
   for(jjj in 1:nfac) {
     for(jj in 1:nitem) {
       if(factoridx[jj, jjj] != 0) {
         if(firstitem[jj] == 1) { // first loading per factor constrained to 1.
-        lambda[jj, jjj] = 1;
+        loading[jj, jjj] = 1;
         } else {
-          lambda[jj, jjj] = lambda_free[jj, jjj];
+          loading[jj, jjj] = loading_free[jj, jjj];
         }
       } else {
-        lambda[jj, jjj] = 0;
+        loading[jj, jjj] = 0;
       }
     }
   };
@@ -75,39 +75,40 @@ model{
   A0 = diag_pre_multiply(A, L);
 
   for(i in 1:nstud){
-	  muEta[i] = to_vector(X[i, ]*betaU);
-	  muY0[i] = b00+ to_row_vector(a1)*eta[i] + Z[i] * (b0 + to_row_vector(b1)*eta[i]);
-	  muY[i]  = muY0[i] + X[i,]*betaY;
+	  muEta[i] = to_vector(X[i, ]*XF);
+	  muY0[i] = intcptY + to_row_vector(omega)*fsc[i] + Z[i] * (tau0 + to_row_vector(tau1)*fsc[i]);
+	  muY[i]  = muY0[i] + X[i,]*XY;
 	  sigYI[i]=sigY[Z[i]+1];
   };
 
   for(j in 1:nitemWorked) {
-    linPred[j] = tau[section[j]] + lambda[section[j],1:nfac] * eta[studentM[j]];
+    linPred[j] = intcpt[section[j]] + loading[section[j],1:nfac] * fsc[studentM[j]];
   }
 
   // model sampling
   grad ~ normal(linPred, sigR);
-  eta ~ multi_normal_cholesky(muEta, A0);
+  fsc ~ multi_normal_cholesky(muEta, A0);
   Y ~ normal(muY,sigYI);
 
  //priors
   // IRT priors
-  tau ~ normal(0, 1);
+  intcpt ~ normal(0, 5);
   for(i in 1:nitem) {
     for(j in 1:nfac) {
-      lambda_free[i, j] ~ normal(1, 1);
+      loading_free[i, j] ~ normal(0, 5);
      };
   };
 
   // PS priors
-  betaY ~ normal(0, 1);
+  XY ~ normal(0, 5);
   for(i in 1:nfac) {
-    betaU[,i] ~ normal(0, 1);
+    XF[,i] ~ normal(0, 5);
   };
 
-  a1 ~ normal(0, 1);
-  b1 ~ normal(0, 1);
-  b00 ~ normal(0, 1);
-  b0  ~ normal(0, 1);
+  omega ~ normal(0, 5);
+  tau1 ~ normal(0, 5);
+  tau0  ~ normal(0, 5);
+  intcptY ~ normal(0, 5);
+
 }
 // last line blank
