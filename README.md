@@ -21,18 +21,18 @@ devtools::install_github("sooyongl/flps")
 The documentation is available at
 [here](https://sooyongl.github.io/flps/).
 
-If compling errors occur, see
+If compiling errors occur, see
 [here](https://github.com/stan-dev/rstan/wiki/Configuring-C---Toolchain-for-Windows#r-42).
 
 ## Basic working example
 
 ### Running with the package
 
-- Generate a simulated rectangular data.
-- This data will be converted to a list of data for
-  [`rstan`](https://github.com/stan-dev/rstan) package.
-- For latent variable models, Rasch, 2PL, GRM, and SEM (one-factor CFA)
-  are available.
+-   Generate a simulated rectangular data.
+-   This data will be converted to a list of data for
+    [`rstan`](https://github.com/stan-dev/rstan) package.
+-   For latent variable models, Rasch, 2PL, GRM, and SEM (one-factor
+    CFA) are available.
 
 ``` r
 inp_data <- flps::makeInpData(
@@ -51,28 +51,28 @@ inp_data <- flps::makeInpData(
 
 `makeInpData()` creates input data for running FLPS.
 
-- `inp_data`: a data frame containing all the data for FLPS. It is used
-  in `runFLPS` function.
+-   `inp_data`: a data frame containing all the data for FLPS. It is
+    used in `runFLPS` function.
 
 ``` r
 # Input data matrix
 data.table::data.table(inp_data)
 ```
 
-    ##                Y Z           X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
-    ##   1:  0.62562534 1 -0.42116814  0.5728188  1  1  0  1  1  1  0  0  1   1
-    ##   2: -0.31757694 1  0.93418192  0.2817544  0  0  1  1  1  1  0  0  1   1
-    ##   3:  0.74942580 1 -1.98573532 -2.3957913  0  1  1  0  0  1  0  0  0   0
-    ##   4:  0.16054994 1  0.31994754 -0.1088874  1  1  0  1  1  1  0  0  0   0
-    ##   5:  0.51777415 1  0.01307849 -1.2011336  1  1  0  1  0  1  1  1  0   0
-    ##  ---                                                                    
-    ## 196:  0.77154946 0 -2.23472798 -2.4594862 NA NA NA NA NA NA NA NA NA  NA
-    ## 197: -0.30967398 0  1.92133226  0.7003654 NA NA NA NA NA NA NA NA NA  NA
-    ## 198: -0.06059372 0 -0.36360236 -0.1223452 NA NA NA NA NA NA NA NA NA  NA
-    ## 199: -0.40910139 0  0.39644264  0.3700518 NA NA NA NA NA NA NA NA NA  NA
-    ## 200:  0.13253869 0  0.69286702  0.1302301 NA NA NA NA NA NA NA NA NA  NA
+    ##               Y Z           X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+    ##   1:  0.1334739 1  0.02084144 -0.6655418  1  0  0  0  1  0  0  0  1   0
+    ##   2:  0.5637497 1  1.12518541  0.4075764  1  1  1  0  0  0  1  1  1   0
+    ##   3:  1.4244225 1 -0.58799823 -0.4149190  0  0  1  1  1  0  0  1  1   0
+    ##   4:  0.3644402 1 -0.20996355  1.1467449  1  1  1  0  1  1  1  1  1   1
+    ##   5: -0.1702918 1  0.54647799  0.4955865  1  1  1  0  1  0  1  1  1   0
+    ##  ---                                                                   
+    ## 196: -0.2333591 0 -1.10325551 -0.7155695 NA NA NA NA NA NA NA NA NA  NA
+    ## 197: -0.7420041 0 -0.72720950 -0.5975197 NA NA NA NA NA NA NA NA NA  NA
+    ## 198: -0.5379497 0 -1.52642396 -1.1299039 NA NA NA NA NA NA NA NA NA  NA
+    ## 199:  0.6956099 0  0.26472627  0.6585079 NA NA NA NA NA NA NA NA NA  NA
+    ## 200: -2.4699201 0  2.34152782  0.5237120 NA NA NA NA NA NA NA NA NA  NA
 
-- Fit your FLPS model
+-   Fit your FLPS model
 
 Now, provide information about your model. `runFLPS` internally coverts
 `inp_data` into the data format for `rstan` given the information, and
