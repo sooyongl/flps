@@ -52,7 +52,8 @@ runFLPS <- function(inp_data = NULL,
     flps_data_class <- makeFLPSdata(inp_data, outcome, group, covariate,
                                     lv_model, lv_type)
 
-    flps_model <- loadRstan(flps_data_class$lv_type)
+    flps_model <- loadRstan(lv_type = flps_data_class$lv_type)
+    # flps_model <- mkStanModel(lv_type = flps_data_class$lv_type)
   }
 
 

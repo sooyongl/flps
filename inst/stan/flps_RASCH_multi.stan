@@ -26,13 +26,13 @@ data{
 }
 
 transformed data {
-   matrix[nitem, nfac] lambda = factoridx;
+   matrix[nitem, nfac] loading = factoridx;
 
 }
 
 parameters{
   // IRT model
-  vector[nfac] fcs[nstud];       // person scores for each factor
+  vector[nfac] fsc[nstud];       // person scores for each factor
   cholesky_factor_corr[nfac] L; // Cholesky decomp of corr mat of random slopes
 
   real intcpt[nitem];                 // difficulty of question nitem
