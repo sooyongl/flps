@@ -127,18 +127,18 @@ FLPS. It is used in <code>runFLPS</code> function.</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;               Y Z           X        eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span><span class="co">#&gt;   1: -1.0053305 1  0.49323830  0.52530110  0  0  1  1  0  1  1  0  1   1</span></span>
-<span><span class="co">#&gt;   2:  0.1949004 1  0.04845172  0.69744919  1  0  1  0  1  1  1  0  0   1</span></span>
-<span><span class="co">#&gt;   3: -0.9029405 1  0.42978810 -0.38328908  0  0  1  0  0  1  0  0  0   1</span></span>
-<span><span class="co">#&gt;   4:  0.8502148 1 -0.78113719  0.07210700  0  0  1  0  1  1  0  1  1   1</span></span>
-<span><span class="co">#&gt;   5: -0.4626808 1  1.94891600  1.49293217  1  0  1  1  1  1  1  1  0   1</span></span>
+<span><span class="co">#&gt;                Y Z           X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span><span class="co">#&gt;   1: -0.12486902 1 -0.64247332 -2.3773446  0  0  0  0  0  0  0  0  0   0</span></span>
+<span><span class="co">#&gt;   2: -0.23013311 1  0.05371934 -0.5598432  0  1  1  0  1  0  0  0  0   0</span></span>
+<span><span class="co">#&gt;   3: -0.77635224 1  1.49537202  1.2037654  1  1  1  1  0  1  0  1  0   1</span></span>
+<span><span class="co">#&gt;   4:  1.39073936 1 -0.13935556  0.2147403  0  1  1  1  0  1  1  0  0   1</span></span>
+<span><span class="co">#&gt;   5:  0.24681256 1 -1.15750760 -1.9075652  0  0  0  1  0  0  1  0  0   0</span></span>
 <span><span class="co">#&gt;  ---                                                                    </span></span>
-<span><span class="co">#&gt; 196:  0.1683667 0 -0.71651108 -0.52884964 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 197: -0.2187462 0 -0.15464294 -0.06567987 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 198: -0.7388606 0  1.46122160  0.17887461 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 199:  2.1491786 0 -1.33406540 -0.76933222 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 200:  0.8019380 0 -0.61727448 -0.76264032 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<span><span class="co">#&gt; 196:  1.22006646 0 -0.52542511 -1.1730467 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 197:  1.30503808 0 -1.34304195  0.3372866 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 198:  0.13505268 0  0.38430513  0.9206100 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 199: -0.08710105 0  0.26220435 -0.2295518 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 200:  0.60462620 0  0.09639045  0.1327144 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>
@@ -158,7 +158,7 @@ internally coverts <code>inp_data</code> into the data format for
 <p>The summary of results can be shown by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/summary.flps.html">summary.flps</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"casual"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"casual"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>
