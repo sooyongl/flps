@@ -104,6 +104,7 @@ runFLPS <- function(inp_data = NULL,
 #' @param ... additional options for future development
 #'
 #' @method print flps
+#' @export
 print.flps <- function(obj, ...) {
   rstan::show(obj$flps_fit)
 }
@@ -117,6 +118,7 @@ print.flps <- function(obj, ...) {
 #' @param ... additional options for future development
 #'
 #' @method summary flps
+#' @export
 summary.flps <- function(object, type = "all", ...) {
   type <- match.arg(type, c("all","measurement","structure","casual"))
 
