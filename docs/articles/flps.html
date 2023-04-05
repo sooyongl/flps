@@ -90,6 +90,7 @@ extension of principal stratification.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"sooyongl/flps"</span><span class="op">)</span></span></code></pre></div>
 <p>The documentation is available at <a href="https://sooyongl.github.io/flps/" class="external-link">here</a>.</p>
+<p>If compling errors occur, see <a href="https://github.com/stan-dev/rstan/wiki/Configuring-C---Toolchain-for-Windows#r-42" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="basic-working-example">Basic working example<a class="anchor" aria-label="anchor" href="#basic-working-example"></a>
@@ -126,18 +127,18 @@ FLPS. It is used in <code>runFLPS</code> function.</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                Y Z           X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span><span class="co">#&gt;   1:  0.28436396 1  0.62544886  0.5060806  1  1  1  1  0  0  1  1  1   1</span></span>
-<span><span class="co">#&gt;   2: -1.11062081 1 -0.03490122 -0.1622922  0  0  0  0  0  0  0  1  0   0</span></span>
-<span><span class="co">#&gt;   3: -1.10408488 1  0.75830604  0.3382507  1  0  1  1  0  0  0  1  1   0</span></span>
-<span><span class="co">#&gt;   4:  0.01501683 1  1.41807572  0.8880052  1  1  1  1  1  0  1  1  0   0</span></span>
-<span><span class="co">#&gt;   5: -0.23767587 1  1.06278875  0.2627728  1  1  0  1  1  0  0  1  0   0</span></span>
-<span><span class="co">#&gt;  ---                                                                    </span></span>
-<span><span class="co">#&gt; 196:  0.50258958 0 -0.33558933 -1.0703805 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 197:  0.46587496 0 -0.65251968 -0.1012535 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 198: -0.29908349 0  0.25356208 -0.1929996 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 199: -0.41407166 0  0.37889916  0.4572750 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 200:  0.14322573 0  0.21639366 -0.4714465 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<span><span class="co">#&gt;                Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span><span class="co">#&gt;   1: -0.63325611 1  1.3948151  0.9231540  0  0  1  1  0  1  1  0  1   0</span></span>
+<span><span class="co">#&gt;   2: -1.23606642 1  0.9343182  1.1570543  1  0  1  1  1  1  1  0  1   0</span></span>
+<span><span class="co">#&gt;   3: -0.03544705 1  0.3748090  0.2628540  1  1  0  1  1  1  0  0  0   0</span></span>
+<span><span class="co">#&gt;   4:  0.36201043 1  1.8378862  2.3072628  1  1  1  1  1  1  1  0  1   1</span></span>
+<span><span class="co">#&gt;   5:  0.33906273 1 -0.9859312  0.9115196  1  0  0  0  1  1  1  0  0   0</span></span>
+<span><span class="co">#&gt;  ---                                                                   </span></span>
+<span><span class="co">#&gt; 196: -0.90403909 0  1.6227526  1.3153972 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 197: -0.23191501 0  1.1824339 -0.2228902 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 198: -0.22281775 0 -0.1839256 -0.1688451 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 199: -0.86491361 0  1.9297006  1.0358344 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 200:  0.17066535 0 -0.6094107 -1.3385954 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>
