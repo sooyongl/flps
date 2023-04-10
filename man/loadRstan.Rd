@@ -4,10 +4,12 @@
 \alias{loadRstan}
 \title{Load rstan model}
 \usage{
-loadRstan(lv_type = "2PL")
+loadRstan(lv_type = "2PL", force.string = F)
 }
 \arguments{
 \item{lv_type}{a character specifying a latent model}
+
+\item{force.string}{a logical indicating forcing the string stan code}
 }
 \value{
 A string for Stan syntax

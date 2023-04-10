@@ -59,6 +59,9 @@ runFLPS <- function(inp_data = NULL,
 
   # fit FLPS ----------------------------------------------------------------
   if(!inherits(flps_model, "stanmodel")) {
+
+    message("Compiling Stan code...")
+
     flps_model <- rstan::stan_model(model_code = flps_model)
   }
 
@@ -80,8 +83,20 @@ runFLPS <- function(inp_data = NULL,
                               data = flps_data_class$stan_data,
                               object = flps_model)
 
+  flps_fit <-  try(do.call(rstan::sampling, stan_options))
 
-  flps_fit <-  do.call(rstan::sampling, stan_options)
+  if(inherits(a1, "try-error")) {
+
+    message("Initial run failed, and re-compile and run.")
+
+    flps_model <- loadRstan(lv_type = flps_data_class$lv_type, T)
+    flps_model <- rstan::stan_model(model_code = flps_model)
+    stan_options <- stanOptions(stan_options,
+                                data = flps_data_class$stan_data,
+                                object = flps_model)
+
+    flps_fit <-  try(do.call(rstan::sampling, stan_options))
+  }
 
   # class output ------------------------------------------------------------
 
