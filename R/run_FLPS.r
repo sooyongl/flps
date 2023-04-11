@@ -56,7 +56,7 @@ runFLPS <- function(inp_data = NULL,
     # flps_model <- mkStanModel(lv_type = flps_data_class$lv_type)
   }
 
-
+  # flps_model
   # fit FLPS ----------------------------------------------------------------
   if(!inherits(flps_model, "stanmodel")) {
 
@@ -85,7 +85,7 @@ runFLPS <- function(inp_data = NULL,
 
   flps_fit <-  try(do.call(rstan::sampling, stan_options))
 
-  if(inherits(a1, "try-error")) {
+  if(inherits(flps_fit, "try-error")) {
 
     message("Initial run failed, and re-compile and run.")
 
