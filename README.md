@@ -59,24 +59,36 @@ inp_data <- flps::makeInpData(
 data.table::data.table(inp_data)
 ```
 
-    ##                Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
-    ##   1:  0.08869462 1  0.2216264  0.8981923  1  1  1  0  0  1  1  0  1   0
-    ##   2: -0.01824707 1  0.1287782  0.4112477  1  0  1  1  0  1  1  1  0   0
-    ##   3:  0.61522760 1  0.2463158  0.2468933  1  1  1  0  1  1  0  0  0   0
-    ##   4:  0.23335010 1  0.1046426  0.1454832  1  1  1  1  0  1  1  0  1   0
-    ##   5: -0.67888432 1 -0.0803088 -0.3228670  1  0  1  0  0  1  1  0  1   0
-    ##  ---                                                                   
-    ## 196:  0.07394363 0 -0.2793789 -1.4326300 NA NA NA NA NA NA NA NA NA  NA
-    ## 197: -0.58291780 0  1.6094844  0.3070913 NA NA NA NA NA NA NA NA NA  NA
-    ## 198:  0.98271575 0  0.3940290  0.4581900 NA NA NA NA NA NA NA NA NA  NA
-    ## 199:  0.04670380 0 -0.1170385  0.7839863 NA NA NA NA NA NA NA NA NA  NA
-    ## 200: -1.09842684 0  0.5072524  2.5368779 NA NA NA NA NA NA NA NA NA  NA
+    ##               Y Z           X        eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+    ##   1: -0.8229286 1  0.81970123  0.80513323  1  1  1  0  0  0  0  0  1   1
+    ##   2: -2.2757364 1 -0.04787554 -0.17824663  0  1  1  0  0  1  1  1  1   0
+    ##   3:  1.7244453 1 -0.28450512 -0.04733339  0  0  1  0  0  0  0  0  1   0
+    ##   4: -0.9570852 1  2.47234904  3.03804671  1  1  1  1  1  0  1  1  1   1
+    ##   5: -0.4641767 1  0.52827230  0.40092126  0  0  1  0  1  0  0  1  1   0
+    ##  ---                                                                    
+    ## 196: -0.5238044 0  0.70031265  0.87764963 NA NA NA NA NA NA NA NA NA  NA
+    ## 197:  1.3158738 0 -2.03092566 -1.53048045 NA NA NA NA NA NA NA NA NA  NA
+    ## 198: -1.8832812 0  2.08024036  1.96220171 NA NA NA NA NA NA NA NA NA  NA
+    ## 199: -1.2764512 0  1.91509187  0.96052374 NA NA NA NA NA NA NA NA NA  NA
+    ## 200:  1.4095648 0 -0.47788144  0.07156641 NA NA NA NA NA NA NA NA NA  NA
 
 -   Fit your FLPS model
 
 Now, provide information about your model. `runFLPS` internally coverts
 `inp_data` into the data format for `rstan` given the information, and
 runs FLPS.
+
+To avoid having to compile the Stan code every time you run it, you can
+pre-compile the code using the `modelBuilder()` function along with the
+relevant measurement model. This function will compile the Stan code and
+store the resulting stanmodel object in the `flps` package directory.
+The next time you run `runFLPS()`, the code will skip the compilation
+step, making your analysis faster and more efficient. Otherwise, it will
+take a while for `runFLPS()` to compile the Stan code.
+
+``` r
+modelBuilder(type = "rasch")
+```
 
 ``` r
 res <- runFLPS(

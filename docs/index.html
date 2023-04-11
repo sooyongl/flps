@@ -109,23 +109,26 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">##                Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   1:  0.08869462 1  0.2216264  0.8981923  1  1  1  0  0  1  1  0  1   0</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   2: -0.01824707 1  0.1287782  0.4112477  1  0  1  1  0  1  1  1  0   0</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   3:  0.61522760 1  0.2463158  0.2468933  1  1  1  0  1  1  0  0  0   0</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   4:  0.23335010 1  0.1046426  0.1454832  1  1  1  1  0  1  1  0  1   0</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   5: -0.67888432 1 -0.0803088 -0.3228670  1  0  1  0  0  1  1  0  1   0</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                                                   </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 196:  0.07394363 0 -0.2793789 -1.4326300 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 197: -0.58291780 0  1.6094844  0.3070913 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 198:  0.98271575 0  0.3940290  0.4581900 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 199:  0.04670380 0 -0.1170385  0.7839863 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 200: -1.09842684 0  0.5072524  2.5368779 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">##               Y Z           X        eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   1: -0.8229286 1  0.81970123  0.80513323  1  1  1  0  0  0  0  0  1   1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   2: -2.2757364 1 -0.04787554 -0.17824663  0  1  1  0  0  1  1  1  1   0</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   3:  1.7244453 1 -0.28450512 -0.04733339  0  0  1  0  0  0  0  0  1   0</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   4: -0.9570852 1  2.47234904  3.03804671  1  1  1  1  1  0  1  1  1   1</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   5: -0.4641767 1  0.52827230  0.40092126  0  0  1  0  1  0  0  1  1   0</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                                                    </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 196: -0.5238044 0  0.70031265  0.87764963 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 197:  1.3158738 0 -2.03092566 -1.53048045 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 198: -1.8832812 0  2.08024036  1.96220171 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 199: -1.2764512 0  1.91509187  0.96052374 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 200:  1.4095648 0 -0.47788144  0.07156641 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>
 <p>Now, provide information about your model. <code>runFLPS</code> internally coverts <code>inp_data</code> into the data format for <code>rstan</code> given the information, and runs FLPS.</p>
+<p>To avoid having to compile the Stan code every time you run it, you can pre-compile the code using the <code><a href="reference/modelBuilder.html">modelBuilder()</a></code> function along with the relevant measurement model. This function will compile the Stan code and store the resulting stanmodel object in the <code>flps</code> package directory. The next time you run <code><a href="reference/runFLPS.html">runFLPS()</a></code>, the code will skip the compilation step, making your analysis faster and more efficient. Otherwise, it will take a while for <code><a href="reference/runFLPS.html">runFLPS()</a></code> to compile the Stan code.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/modelBuilder.html">modelBuilder</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"rasch"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
 <span>  inp_data <span class="op">=</span> <span class="va">inp_data</span>,</span>
 <span>  outcome <span class="op">=</span> <span class="st">"Y"</span>,</span>
@@ -136,7 +139,7 @@
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The summary of results can be shown by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"casual"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>

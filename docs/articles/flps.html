@@ -127,25 +127,35 @@ FLPS. It is used in <code>runFLPS</code> function.</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                Y Z           X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span><span class="co">#&gt;   1: -0.12486902 1 -0.64247332 -2.3773446  0  0  0  0  0  0  0  0  0   0</span></span>
-<span><span class="co">#&gt;   2: -0.23013311 1  0.05371934 -0.5598432  0  1  1  0  1  0  0  0  0   0</span></span>
-<span><span class="co">#&gt;   3: -0.77635224 1  1.49537202  1.2037654  1  1  1  1  0  1  0  1  0   1</span></span>
-<span><span class="co">#&gt;   4:  1.39073936 1 -0.13935556  0.2147403  0  1  1  1  0  1  1  0  0   1</span></span>
-<span><span class="co">#&gt;   5:  0.24681256 1 -1.15750760 -1.9075652  0  0  0  1  0  0  1  0  0   0</span></span>
-<span><span class="co">#&gt;  ---                                                                    </span></span>
-<span><span class="co">#&gt; 196:  1.22006646 0 -0.52542511 -1.1730467 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 197:  1.30503808 0 -1.34304195  0.3372866 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 198:  0.13505268 0  0.38430513  0.9206100 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 199: -0.08710105 0  0.26220435 -0.2295518 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 200:  0.60462620 0  0.09639045  0.1327144 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<span><span class="co">#&gt;               Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span><span class="co">#&gt;   1: -0.9163714 1  2.0740854  1.9501260  1  1  1  1  1  0  0  1  0   1</span></span>
+<span><span class="co">#&gt;   2: -0.5127935 1  0.1945182  0.5533515  1  1  1  1  1  1  0  0  1   0</span></span>
+<span><span class="co">#&gt;   3:  1.4718907 1 -0.3790059  0.1304144  0  0  0  1  1  0  1  0  0   0</span></span>
+<span><span class="co">#&gt;   4:  1.3350811 1 -0.3296728 -0.9081450  1  0  0  1  0  1  0  0  0   0</span></span>
+<span><span class="co">#&gt;   5:  2.9712132 1  0.2734004  0.5764058  1  1  1  1  0  0  1  0  1   0</span></span>
+<span><span class="co">#&gt;  ---                                                                  </span></span>
+<span><span class="co">#&gt; 196: -1.9437719 0  0.7914456  1.4430548 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 197:  0.4500141 0 -0.2201384 -0.8598338 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 198:  0.2441740 0 -0.7871419 -0.8402927 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 199: -2.5374785 0  1.6765703  0.8728107 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 200: -0.5434867 0 -0.2053276  0.1663753 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>
 <p>Now, provide information about your model. <code>runFLPS</code>
 internally coverts <code>inp_data</code> into the data format for
 <code>rstan</code> given the information, and runs FLPS.</p>
+<p>To avoid having to compile the Stan code every time you run it, you
+can pre-compile the code using the <code><a href="../reference/modelBuilder.html">modelBuilder()</a></code> function
+along with the relevant measurement model. This function will compile
+the Stan code and store the resulting stanmodel object in the
+<code>flps</code> package directory. The next time you run
+<code><a href="../reference/runFLPS.html">runFLPS()</a></code>, the code will skip the compilation step, making
+your analysis faster and more efficient. Otherwise, it will take a while
+for <code><a href="../reference/runFLPS.html">runFLPS()</a></code> to compile the Stan code.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/modelBuilder.html">modelBuilder</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"rasch"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
 <span>  inp_data <span class="op">=</span> <span class="va">inp_data</span>,</span>
 <span>  outcome <span class="op">=</span> <span class="st">"Y"</span>,</span>
@@ -156,7 +166,7 @@ internally coverts <code>inp_data</code> into the data format for
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The summary of results can be shown by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"casual"</span><span class="op">)</span></span></code></pre></div>
 </div>

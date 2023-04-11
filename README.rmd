@@ -65,9 +65,18 @@ inp_data <- flps::makeInpData(
 data.table::data.table(inp_data)
 ```
 
+
+
 - Fit your FLPS model
 
 Now, provide information about your model. `runFLPS` internally coverts `inp_data` into the data format for `rstan` given the information, and runs FLPS.
+
+To avoid having to compile the Stan code every time you run it, you can pre-compile the code using the `modelBuilder()` function along with the relevant measurement model. This function will compile the Stan code and store the resulting stanmodel object in the `flps` package directory. The next time you run `runFLPS()`, the code will skip the compilation step, making your analysis faster and more efficient. Otherwise, it will take a while for `runFLPS()` to compile the Stan code.
+
+```{r}
+modelBuilder(type = "rasch")
+```
+
 
 ```{r eval = F}
 res <- runFLPS(
