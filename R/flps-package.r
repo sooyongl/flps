@@ -13,6 +13,7 @@
 #' @import Rcpp
 #' @import rstan
 #' @import methods
+#' @import ggplot2
 #' @importFrom stats runif rnorm rmultinom rlnorm quantile var cov cor
 #' @importFrom utils read.csv packageVersion head tail
 #' @importFrom MASS mvrnorm

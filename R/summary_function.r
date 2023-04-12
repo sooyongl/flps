@@ -22,7 +22,7 @@ print.flps <- function(obj, ...) {
 summary.flps <- function(object, type = "all", ...) {
   type <- match.arg(type, c("all","measurement","structure","casual"))
 
-  out <- rstan::summary(object$flps_fit)
+  out <- rstan::summary(object$flps_fit, ...)
 
   if(type == "all") {
     out1 <- out$summary
