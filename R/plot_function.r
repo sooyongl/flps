@@ -1,8 +1,10 @@
 #' Latent factor scores distribution by treatment assignment
 #'
+#' @param object a flps object
+#' @export
 flps_latent <- function(object, type = "hist") {
 
-  inputs <- as.list(o$call)
+  inputs <- as.list(object$call)
 
   outcome <- inputs$outcome
   group <- inputs$group
@@ -27,9 +29,11 @@ flps_latent <- function(object, type = "hist") {
 
 #' Causal inference graphs
 #'
+#' @param object a flps object
+#' @export
 flps_causal <- function(object) {
 
-  inputs <- as.list(o$call)
+  inputs <- as.list(object$call)
 
   outcome <- inputs$outcome
   group <- inputs$group
@@ -37,9 +41,9 @@ flps_causal <- function(object) {
 
   inp_data <- object$inp_data
 
-  out.val <- inp_data[outcome]
-  group.val <- inp_data[group]
-  cov.val <- inp_data[covariate]
+  out.val <- unlist(inp_data[outcome])
+  group.val <- unlist(inp_data[group])
+  cov.val <- unlist(inp_data[covariate])
 
   fit <- summary(object)
   lat.val <- fit[grepl("fsc", rownames(fit)), "mean"]
@@ -52,15 +56,25 @@ flps_causal <- function(object) {
   inp_data$Control <- inp_data$lscores*tau0
   inp_data$Treatment <- inp_data$lscores*(tau0+tau1)
 
-  p <- ggplot(inp_data)
+  p <- ggplot(inp_data, aes_string("lscores", outcome))
 
-  yint <- mean(out.val) -
-    (mean(group.val)*tau0 + mean(lat.val)*omega + mean(group.val*lat.val)*tau1)
+  yint <- mean(out.val, na.rm = T) -
+    (mean(group.val, na.rm = T)*tau0 +
+       mean(lat.val, na.rm = T)*omega + mean(group.val*lat.val, na.rm = T)*tau1)
+
+  slp.data <- data.frame(trt = factor(c("Treatment", "Contrl"), c("Treatment", "Contrl")),
+                         intercept = yint,
+                         slope = c(tau0+tau1, tau0))
 
   p +
-    geom_point(aes_string("lscores", outcome)) +
-    geom_abline(intercept = yint, slope = tau0, color = "red") +
-    geom_abline(intercept = yint, slope = tau0+tau1, color = "blue")
+    geom_point() +
+    geom_abline(data = slp.data,
+                aes(intercept = yint, slope = slope, color = trt, linetype = trt),
+                linewidth = 1) +
+    scale_x_continuous(name = "Factor Scores") +
+    scale_linetype_discrete(name = "") +
+    scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
+    theme_bw()
 }
 
 #' Plot

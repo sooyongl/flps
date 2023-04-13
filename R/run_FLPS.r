@@ -78,6 +78,9 @@ runFLPS <- function(inp_data = NULL,
   # }
   # stan_options$init <- initf1
 
+  # Prior setting
+  # priors <- function() {    }
+
   ## S3
   stan_options <- stanOptions(stan_options,
                               data = flps_data_class$stan_data,
@@ -98,7 +101,10 @@ runFLPS <- function(inp_data = NULL,
     flps_fit <-  try(do.call(rstan::sampling, stan_options))
   }
 
-  # class output ------------------------------------------------------------
+
+
+
+  # class output ---------------------------------------------------
 
   ## S3
   o <- S3class("flps")

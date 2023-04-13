@@ -41,6 +41,7 @@ The documentation is available at [here](https://sooyongl.github.io/flps/).
 
 If compiling errors occur, see [here](https://github.com/stan-dev/rstan/wiki/Configuring-C---Toolchain-for-Windows#r-42).
 
+
 ## Basic working example
 
 ### Running with the package
@@ -76,6 +77,8 @@ inp_data <- flps::makeInpData(
 data.table::data.table(inp_data)
 ```
 
+
+
 - Fit your FLPS model
 
 Now, provide information about your model. `runFLPS` internally coverts `inp_data` into the data format for `rstan` given the information, and runs FLPS.
@@ -86,7 +89,8 @@ To avoid having to compile the Stan code every time you run it, you can pre-comp
 modelBuilder(type = "rasch")
 ```
 
-```{r eval = F}
+
+```{r eval = T}
 res <- runFLPS(
   inp_data = inp_data,
   outcome = "Y",
@@ -101,10 +105,21 @@ res <- runFLPS(
 
 The summary of results can be shown by `summary()`.
 
-```{r}
+```{r eval = T}
 
 summary(res, type = "casual")
 
 ```
+
+
+The `flps_causal()` shows the plot for the principal effects.
+
+```{r eval = T}
+
+flps_causal(res)
+
+```
+
+
 
 
