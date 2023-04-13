@@ -49,5 +49,7 @@ Collate:
 	'sim_make_data.r'
 	'z_utils.r'
 	'z_validate.r'
+	'plot_function.r'
+	'summary_function.r'
 	'zzz.r'
 URL: https://sooyongl.github.io/flps/
