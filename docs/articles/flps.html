@@ -73,7 +73,8 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sooyongl.github.io/flps/" class="external-link">flps</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sooyongl.github.io/flps/" class="external-link">flps</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; It is a demo</span></span></code></pre></div>
 <!-- badges: start -->
 <p><a href="https://CRAN.R-project.org/package=flps" class="external-link"><img src="https://www.r-pkg.org/badges/version/flps" alt="CRAN status"></a>
 <!-- badges: end --></p>
@@ -106,13 +107,14 @@ package.</li>
 CFA) are available.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">inp_data</span> <span class="op">&lt;-</span> <span class="fu">flps</span><span class="fu">::</span><span class="fu"><a href="../reference/makeInpData.html">makeInpData</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span></span>
+<span><span class="va">inp_data</span> <span class="op">&lt;-</span> <span class="fu">flps</span><span class="fu">::</span><span class="fu"><a href="../reference/makeInpData.html">makeInpData</a></span><span class="op">(</span></span>
 <span>  N       <span class="op">=</span> <span class="fl">200</span>,  <span class="co"># sample size</span></span>
 <span>  R2Y     <span class="op">=</span> <span class="fl">0.2</span>,  <span class="co"># r^2 of outcome</span></span>
 <span>  R2eta   <span class="op">=</span> <span class="fl">0.5</span>,  <span class="co"># r^2 of eta by one covariates</span></span>
 <span>  omega   <span class="op">=</span> <span class="fl">0.2</span>,  <span class="co"># the effect of eta</span></span>
-<span>  tau0    <span class="op">=</span> <span class="fl">0.13</span>, <span class="co"># direct effect</span></span>
-<span>  tau1    <span class="op">=</span> <span class="op">-</span><span class="fl">0.06</span>,<span class="co"># interaction effect between Z and eta</span></span>
+<span>  tau0    <span class="op">=</span> <span class="fl">0.23</span>, <span class="co"># direct effect</span></span>
+<span>  tau1    <span class="op">=</span> <span class="op">-</span><span class="fl">0.16</span>,<span class="co"># interaction effect between Z and eta</span></span>
 <span>  lambda  <span class="op">=</span> <span class="fl">0.8</span>,  <span class="co"># the proportion of administered items</span></span>
 <span>  nitem    <span class="op">=</span> <span class="fl">10</span>,   <span class="co"># the total number of items</span></span>
 <span>  nfac    <span class="op">=</span> <span class="fl">1</span>,    <span class="co"># the number of latent factors</span></span>
@@ -127,18 +129,18 @@ FLPS. It is used in <code>runFLPS</code> function.</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;               Y Z          X       eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span><span class="co">#&gt;   1: -0.9163714 1  2.0740854  1.9501260  1  1  1  1  1  0  0  1  0   1</span></span>
-<span><span class="co">#&gt;   2: -0.5127935 1  0.1945182  0.5533515  1  1  1  1  1  1  0  0  1   0</span></span>
-<span><span class="co">#&gt;   3:  1.4718907 1 -0.3790059  0.1304144  0  0  0  1  1  0  1  0  0   0</span></span>
-<span><span class="co">#&gt;   4:  1.3350811 1 -0.3296728 -0.9081450  1  0  0  1  0  1  0  0  0   0</span></span>
-<span><span class="co">#&gt;   5:  2.9712132 1  0.2734004  0.5764058  1  1  1  1  0  0  1  0  1   0</span></span>
-<span><span class="co">#&gt;  ---                                                                  </span></span>
-<span><span class="co">#&gt; 196: -1.9437719 0  0.7914456  1.4430548 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 197:  0.4500141 0 -0.2201384 -0.8598338 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 198:  0.2441740 0 -0.7871419 -0.8402927 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 199: -2.5374785 0  1.6765703  0.8728107 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span><span class="co">#&gt; 200: -0.5434867 0 -0.2053276  0.1663753 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<span><span class="co">#&gt;               Y Z           X        eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
+<span><span class="co">#&gt;   1: -0.9843196 1  0.12721892  0.07660374  0  1  0  0  0  0  1  0  1   1</span></span>
+<span><span class="co">#&gt;   2:  0.2746336 1  0.14544680  0.84773168  1  1  1  1  1  1  0  0  0   1</span></span>
+<span><span class="co">#&gt;   3:  0.8273071 1  0.05538890  0.16356192  1  1  1  0  0  1  1  1  0   1</span></span>
+<span><span class="co">#&gt;   4:  0.1341367 1  0.41781402  0.09197033  0  1  1  0  0  1  1  0  1   1</span></span>
+<span><span class="co">#&gt;   5: -0.7505670 1  2.79690269  2.20884247  1  1  1  1  1  1  1  1  1   1</span></span>
+<span><span class="co">#&gt;  ---                                                                    </span></span>
+<span><span class="co">#&gt; 196: -0.2823631 0 -0.12195980 -0.58801343 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 197: -0.2955101 0 -0.06751441  1.01999716 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 198:  0.1601140 0  0.56896866  0.71472229 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 199: -0.5402748 0  0.57374989  0.61235276 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span><span class="co">#&gt; 200: -0.5645506 0  0.80418321  0.03497865 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>
@@ -164,11 +166,52 @@ for <code><a href="../reference/runFLPS.html">runFLPS()</a></code> to compile th
 <span>  lv_type <span class="op">=</span> <span class="st">"rasch"</span>,</span>
 <span>  lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span>
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>The summary of results can be shown by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Compiling Stan code...</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span></span>
+<span><span class="co">#&gt; Chain 1: </span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.001476 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 14.76 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
+<span><span class="co">#&gt; Chain 1: </span></span>
+<span><span class="co">#&gt; Chain 1: </span></span>
+<span><span class="co">#&gt; Chain 1: Iteration:   1 / 1000 [  0%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 100 / 1000 [ 10%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 200 / 1000 [ 20%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 300 / 1000 [ 30%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 400 / 1000 [ 40%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 500 / 1000 [ 50%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 501 / 1000 [ 50%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 600 / 1000 [ 60%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 700 / 1000 [ 70%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1: </span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 12.538 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                6.148 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                18.686 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:</span></span>
+<span><span class="co">#&gt; Warning: The largest R-hat is NA, indicating chains have not mixed.</span></span>
+<span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
+<span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#r-hat</span></span>
+<span><span class="co">#&gt; Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span></span>
+<span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
+<span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#bulk-ess</span></span>
+<span><span class="co">#&gt; Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span></span>
+<span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
+<span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#tail-ess</span></span></code></pre></div>
+<p>The <code><a href="../reference/flps_plot.html">flps_plot()</a></code> shows the plot related to FLPS
+models</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"casual"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="../reference/figures/causal_1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"latent"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="../reference/figures/latent_1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>

@@ -1,13 +1,13 @@
 {
     "dialog-state": {
-        "query": "generateLV",
+        "query": "casual",
         "path": "",
         "regex": false,
         "caseSensitive": false,
         "wholeWord": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 21,
+        "resultsCount": 6,
         "errorCount": 0,
         "replaceErrors": "",
         "projectRelative": true

@@ -28,13 +28,14 @@ If compiling errors occur, see
 
 ### Running with the package
 
-- Generate a simulated rectangular data.
-- This data will be converted to a list of data for
-  [`rstan`](https://github.com/stan-dev/rstan) package.
-- For latent variable models, Rasch, 2PL, GRM, and SEM (one-factor CFA)
-  are available.
+-   Generate a simulated rectangular data.
+-   This data will be converted to a list of data for
+    [`rstan`](https://github.com/stan-dev/rstan) package.
+-   For latent variable models, Rasch, 2PL, GRM, and SEM (one-factor
+    CFA) are available.
 
 ``` r
+set.seed(10000)
 inp_data <- flps::makeInpData(
   N       = 200,  # sample size
   R2Y     = 0.2,  # r^2 of outcome
@@ -51,28 +52,28 @@ inp_data <- flps::makeInpData(
 
 `makeInpData()` creates input data for running FLPS.
 
-- `inp_data`: a data frame containing all the data for FLPS. It is used
-  in `runFLPS` function.
+-   `inp_data`: a data frame containing all the data for FLPS. It is
+    used in `runFLPS` function.
 
 ``` r
 # Input data matrix
 data.table::data.table(inp_data)
 ```
 
-    ##               Y Z          X         eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
-    ##   1:  1.0259233 1 -1.4644935 -1.788707138  1  0  0  0  0  0  1  0  0   0
-    ##   2: -1.0841548 1  0.4281658 -0.007676593  0  0  0  1  0  1  1  0  0   1
-    ##   3:  0.1089741 1 -0.8637844 -0.843340048  1  0  0  0  1  0  0  0  0   0
-    ##   4:  1.0502535 1 -0.3644006 -1.388024499  0  1  0  0  1  0  0  1  0   0
-    ##   5:  0.0174028 1  0.7367495  0.822777723  1  1  0  1  1  1  0  1  0   0
+    ##               Y Z           X        eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+    ##   1: -0.9843196 1  0.12721892  0.07660374  0  1  0  0  0  0  1  0  1   1
+    ##   2:  0.2746336 1  0.14544680  0.84773168  1  1  1  1  1  1  0  0  0   1
+    ##   3:  0.8273071 1  0.05538890  0.16356192  1  1  1  0  0  1  1  1  0   1
+    ##   4:  0.1341367 1  0.41781402  0.09197033  0  1  1  0  0  1  1  0  1   1
+    ##   5: -0.7505670 1  2.79690269  2.20884247  1  1  1  1  1  1  1  1  1   1
     ##  ---                                                                    
-    ## 196:  0.3059137 0  0.1635045  0.544798530 NA NA NA NA NA NA NA NA NA  NA
-    ## 197: -1.2989243 0  2.0113559  0.795131750 NA NA NA NA NA NA NA NA NA  NA
-    ## 198: -1.0234759 0  1.0583534  0.809837691 NA NA NA NA NA NA NA NA NA  NA
-    ## 199: -0.4449205 0 -0.5544155 -0.602114679 NA NA NA NA NA NA NA NA NA  NA
-    ## 200:  0.5265454 0 -1.0333341 -2.212224653 NA NA NA NA NA NA NA NA NA  NA
+    ## 196: -0.2823631 0 -0.12195980 -0.58801343 NA NA NA NA NA NA NA NA NA  NA
+    ## 197: -0.2955101 0 -0.06751441  1.01999716 NA NA NA NA NA NA NA NA NA  NA
+    ## 198:  0.1601140 0  0.56896866  0.71472229 NA NA NA NA NA NA NA NA NA  NA
+    ## 199: -0.5402748 0  0.57374989  0.61235276 NA NA NA NA NA NA NA NA NA  NA
+    ## 200: -0.5645506 0  0.80418321  0.03497865 NA NA NA NA NA NA NA NA NA  NA
 
-- Fit your FLPS model
+-   Fit your FLPS model
 
 Now, provide information about your model. `runFLPS` internally coverts
 `inp_data` into the data format for `rstan` given the information, and
@@ -107,8 +108,8 @@ res <- runFLPS(
     ## 
     ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
     ## Chain 1: 
-    ## Chain 1: Gradient evaluation took 0.000418 seconds
-    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 4.18 seconds.
+    ## Chain 1: Gradient evaluation took 0.000687 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.87 seconds.
     ## Chain 1: Adjust your expectations accordingly!
     ## Chain 1: 
     ## Chain 1: 
@@ -125,10 +126,14 @@ res <- runFLPS(
     ## Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
     ## Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
     ## Chain 1: 
-    ## Chain 1:  Elapsed Time: 6.206 seconds (Warm-up)
-    ## Chain 1:                4.865 seconds (Sampling)
-    ## Chain 1:                11.071 seconds (Total)
+    ## Chain 1:  Elapsed Time: 12.095 seconds (Warm-up)
+    ## Chain 1:                6.091 seconds (Sampling)
+    ## Chain 1:                18.186 seconds (Total)
     ## Chain 1:
+
+    ## Warning: The largest R-hat is NA, indicating chains have not mixed.
+    ## Running the chains for more iterations may help. See
+    ## https://mc-stan.org/misc/warnings.html#r-hat
 
     ## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
     ## Running the chains for more iterations may help. See
@@ -141,20 +146,26 @@ res <- runFLPS(
 The summary of results can be shown by `summary()`.
 
 ``` r
-summary(res, type = "casual")
+summary(res, type = "causal")
 ```
 
-    ##               mean     se_mean        sd       2.5%        25%        50%
-    ## tau0     0.2245701 0.006182219 0.1350205 -0.0270645  0.1221805  0.2253069
-    ## tau1[1] -0.2394174 0.032677400 0.2512293 -0.7502770 -0.3904672 -0.2260230
+    ##               mean     se_mean        sd        2.5%        25%        50%
+    ## tau0     0.2335790 0.008042345 0.1315446 -0.02312351  0.1438497  0.2328717
+    ## tau1[1] -0.2115077 0.037305594 0.1929311 -0.60510884 -0.3373740 -0.1913968
     ##                 75%     97.5%     n_eff     Rhat
-    ## tau0     0.31718021 0.4954197 476.99121 1.000131
-    ## tau1[1] -0.08471674 0.2532184  59.10789 1.012760
+    ## tau0     0.31120287 0.4988919 267.53508 1.001113
+    ## tau1[1] -0.07829669 0.1284365  26.74585 1.150006
 
-The `flps_causal()` shows the plot for the principal effects.
+The `flps_plot()` shows the plot related to FLPS models
 
 ``` r
-flps_causal(res)
+flps_plot(res, type = "causal")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+<img src="man/figures/causal_1.png" width="100%" style="display: block; margin: auto;" />
+
+``` r
+flps_plot(res, type = "latent")
+```
+
+<img src="man/figures/latent_1.png" width="100%" style="display: block; margin: auto;" />

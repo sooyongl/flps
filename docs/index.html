@@ -89,13 +89,14 @@
 <li>For latent variable models, Rasch, 2PL, GRM, and SEM (one-factor CFA) are available.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">inp_data</span> <span class="op">&lt;-</span> <span class="fu">flps</span><span class="fu">::</span><span class="fu"><a href="reference/makeInpData.html">makeInpData</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span></span>
+<span><span class="va">inp_data</span> <span class="op">&lt;-</span> <span class="fu">flps</span><span class="fu">::</span><span class="fu"><a href="reference/makeInpData.html">makeInpData</a></span><span class="op">(</span></span>
 <span>  N       <span class="op">=</span> <span class="fl">200</span>,  <span class="co"># sample size</span></span>
 <span>  R2Y     <span class="op">=</span> <span class="fl">0.2</span>,  <span class="co"># r^2 of outcome</span></span>
 <span>  R2eta   <span class="op">=</span> <span class="fl">0.5</span>,  <span class="co"># r^2 of eta by one covariates</span></span>
 <span>  omega   <span class="op">=</span> <span class="fl">0.2</span>,  <span class="co"># the effect of eta</span></span>
-<span>  tau0    <span class="op">=</span> <span class="fl">0.13</span>, <span class="co"># direct effect</span></span>
-<span>  tau1    <span class="op">=</span> <span class="op">-</span><span class="fl">0.06</span>,<span class="co"># interaction effect between Z and eta</span></span>
+<span>  tau0    <span class="op">=</span> <span class="fl">0.23</span>, <span class="co"># direct effect</span></span>
+<span>  tau1    <span class="op">=</span> <span class="op">-</span><span class="fl">0.16</span>,<span class="co"># interaction effect between Z and eta</span></span>
 <span>  lambda  <span class="op">=</span> <span class="fl">0.8</span>,  <span class="co"># the proportion of administered items</span></span>
 <span>  nitem    <span class="op">=</span> <span class="fl">10</span>,   <span class="co"># the total number of items</span></span>
 <span>  nfac    <span class="op">=</span> <span class="fl">1</span>,    <span class="co"># the number of latent factors</span></span>
@@ -110,17 +111,17 @@
 <code class="sourceCode R"><span><span class="co"># Input data matrix</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">inp_data</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">##               Y Z           X        eta1 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   1: -0.8229286 1  0.81970123  0.80513323  1  1  1  0  0  0  0  0  1   1</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   2: -2.2757364 1 -0.04787554 -0.17824663  0  1  1  0  0  1  1  1  1   0</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   3:  1.7244453 1 -0.28450512 -0.04733339  0  0  1  0  0  0  0  0  1   0</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   4: -0.9570852 1  2.47234904  3.03804671  1  1  1  1  1  0  1  1  1   1</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   5: -0.4641767 1  0.52827230  0.40092126  0  0  1  0  1  0  0  1  1   0</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   1: -0.9843196 1  0.12721892  0.07660374  0  1  0  0  0  0  1  0  1   1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   2:  0.2746336 1  0.14544680  0.84773168  1  1  1  1  1  1  0  0  0   1</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   3:  0.8273071 1  0.05538890  0.16356192  1  1  1  0  0  1  1  1  0   1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   4:  0.1341367 1  0.41781402  0.09197033  0  1  1  0  0  1  1  0  1   1</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   5: -0.7505670 1  2.79690269  2.20884247  1  1  1  1  1  1  1  1  1   1</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  ---                                                                    </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 196: -0.5238044 0  0.70031265  0.87764963 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 197:  1.3158738 0 -2.03092566 -1.53048045 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 198: -1.8832812 0  2.08024036  1.96220171 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 199: -1.2764512 0  1.91509187  0.96052374 NA NA NA NA NA NA NA NA NA  NA</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 200:  1.4095648 0 -0.47788144  0.07156641 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 196: -0.2823631 0 -0.12195980 -0.58801343 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 197: -0.2955101 0 -0.06751441  1.01999716 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 198:  0.1601140 0  0.56896866  0.71472229 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 199: -0.5402748 0  0.57374989  0.61235276 NA NA NA NA NA NA NA NA NA  NA</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 200: -0.5645506 0  0.80418321  0.03497865 NA NA NA NA NA NA NA NA NA  NA</span></span></code></pre></div>
 <ul>
 <li>Fit your FLPS model</li>
 </ul>
@@ -138,9 +139,61 @@
 <span>  lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span>
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Compiling Stan code...</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Gradient evaluation took 0.000687 seconds</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.87 seconds.</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Adjust your expectations accordingly!</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration:   1 / 1000 [  0%]  (Warmup)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 100 / 1000 [ 10%]  (Warmup)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 200 / 1000 [ 20%]  (Warmup)</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 300 / 1000 [ 30%]  (Warmup)</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 400 / 1000 [ 40%]  (Warmup)</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 500 / 1000 [ 50%]  (Warmup)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 501 / 1000 [ 50%]  (Sampling)</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 600 / 1000 [ 60%]  (Sampling)</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 700 / 1000 [ 70%]  (Sampling)</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:  Elapsed Time: 12.095 seconds (Warm-up)</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:                6.091 seconds (Sampling)</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:                18.186 seconds (Total)</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: The largest R-hat is NA, indicating chains have not mixed.</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Running the chains for more iterations may help. See</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="do">## https://mc-stan.org/misc/warnings.html#r-hat</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Running the chains for more iterations may help. See</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="do">## https://mc-stan.org/misc/warnings.html#bulk-ess</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="do">## Running the chains for more iterations may help. See</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="do">## https://mc-stan.org/misc/warnings.html#tail-ess</span></span></code></pre></div>
 <p>The summary of results can be shown by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"casual"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">##               mean     se_mean        sd        2.5%        25%        50%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## tau0     0.2335790 0.008042345 0.1315446 -0.02312351  0.1438497  0.2328717</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## tau1[1] -0.2115077 0.037305594 0.1929311 -0.60510884 -0.3373740 -0.1913968</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                 75%     97.5%     n_eff     Rhat</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">## tau0     0.31120287 0.4988919 267.53508 1.001113</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## tau1[1] -0.07829669 0.1284365  26.74585 1.150006</span></span></code></pre></div>
+<p>The <code><a href="reference/flps_plot.html">flps_plot()</a></code> shows the plot related to FLPS models</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/causal_1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"latent"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/latent_1.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 

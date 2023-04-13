@@ -25,6 +25,15 @@
     <loc>http://sooyongl.github.io/flps/reference/FLPS-package.html</loc>
   </url>
   <url>
+    <loc>http://sooyongl.github.io/flps/reference/flps_causal.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/reference/flps_latent.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/reference/flps_plot.html</loc>
+  </url>
+  <url>
     <loc>http://sooyongl.github.io/flps/reference/genLVinfo.html</loc>
   </url>
   <url>
@@ -47,6 +56,9 @@
   </url>
   <url>
     <loc>http://sooyongl.github.io/flps/reference/modelBuilder.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/reference/plot.flps.html</loc>
   </url>
   <url>
     <loc>http://sooyongl.github.io/flps/reference/print.flps.html</loc>

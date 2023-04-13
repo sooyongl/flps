@@ -20,7 +20,7 @@ print.flps <- function(obj, ...) {
 #' @method summary flps
 #' @export
 summary.flps <- function(object, type = "all", ...) {
-  type <- match.arg(type, c("all","measurement","structure","casual"))
+  type <- match.arg(type, c("all","measurement","structure","causal"))
 
   out <- rstan::summary(object$flps_fit, ...)
 
@@ -38,7 +38,7 @@ summary.flps <- function(object, type = "all", ...) {
 
 
 
-  } else if(type == "casual") {
+  } else if(type == "causal") {
     out1 <- out$summary[grepl("^(tau0)$|(tau1)",rownames(out$summary)), ]
 
   }

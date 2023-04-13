@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, eval = T}
 library(flps)
 ```
 
@@ -33,7 +33,7 @@ Fully Latent Principal Stratification (**FLPS**) is an extension of principal st
 
 Install the latest release from CRAN:
 
-```{r}
+```{r eval = F}
 devtools::install_github("sooyongl/flps")
 ```
 
@@ -52,13 +52,14 @@ If compiling errors occur, see [here](https://github.com/stan-dev/rstan/wiki/Con
 
 
 ```{r eval = T}
+set.seed(10000)
 inp_data <- flps::makeInpData(
   N       = 200,  # sample size
   R2Y     = 0.2,  # r^2 of outcome
   R2eta   = 0.5,  # r^2 of eta by one covariates
   omega   = 0.2,  # the effect of eta
-  tau0    = 0.13, # direct effect
-  tau1    = -0.06,# interaction effect between Z and eta
+  tau0    = 0.23, # direct effect
+  tau1    = -0.16,# interaction effect between Z and eta
   lambda  = 0.8,  # the proportion of administered items
   nitem    = 10,   # the total number of items
   nfac    = 1,    # the number of latent factors
@@ -103,23 +104,31 @@ res <- runFLPS(
 ```
 
 
-The summary of results can be shown by `summary()`.
+The `flps_plot()` shows the plot related to FLPS models
 
-```{r eval = T}
+```{r eval = F}
 
-summary(res, type = "casual")
+flps_plot(res, type = "causal")
+
+```
+
+```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='100%'}
+# a1 <- flps_plot(res, type = "causal")
+# ggplot2::ggsave("man/figures/causal_1.png", a1)
+knitr::include_graphics('../man/figures/causal_1.png')
+```
+
+
+
+```{r eval = F}
+
+flps_plot(res, type = "latent")
 
 ```
 
 
-The `flps_causal()` shows the plot for the principal effects.
-
-```{r eval = T}
-
-flps_causal(res)
-
+```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='100%'}
+# a1 <- flps_plot(res, type = "latent")
+# ggplot2::ggsave("man/figures/latent_1.png", a1)
+knitr::include_graphics('../man/figures/latent_1.png')
 ```
-
-
-
-

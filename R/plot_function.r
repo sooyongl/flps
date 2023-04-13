@@ -1,7 +1,26 @@
+#' Make plots related to FLPS models
+#'
+#' @param object a flps object
+#' @param type a character indicating the type of plots
+#'
+#' @export
+flps_plot <- function(object, type = "latent") {
+
+  if(tolower(type) == "latent") {
+
+    flps_latent(object, "hist")
+  }
+  else if(tolower(type) == "causal") {
+
+    flps_causal(object)
+  }
+
+}
+
+
 #' Latent factor scores distribution by treatment assignment
 #'
 #' @param object a flps object
-#' @export
 flps_latent <- function(object, type = "hist") {
 
   inputs <- as.list(object$call)
@@ -23,14 +42,13 @@ flps_latent <- function(object, type = "hist") {
   p <- ggplot(inp_data)
 
   if(type == "hist") {
-    p + geom_histogram(aes(lscores))
+    p + geom_histogram(aes(lscores), color = "white") + theme_bw()
   }
 }
 
 #' Causal inference graphs
 #'
 #' @param object a flps object
-#' @export
 flps_causal <- function(object) {
 
   inputs <- as.list(object$call)
