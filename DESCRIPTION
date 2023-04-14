@@ -28,7 +28,8 @@ Imports:
     MASS,
     utils,
     stats,
-    mvtnorm
+    mvtnorm,
+    ggplot2
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
