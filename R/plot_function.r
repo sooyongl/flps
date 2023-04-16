@@ -21,6 +21,7 @@ flps_plot <- function(object, type = "latent") {
 #' Latent factor scores distribution by treatment assignment
 #'
 #' @param object a flps object
+#' @param type a character indicating the type of plots
 flps_latent <- function(object, type = "hist") {
 
   inputs <- as.list(object$call)
@@ -42,7 +43,7 @@ flps_latent <- function(object, type = "hist") {
   p <- ggplot(inp_data)
 
   if(type == "hist") {
-    p + geom_histogram(aes(lscores), color = "white") + theme_bw()
+    p + geom_histogram(aes(.data$lscores), color = "white") + theme_bw()
   }
 }
 
@@ -87,7 +88,8 @@ flps_causal <- function(object) {
   p +
     geom_point() +
     geom_abline(data = slp.data,
-                aes(intercept = yint, slope = slope, color = trt, linetype = trt),
+                aes(intercept = .data$yint, slope = .data$slope,
+                    color = .data$trt, linetype = .data$trt),
                 linewidth = 1) +
     scale_x_continuous(name = "Factor Scores") +
     scale_linetype_discrete(name = "") +
@@ -99,6 +101,7 @@ flps_causal <- function(object) {
 #'
 #' @param object an object of class \code{flps}
 #' @param type a string for the type of plot
+#' @param pars a character vector indicating the target parameters
 #' @param ... additional options for future development
 #'
 #' @method plot flps

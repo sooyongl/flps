@@ -11,7 +11,7 @@ test_that("runFLPS run FLPS model", {
     lambda  = 0.8,
     nitem    = 5,
     nfac    = 1,
-    lvmodel = 'rasch'
+    lvmodel = 'sem'
   )
 
   res <- suppressWarnings(runFLPS(
@@ -19,9 +19,9 @@ test_that("runFLPS run FLPS model", {
     outcome = "Y",
     group = "Z",
     covariate = c("X"),
-    lv_type = "rasch",
+    lv_type = "sem",
     lv_model = "F =~ v1 + v2 + v3 + v4 + v5",
-    stan_options = list(iter = 500, warmup = 250, cores = 1, chains = 1)
+    stan_options = list(iter = 100, warmup = 50, cores = 1, chains = 1)
   ))
 
   res <- class(res$flps_fit)

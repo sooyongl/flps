@@ -11,6 +11,8 @@
 
 \item{type}{a string for the type of plot}
 
+\item{pars}{a character vector indicating the target parameters}
+
 \item{...}{additional options for future development}
 }
 \description{

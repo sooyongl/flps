@@ -8,6 +8,8 @@ flps_latent(object, type = "hist")
 }
 \arguments{
 \item{object}{a flps object}
+
+\item{type}{a character indicating the type of plots}
 }
 \description{
 Latent factor scores distribution by treatment assignment
