@@ -2,7 +2,7 @@
 #'
 #' @name FLPS-package
 #' @title Fully latent principal stratification
-#' @description The FLPS package conducts bayesian analysis for fully latent principal stratification via rstan.
+#' @description The FLPS package conducts Bayesian analysis for fully latent principal stratification via rstan.
 #'
 #' @docType package
 #' @aliases flps
@@ -20,20 +20,3 @@
 #' @importFrom mvtnorm rmvnorm
 #' @keywords package
 NULL
-
-# library(lavaan)
-# library(mirt)
-# library(poLCA)
-# library(tidyLPA)
-# library(flexmix)
-# library(broom)
-# library(lme4)
-# library(mvtnorm)
-# library(coda)
-# library(rstan)
-# library(tidyverse)
-# library(ggmcmc)
-# library(doSNOW)
-# library(doParallel)
-# library(foreach)
-# library(bayesplot)

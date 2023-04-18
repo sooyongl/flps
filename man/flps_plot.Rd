@@ -11,6 +11,10 @@ flps_plot(object, type = "latent")
 
 \item{type}{a character indicating the type of plots}
 }
+\value{
+A \code{\link[ggplot2]{ggplot}} object that can be further customized
+  using the \pkg{ggplot2} package.
+}
 \description{
 Make plots related to FLPS models
 }

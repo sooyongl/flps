@@ -28,7 +28,7 @@
 #' when nfac > 1.
 #' @param cov.res a logical to allow for residual correlations
 #' (only for CFA model).
-#' @param relsize a numeric indicating the degree to which the latent factor explain the variances of continous items (only for CFA model).
+#' @param relsize a numeric indicating the degree to which the latent factor explain the variances of continuous items (only for CFA model).
 #' @return a list containing all the data related to population values and running FLPS.
 #'
 #' @examples

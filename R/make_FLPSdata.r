@@ -37,6 +37,7 @@ infoSetting <- function(...) {
 #' @param ... Additional arguments for latent variable models information (e.g., nclass = 2).
 #'
 #' @returns a S3 class for a corresponding measurement model
+#' @noRd
 makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type, custom = F, ...) {
   # flps_data <- dataSetting() ; S3 class
   dotdotdot <- list(...)

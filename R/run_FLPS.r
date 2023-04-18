@@ -1,18 +1,27 @@
 #' Conduct fully latent principal stratification
 #'
 #' @param inp_data A matrix or a data frame
-#' @param custom_data A list. should be provided with custom_stan.
-#' @param custom_stan A string. should be provided with custom_data.
+#' @param custom_data A list. should be provided with \code{custom_stan}.
+#' @param custom_stan A string. should be provided with \code{custom_data}.
 #' @param outcome A character indicating the name of an outcome variable
 #' @param group A character indicating the name of a treatment/control group variable
-#' @param covariate A character indicating the names of covariates variables
-#' @param lv_model A description of the latent variable model, which is similar to the \code{\link{lavaan}} model syntax.
+#' @param covariate A character indicating the names of covariate variables
+#' @param lv_model A description of the latent variable model, which is similar
+#' to the \pkg{lavaan} model syntax.
 #' @param lv_type  A character indicating the type of latent variable models
-#' @param stan_options A list containing \code{\link{stan}} options, using 'name = value'.
+#' @param stan_options A list containing [rstan::stan()] options, using 'name = value'.
 #' @param ... Additional arguments for latent variable models information (e.g., nclass = 2).
-#' @return an object of class \code{flps} which contains a  \code{\link{stan}} object.
+#' @return an object of class \code{flps} which contains a \code{\link[rstan]{stanfit}} object.
 #'
-#' @aliases lavaan
+#'  \item{call}{argument calls}
+#'  \item{inp_data}{A given data frame}
+#'  \item{flps_model}{a Stan syntax used in [rstan::stan()]}
+#'  \item{flps_data}{a list of data used in [rstan::stan()]}
+#'  \item{flps_fit}{\code{\link[rstan]{stanfit}}
+#'  \item{time}{a numeric of timing}
+#'
+#' @family rstan
+#' @seealso [rstan::stan()]
 #' @export
 runFLPS <- function(inp_data = NULL,
                     custom_data = NULL,

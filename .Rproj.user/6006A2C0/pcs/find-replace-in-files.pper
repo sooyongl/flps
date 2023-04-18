@@ -1,13 +1,13 @@
 {
     "dialog-state": {
-        "query": "custom_",
+        "query": "FALSE",
         "path": "",
         "regex": false,
         "caseSensitive": false,
         "wholeWord": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 36,
+        "resultsCount": 35,
         "errorCount": 0,
         "replaceErrors": "",
         "projectRelative": true

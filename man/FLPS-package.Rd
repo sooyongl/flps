@@ -6,7 +6,7 @@
 \alias{flps}
 \title{Fully latent principal stratification}
 \description{
-The FLPS package conducts bayesian analysis for fully latent principal stratification via rstan.
+The FLPS package conducts Bayesian analysis for fully latent principal stratification via rstan.
 }
 \details{
 The 'flps' package.

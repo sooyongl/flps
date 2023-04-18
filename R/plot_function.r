@@ -3,6 +3,10 @@
 #' @param object a flps object
 #' @param type a character indicating the type of plots
 #'
+#' @return
+#'   A \code{\link[ggplot2]{ggplot}} object that can be further customized
+#'   using the \pkg{ggplot2} package.
+#'
 #' @export
 flps_plot <- function(object, type = "latent") {
 
@@ -22,6 +26,7 @@ flps_plot <- function(object, type = "latent") {
 #'
 #' @param object a flps object
 #' @param type a character indicating the type of plots
+#' @noRd
 flps_latent <- function(object, type = "hist") {
 
   inputs <- as.list(object$call)
@@ -50,6 +55,7 @@ flps_latent <- function(object, type = "hist") {
 #' Causal inference graphs
 #'
 #' @param object a flps object
+#' @noRd
 flps_causal <- function(object) {
 
   inputs <- as.list(object$call)

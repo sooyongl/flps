@@ -2,7 +2,6 @@
 % Please edit documentation in R/run_FLPS.r
 \name{runFLPS}
 \alias{runFLPS}
-\alias{lavaan}
 \title{Conduct fully latent principal stratification}
 \usage{
 runFLPS(
@@ -31,11 +30,11 @@ runFLPS(
 
 \item{covariate}{A character indicating the names of covariates variables}
 
-\item{lv_model}{A description of the latent variable model, which is similar to the \code{\link{lavaan}} model syntax.}
+\item{lv_model}{A description of the latent variable model, which is similar to the \pkg{lavaan} model syntax.}
 
 \item{lv_type}{A character indicating the type of latent variable models}
 
-\item{stan_options}{A list containing \code{\link{stan}} options, using 'name = value'.}
+\item{stan_options}{A list containing [rstan::stan()] options, using 'name = value'.}
 
 \item{...}{Additional arguments for latent variable models information (e.g., nclass = 2).}
 }
@@ -45,3 +44,7 @@ an object of class \code{flps} which contains a  \code{\link{stan}} object.
 \description{
 Conduct fully latent principal stratification
 }
+\seealso{
+[rstan::stan()]
+}
+\concept{rstan}

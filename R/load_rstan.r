@@ -1,7 +1,8 @@
 #' Generate compiled Stan object to facilitate the analysis
 #'
-#' @param type a character indicating the type of FLPS model. The default is NULL to compile all available Stan codes ('all' does the same thing).
-#' @return There's no return, but the compiled objects are saved in the package root directory.
+#' @param type a character indicating the type of FLPS model. The default is \code{NULL} to compile all available Stan syntax ('all' does the same thing).
+#' @return There's no return, but the compiled objects are saved in the package
+#' root directory.
 #'
 #' @export
 modelBuilder <- function(type = 'all') {
@@ -49,6 +50,7 @@ modelBuilder <- function(type = 'all') {
 #' @param lv_type a character specifying a latent model
 #' @param force.string a logical indicating forcing the string stan code
 #' @return A string for Stan syntax
+#' @noRd
 loadRstan <- function(lv_type = "2PL", force.string = F) {
 
   if(!dir.exists(system.file("stan", package = "flps")))
@@ -111,6 +113,7 @@ loadRstan <- function(lv_type = "2PL", force.string = F) {
 #'
 #' @param lv_type a character specifying a latent model
 #' @return A stanmodel class
+#' @noRd
 mkStanModel <- function(lv_type = '2pl') {
 
   if(!dir.exists(system.file("stan", package = "flps")))
