@@ -8,6 +8,8 @@ test_that("runFLPS run FLPS model", {
     omega   = 0.2,
     tau0    = 0.13,
     tau1    = -0.06,
+    betaY   = 0.1,
+    betaL   = 0.2,
     lambda  = 0.8,
     nitem    = 5,
     nfac    = 1,
@@ -18,7 +20,7 @@ test_that("runFLPS run FLPS model", {
     inp_data = inp_data,
     outcome = "Y",
     group = "Z",
-    covariate = c("X"),
+    covariate = c("X1"),
     lv_type = "sem",
     lv_model = "F =~ v1 + v2 + v3 + v4 + v5",
     stan_options = list(iter = 100, warmup = 50, cores = 1, chains = 1)

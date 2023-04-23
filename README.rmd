@@ -3,7 +3,7 @@ output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = F)
+knitr::opts_chunk$set(echo = TRUE, eval = F,fig.width = 4)
 library(flps)
 ```
 
@@ -48,6 +48,8 @@ inp_data <- flps::makeInpData(
   omega   = 0.2,  # the effect of eta
   tau0    = 0.23, # direct effect
   tau1    = -0.16,# interaction effect between Z and eta
+  betaL   = 0.2,
+  betaY   = 0.4,
   lambda  = 0.8,  # the proportion of administered items
   nitem    = 10,   # the total number of items
   nfac    = 1,    # the number of latent factors
@@ -84,7 +86,7 @@ res <- runFLPS(
   inp_data = inp_data,
   outcome = "Y",
   group = "Z",
-  covariate = c("X"),
+  covariate = c("X1"),
   lv_type = "rasch",
   lv_model = "F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10",
   stan_options = list(iter = 1000, warmup = 500, cores = 1, chains = 2)
@@ -109,7 +111,7 @@ flps_plot(res, type = "causal")
 
 ```
 
-```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='100%'}
+```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='60%'}
 # a1 <- flps_plot(res, type = "causal")
 # ggplot2::ggsave("man/figures/causal_1.png", a1)
 knitr::include_graphics('man/figures/causal_1.png')
@@ -124,7 +126,7 @@ flps_plot(res, type = "latent")
 ```
 
 
-```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='100%'}
+```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='60%'}
 # a1 <- flps_plot(res, type = "latent")
 # ggplot2::ggsave("man/figures/latent_1.png", a1)
 knitr::include_graphics('man/figures/latent_1.png')

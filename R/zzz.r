@@ -34,6 +34,8 @@
 
 }
 
+globalVariables(c("custom_data", "custom_stan"))
+
 #' #' @noRd
 #' .onLoad <- function(...) {
 #'   .S3method("summary","flps")

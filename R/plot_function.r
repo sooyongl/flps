@@ -105,19 +105,20 @@ flps_causal <- function(object) {
 
 #' Plot
 #'
-#' @param object an object of class \code{flps}
+#' @param x an object of class \code{flps}
 #' @param type a string for the type of plot
 #' @param pars a character vector indicating the target parameters
 #' @param ... additional options for future development
 #'
 #' @method plot flps
+#' @rdname plot
 #' @export
-plot.flps <- function(object, type = NULL, pars = c("tau0","tau1"), ...) {
+plot.flps <- function(x, type = NULL, pars = c("tau0","tau1"), ...) {
 
   args_ls <- mget(names(formals()),sys.frame(sys.nframe()))
   args_ls$`...` <- NULL
   args_ls$type <- NULL
-  args_ls$object <- object$flps_fit
+  args_ls$object <- x$flps_fit
 
 
   if(is.null(type)) {

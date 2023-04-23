@@ -138,63 +138,46 @@ genData <- function(N, BETA, PSI, ALPHA) {
 #' @noRd
 makeStructureData <- function(N, YRes, tau0, omega, inteff, xtol, xtoy, EtaRes, fcov) {
 
-  if(length(EtaRes) == 1) {
+  nfac = length(EtaRes)
+  ncov = length(xtoy)
 
-    Alpha1 = matrix(c(tau0,0,0), ncol = 1)
-    Alpha2 = matrix(c(0,0,0), ncol = 1)
+  xtol = matrix(xtol, ncol = ncov)
 
-    Psi <- matrix(c(
-      #Y   X  eta1
-      YRes, 0, 0,
-      0,   1, 0,
-      0,   0, EtaRes[1]
+  acov <- rep(0, ncov)
+  afac <- rep(0, nfac)
 
-    ), ncol = 3, byrow = T)
+  Alpha1 = matrix(c(tau0,acov,afac), ncol = 1)
+  Alpha2 = matrix(c(0,acov,afac), ncol = 1)
 
-    Beta1 <- matrix(c(
-      #Y X eta1
-      0, xtoy, inteff[1],
-      0, 0,   0,
-      0, xtol[1],0
-    ), ncol = 3, byrow = T)
+  ccov <- diag(1,ncov)
 
-    Beta2 <- matrix(c(
-      #Y X eta1 eta2
-      0, xtoy,  omega[1],
-      0, 0,    0,
-      0, xtol[1],  0
-    ), ncol = 3, byrow = T)
+  Psi <- diag(0, 1+ncov+nfac)
+
+  if(nfac == 1) {
+    temp_m <- EtaRes
+
   } else {
-
-    Alpha1 = matrix(c(tau0,0,0,0), ncol = 1)
-    Alpha2 = matrix(c(0,0,0,0), ncol = 1)
-
-    Psi <- matrix(c(
-      #Y   X  eta1 eta2
-      YRes, 0, 0,   0,
-      0,   1, 0,   0,
-      0,   0, EtaRes[1], fcov,
-      0,   0, fcov, EtaRes[2]
-    ), ncol = 4, byrow = T)
-
-
-    Beta1 <- matrix(c(
-      #Y X eta1 eta2
-      0, xtoy, inteff[1], inteff[2],
-      0, 0,   0, 0,
-      0, xtol[1], 0, 0,
-      0, xtol[2], 0, 0
-    ), ncol = 4, byrow = T)
-
-    Beta2 <- matrix(c(
-      #Y X eta1 eta2
-      0, xtoy,  omega[1], omega[2],
-      0, 0,    0,   0,
-      0, xtol[1],  0,   0,
-      0, xtol[2],  0,   0
-    ), ncol = 4, byrow = T)
-
+    temp_m <- diag(EtaRes)
+    temp_m[lower.tri(temp_m)] <- fcov
+    temp_m[upper.tri(temp_m)] <- t(temp_m)[upper.tri(temp_m)]
   }
+
+
+  Psi[1,1] <- YRes
+  Psi[2:(2+ncov-1), 2:(2+ncov-1)] <- ccov
+  Psi[(2+ncov):(1+ncov+nfac), (2+ncov):(1+ncov+nfac)] <- temp_m
+
+  Beta1 <- diag(0, 1+ncov+nfac)
+
+  Beta1[1,2:(2+ncov-1)] <- xtoy
+  Beta1[1,(2+ncov):(1+ncov+nfac)] <- inteff
+  Beta1[(2+ncov):(1+ncov+nfac), 2:(2+ncov-1)] <- xtol
+
+  Beta2 <- diag(0, 1+ncov+nfac)
+
+  Beta2[1,2:(2+ncov-1)] <- xtoy
+  Beta2[1,(2+ncov):(1+ncov+nfac)] <- omega
+  Beta2[(2+ncov):(1+ncov+nfac), 2:(2+ncov-1)] <- xtol
 
   d1 <- genData(N/2, Beta1, Psi, Alpha1)
   d1$Z <- 1
@@ -205,6 +188,8 @@ makeStructureData <- function(N, YRes, tau0, omega, inteff, xtol, xtoy, EtaRes, 
   data <- data[, c(which(names(data)=="Y"),
                    which(names(data)=="Z"),
                    which(names(data)!=c("Y","Z")))]
+
+  names(data) <- c("Y","Z", paste0("X", 1:ncov), paste0("eta", 1:nfac))
 
   data
 }

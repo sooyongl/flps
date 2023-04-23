@@ -4,10 +4,10 @@
 \alias{print.flps}
 \title{Print results}
 \usage{
-\method{print}{flps}(obj, ...)
+\method{print}{flps}(x, ...)
 }
 \arguments{
-\item{obj}{an object of class \code{flps}}
+\item{x}{an object of class \code{flps}}
 
 \item{...}{additional options for future development}
 }

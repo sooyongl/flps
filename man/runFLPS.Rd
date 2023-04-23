@@ -20,17 +20,18 @@ runFLPS(
 \arguments{
 \item{inp_data}{A matrix or a data frame}
 
-\item{custom_data}{A list. should be provided with custom_stan.}
+\item{custom_data}{A list. should be provided with \code{custom_stan}.}
 
-\item{custom_stan}{A string. should be provided with custom_data.}
+\item{custom_stan}{A string. should be provided with \code{custom_data}.}
 
 \item{outcome}{A character indicating the name of an outcome variable}
 
 \item{group}{A character indicating the name of a treatment/control group variable}
 
-\item{covariate}{A character indicating the names of covariates variables}
+\item{covariate}{A character indicating the names of covariate variables}
 
-\item{lv_model}{A description of the latent variable model, which is similar to the \pkg{lavaan} model syntax.}
+\item{lv_model}{A description of the latent variable model, which is similar
+to the \pkg{lavaan} model syntax.}
 
 \item{lv_type}{A character indicating the type of latent variable models}
 
@@ -39,10 +40,45 @@ runFLPS(
 \item{...}{Additional arguments for latent variable models information (e.g., nclass = 2).}
 }
 \value{
-an object of class \code{flps} which contains a  \code{\link{stan}} object.
+an object of class \code{flps} which contains a \code{\link[rstan]{stanfit}} object.
+
+ \item{call}{argument calls}
+ \item{inp_data}{A given data frame}
+ \item{flps_model}{a Stan syntax used in [rstan::stan()]}
+ \item{flps_data}{a list of data used in [rstan::stan()]}
+ \item{flps_fit}{\code{\link[rstan]{stanfit}}}
+ \item{time}{a numeric of timing}
 }
 \description{
 Conduct fully latent principal stratification
+}
+\examples{
+\dontrun{
+inp_data <- flps::makeInpData(
+  N       = 200,
+  R2Y     = 0.2,
+  R2eta   = 0.5,
+  omega   = 0.2,
+  tau0    = 0.23,
+  tau1    = -0.16,
+  betaL   = 0.1,
+  betaY   = 0.2,
+  lambda  = 0.8,
+  nitem    = 10,
+  nfac    = 1,
+  lvmodel = 'rasch' )
+
+res <- runFLPS(
+   inp_data = inp_data,
+   outcome = "Y",
+   group = "Z",
+   covariate = c("X1"),
+   lv_type = "rasch",
+   lv_model = "F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10",
+   stan_options = list(iter = 1000, warmup = 500, cores = 1, chains = 2)
+   )
+}
+
 }
 \seealso{
 [rstan::stan()]

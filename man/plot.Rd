@@ -4,10 +4,10 @@
 \alias{plot.flps}
 \title{Plot}
 \usage{
-\method{plot}{flps}(object, type = NULL, pars = c("tau0", "tau1"), ...)
+\method{plot}{flps}(x, type = NULL, pars = c("tau0", "tau1"), ...)
 }
 \arguments{
-\item{object}{an object of class \code{flps}}
+\item{x}{an object of class \code{flps}}
 
 \item{type}{a string for the type of plot}
 

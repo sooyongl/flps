@@ -1,8 +1,14 @@
 #' Generate compiled Stan object to facilitate the analysis
 #'
 #' @param type a character indicating the type of FLPS model. The default is \code{NULL} to compile all available Stan syntax ('all' does the same thing).
+#'
 #' @return There's no return, but the compiled objects are saved in the package
 #' root directory.
+#'
+#' @examples
+#' \dontrun{
+#' modelBuilder(type = "rasch")
+#' }
 #'
 #' @export
 modelBuilder <- function(type = 'all') {

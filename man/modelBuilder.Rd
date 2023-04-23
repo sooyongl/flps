@@ -7,11 +7,18 @@
 modelBuilder(type = "all")
 }
 \arguments{
-\item{type}{a character indicating the type of FLPS model. The default is NULL to compile all available Stan codes ('all' does the same thing).}
+\item{type}{a character indicating the type of FLPS model. The default is \code{NULL} to compile all available Stan syntax ('all' does the same thing).}
 }
 \value{
-There's no return, but the compiled objects are saved in the package root directory.
+There's no return, but the compiled objects are saved in the package
+root directory.
 }
 \description{
 Generate compiled Stan object to facilitate the analysis
+}
+\examples{
+\dontrun{
+modelBuilder(type = "rasch")
+}
+
 }

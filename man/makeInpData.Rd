@@ -11,15 +11,17 @@ makeInpData(
   omega,
   tau0,
   tau1,
-  linear = T,
+  betaL,
+  betaY,
+  linear = TRUE,
   ydist = "n",
   lambda,
   nitem,
   nfac = 1,
   lvmodel,
   fcovmat,
-  item.missing = T,
-  misspec = F,
+  item.missing = TRUE,
+  misspec = FALSE,
   cov.res = 0,
   relsize = 0.6
 )
@@ -39,9 +41,13 @@ between the treatment and the control.}
 
 \item{tau1}{a numeric indicating the principal effect}
 
-\item{linear}{a logical}
+\item{betaL}{a numeric vector indicating the effects of covariates on the latent factor}
 
-\item{ydist}{a character}
+\item{betaY}{a numeric vector indicating the effects of covariates on the outcome}
+
+\item{linear}{a logical whether the relationship between the outcome and covariates is linear (default is \code{TRUE}).}
+
+\item{ydist}{a character indicating the outcome distribution (default is \code{n}).}
 
 \item{lambda}{a numeric indicating the mean of Worked problems/person.
 (extent to which covariates predict eta).}
@@ -57,15 +63,15 @@ given to students.}
 factors when nfac > 1}
 
 \item{item.missing}{a logical to make the measurement item data missing for
-the control group. Default is TRUE}
+the control group (default is \code{TRUE}).}
 
 \item{misspec}{a logical to allow cross-loadings across latent factors
-when nfac > 1.}
+when nfac > 1 (default is \code{FALSE}).}
 
 \item{cov.res}{a logical to allow for residual correlations
-(only for CFA model).}
+(only for CFA model) (default is \code{0}).}
 
-\item{relsize}{a numeric indicating the degree to which the latent factor explain the variances of continous items (only for CFA model).}
+\item{relsize}{a numeric indicating the degree to which the latent factor explain the variances of continuous items (only for CFA model) (default is \code{0.6}).}
 }
 \value{
 a list containing all the data related to population values and running FLPS.
@@ -82,6 +88,8 @@ R2eta   = 0.5,  # r^2 of eta by one covariates
 omega   = 0.2,  # the effect of eta
 tau0    = 0.13, # direct effect
 tau1    = -0.06,# interaction effect between Z and eta
+betaL   = 0.2,
+betaY   = 0.4,
 lambda  = 0.8,  # the proportion of administered items
 nitem    = 10,   # the total number of items
 nfac    = 1,    # the number of latent factors

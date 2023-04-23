@@ -5,14 +5,16 @@ genStructure <- function(sim_info) {
   tau0 = sim_info$tau0
   tau1 = sim_info$tau1
   omega = sim_info$omega
+  xtoy = sim_info$betaY
+  xtol = sim_info$betaL
 
   inteff = tau1 + omega
   YRes = 1 - sim_info$R2Y
   EtaRes = 1 - sim_info$R2eta
   fcov = sim_info$fcovmat
 
-  xtol <- sqrt(EtaRes)
-  xtoy <- - 0.65
+  xtol <- xtol
+  xtoy <- xtoy
 
   data0 <- makeStructureData(N, YRes, tau0, omega, inteff, xtol, xtoy, EtaRes, fcov)
 

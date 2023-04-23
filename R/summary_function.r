@@ -1,12 +1,13 @@
 #' Print results
 #'
-#' @param obj an object of class \code{flps}
+#' @param x an object of class \code{flps}
 #' @param ... additional options for future development
 #'
 #' @method print flps
+#' @rdname print
 #' @export
-print.flps <- function(obj, ...) {
-  rstan::show(obj$flps_fit)
+print.flps <- function(x, ...) {
+  rstan::show(x$flps_fit, ...)
 }
 
 
@@ -18,6 +19,7 @@ print.flps <- function(obj, ...) {
 #' @param ... additional options for future development
 #'
 #' @method summary flps
+#' @rdname summary.flps
 #' @export
 summary.flps <- function(object, type = "all", ...) {
   type <- match.arg(type, c("all","measurement","structure","causal"))

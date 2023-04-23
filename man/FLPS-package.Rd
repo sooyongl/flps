@@ -15,6 +15,6 @@ The 'flps' package.
 Sales, A. C., & Pane, J. F. (2019). The role of mastery learning in an intelligent tutoring system: Principal stratification on a latent variable. The Annals of Applied Statistics, 13(1), 420-443.
 }
 \author{
-Sooyong Lee
+Sooyong Lee \email{sooyongl09@utexas.edu}
 }
 \keyword{package}

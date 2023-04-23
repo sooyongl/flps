@@ -1,9 +1,8 @@
 #' Generate Fully Latent Principal Stratification data for simulation
 #'
 #' @description
-#' \code{\link{makeSimData}} is a function for generating a data based on
+#' \code{\link{makeInpData}} is a function for generating a data based on
 #' the given information.
-#'
 #' @param N a numeric indicating sample size.
 #' @param R2Y a numeric indicating predictive power of covariates.
 #' @param R2eta a numeric indicating Predictive power of latent variable
@@ -12,8 +11,10 @@
 #' @param tau0 a numeric indicating the size of difference in the outcome
 #'  between the treatment and the control.
 #' @param tau1 a numeric indicating the principal effect
-#' @param linear a logical
-#' @param ydist a character
+#' @param betaL a numeric vector indicating the effects of covariates on the latent factor
+#' @param betaY a numeric vector indicating the effects of covariates on the outcome
+#' @param linear a logical whether the relationship between the outcome and covariates is linear (default is \code{TRUE}).
+#' @param ydist a character indicating the outcome distribution (default is \code{n}).
 #' @param lambda a numeric indicating the mean of Worked problems/person.
 #'  (extent to which covariates predict eta).
 #' @param nitem a numeric indicating the number of maximum measurement items
@@ -23,12 +24,12 @@
 #' @param fcovmat a matrix indicating the variance-covariance matrix of latent
 #'  factors when nfac > 1
 #' @param item.missing a logical to make the measurement item data missing for
-#' the control group. Default is TRUE
+#' the control group (default is \code{TRUE}).
 #' @param misspec a logical to allow cross-loadings across latent factors
-#' when nfac > 1.
+#' when nfac > 1 (default is \code{FALSE}).
 #' @param cov.res a logical to allow for residual correlations
-#' (only for CFA model).
-#' @param relsize a numeric indicating the degree to which the latent factor explain the variances of continuous items (only for CFA model).
+#' (only for CFA model) (default is \code{0}).
+#' @param relsize a numeric indicating the degree to which the latent factor explain the variances of continuous items (only for CFA model) (default is \code{0.6}).
 #' @return a list containing all the data related to population values and running FLPS.
 #'
 #' @examples
@@ -39,13 +40,16 @@
 #' omega   = 0.2,  # the effect of eta
 #' tau0    = 0.13, # direct effect
 #' tau1    = -0.06,# interaction effect between Z and eta
+#' betaL   = 0.2,
+#' betaY   = 0.4,
 #' lambda  = 0.8,  # the proportion of administered items
 #' nitem    = 10,   # the total number of items
 #' nfac    = 1,    # the number of latent factors
 #' lvmodel = '2pl' )
 #'
 #' @export
-makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nfac,lvmodel, fcovmat, item.missing=T, misspec=F, cov.res=0, relsize=0.6){
+makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,betaL, betaY,
+                        linear,ydist,lambda,nitem,nfac,lvmodel, fcovmat, item.missing=T, misspec=F, cov.res=0, relsize=0.6){
 
   mc <- match.call(expand.dots = TRUE)
   mc[[1L]] <- quote(list); # mc <- as.list(match.call()[-1])
@@ -112,8 +116,10 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nf
 #' @param tau0 a numeric indicating the size of difference in the outcome
 #'  between the treatment and the control.
 #' @param tau1 a numeric indicating the principal effect
-#' @param linear a logical
-#' @param ydist a character
+#' @param betaL a numeric vector indicating the effects of covariates on the latent factor
+#' @param betaY a numeric vector indicating the effects of covariates on the outcome
+#' @param linear a logical whether the relationship between the outcome and covariates is linear (default is \code{TRUE}).
+#' @param ydist a character indicating the outcome distribution (default is \code{n}).
 #' @param lambda a numeric indicating the mean of Worked problems/person.
 #'  (extent to which covariates predict eta).
 #' @param nitem a numeric indicating the number of maximum measurement items
@@ -123,12 +129,12 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nf
 #' @param fcovmat a matrix indicating the variance-covariance matrix of latent
 #'  factors when nfac > 1
 #' @param item.missing a logical to make the measurement item data missing for
-#' the control group. Default is TRUE
+#' the control group (default is \code{TRUE}).
 #' @param misspec a logical to allow cross-loadings across latent factors
-#' when nfac > 1.
+#' when nfac > 1 (default is \code{FALSE}).
 #' @param cov.res a logical to allow for residual correlations
-#' (only for CFA model).
-#' @param relsize a numeric indicating the degree to which the latent factor explain the variances of continous items (only for CFA model).
+#' (only for CFA model) (default is \code{0}).
+#' @param relsize a numeric indicating the degree to which the latent factor explain the variances of continuous items (only for CFA model) (default is \code{0.6}).
 #' @return a list containing all the data related to population values and running FLPS.
 #'
 #' @examples
@@ -139,15 +145,17 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,linear,ydist,lambda,nitem,nf
 #' omega   = 0.2,  # the effect of eta
 #' tau0    = 0.13, # direct effect
 #' tau1    = -0.06,# interaction effect between Z and eta
+#' betaL   = 0.2,
+#' betaY   = 0.4,
 #' lambda  = 0.8,  # the proportion of administered items
 #' nitem    = 10,   # the total number of items
 #' nfac    = 1,    # the number of latent factors
 #' lvmodel = '2pl' )
 #' @export
-makeInpData <- function(N, R2Y, R2eta, omega, tau0, tau1,
-                        linear=T, ydist='n',lambda,
+makeInpData <- function(N, R2Y, R2eta, omega, tau0, tau1, betaL, betaY,
+                        linear=TRUE, ydist='n',lambda,
                         nitem, nfac = 1, lvmodel,
-                        fcovmat, item.missing=T, misspec=F, cov.res=0, relsize=0.6){
+                        fcovmat, item.missing=TRUE, misspec=FALSE, cov.res=0, relsize=0.6){
 
   mc <- match.call(expand.dots = TRUE)
   mc[[1L]] <- quote(list); # mc <- as.list(match.call()[-1])
