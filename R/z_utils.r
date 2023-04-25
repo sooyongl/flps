@@ -32,6 +32,45 @@ obv_lambda <- function(obs.v.partial, a_idx) {
 }
 
 #' @noRd
+addDefault <- function(sim_info) {
+
+  if(!"nfac" %in% names(sim_info)) {
+    sim_info$nfac <- 1
+  }
+
+  if(!"linear" %in% names(sim_info)) {
+    sim_info$linear <- T
+  }
+
+  if(!"yidst" %in% names(sim_info)) {
+    sim_info$yidst <- 'n'
+  }
+
+  if(!"relsize" %in% names(sim_info)) {
+    sim_info$relsize <- 0.6
+  }
+
+  if(!"cov.res" %in% names(sim_info)) {
+    sim_info$cov.res <- 0
+  }
+
+  if(!"misspec" %in% names(sim_info)) {
+    sim_info$misspec <- F
+  }
+
+  if(!"fcovmat" %in% names(sim_info)) {
+    sim_info$fcovmat <- NULL
+  }
+
+  if(!"item.missing" %in% names(sim_info)) {
+    sim_info$item.missing <- T
+  }
+
+
+  sim_info
+}
+
+#' @noRd
 gen_a <- function(nitem, nfac, misspec = F) {
   # nitem = 20
   # nfac = 2

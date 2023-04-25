@@ -70,12 +70,8 @@ runFLPS <- function(inp_data = NULL,
   argslist <- as.list(.call[-1])
 
   # validate ----------------------------------------------------------------
-  if(!is.null(inp_data) && !is.null(custom_data))
-    stop("Data is not provided.")
+  validate_data(inp_data, custome_data)
 
-  if((!is.null(custom_data) && is.null(custom_stan)) |
-     (is.null(custom_data) && !is.null(custom_stan)))
-    stop("Custom data and custome stan code must be provided at the same time!")
 
   # data and code -------------------------------------------------------------
   if(is.null(inp_data) && !is.null(custom_data) && !is.null(custom_stan)) {
