@@ -1,13 +1,13 @@
 {
     "dialog-state": {
-        "query": "FALSE",
+        "query": "gen_a_idx",
         "path": "",
         "regex": false,
         "caseSensitive": false,
         "wholeWord": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 35,
+        "resultsCount": 3,
         "errorCount": 0,
         "replaceErrors": "",
         "projectRelative": true

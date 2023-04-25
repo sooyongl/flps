@@ -57,10 +57,15 @@ gen_a <- function(nitem, nfac, misspec = F) {
 }
 
 #' @noRd
-gen_a_idx <- function(nitem, nfac) {
-  idx_ <- rep(floor(nitem / nfac),nfac)
-  idx_[length(idx_)] <- nitem - sum(idx_[-length(idx_)])
+gen_a_idx <- function(item_factor, nfac) {
+
+  if(length(item_factor) != nfac)
+    stop("The number of factors inconsistent with the syntax")
+
+  idx_ <- sapply(item_factor, length)
+  nitem <- sum(idx_)
   idx_c <- c(0,cumsum(idx_))
+
   a    <- matrix(rep(0, nitem*nfac), ncol=nfac)
   a_idx <- matrix(rep(0, nitem*nfac), ncol=nfac)
   for(j in 1:nfac) { # j=1
@@ -187,7 +192,7 @@ makeStructureData <- function(N, YRes, tau0, omega, inteff, xtol, xtoy, EtaRes, 
 
   data <- data[, c(which(names(data)=="Y"),
                    which(names(data)=="Z"),
-                   which(names(data)!=c("Y","Z")))]
+                   which(!names(data) %in% c("Y","Z")))]
 
   names(data) <- c("Y","Z", paste0("X", 1:ncov), paste0("eta", 1:nfac))
 
