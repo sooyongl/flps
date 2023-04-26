@@ -56,16 +56,25 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>type</dt>
-<dd><p>a character indicating the type of FLPS model. The default is NULL to compile all available Stan codes ('all' does the same thing).</p></dd>
+<dd><p>a character indicating the type of FLPS model. The default is <code>NULL</code> to compile all available Stan syntax ('all' does the same thing).</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>There's no return, but the compiled objects are saved in the package root directory.</p>
+<p>There's no return, but the compiled objects are saved in the package
+root directory.</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">modelBuilder</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"rasch"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

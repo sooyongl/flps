@@ -59,7 +59,12 @@ addDefault <- function(sim_info) {
   }
 
   if(!"fcovmat" %in% names(sim_info)) {
-    sim_info$fcovmat <- NULL
+
+    if(sim_info$nfac > 1) {
+      sim_info$fcovmat <- diag(0, nfac)[lower.tri(diag(0, nfac))]
+    } else {
+      sim_info$fcovmat <- NULL
+    }
   }
 
   if(!"item.missing" %in% names(sim_info)) {

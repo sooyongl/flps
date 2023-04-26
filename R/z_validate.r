@@ -1,5 +1,5 @@
 #' @noRd
-validate_data <- function(inp_data, custom_data) {
+validate_data <- function(inp_data, custom_data, custom_stan) {
 
   # validate ----------------------------------------------------------------
   if(!is.null(inp_data) && !is.null(custom_data))

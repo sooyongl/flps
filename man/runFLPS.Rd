@@ -31,7 +31,11 @@ runFLPS(
 \item{covariate}{A character indicating the names of covariate variables}
 
 \item{lv_model}{A description of the latent variable model, which is similar
-to the \pkg{lavaan} model syntax.}
+to the \pkg{lavaan} model syntax.
+ \itemize{
+   \item \code{=~} : Specify the association between factors and indicators (e.g., F1 =~ v1 + v2 + v3).
+   \item \code{+} : Specify a series of indicators
+}}
 
 \item{lv_type}{A character indicating the type of latent variable models}
 

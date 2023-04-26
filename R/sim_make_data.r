@@ -61,10 +61,10 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,betaL, betaY,
 
   validate_siminfo(sim_info)
 
-  sim_info <- addDefault(sim_info)
+  sim_info <- flps:::addDefault(sim_info)
 
   # Generate Latent Variable Model Information
-  sim_info <- genLVinfo(sim_info = sim_info)
+  sim_info <- flps:::genLVinfo(sim_info = sim_info)
   # Generate Structural model part
   sim_info <- genStructure(sim_info)
   # Generate Measurement model part

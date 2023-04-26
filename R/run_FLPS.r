@@ -8,6 +8,11 @@
 #' @param covariate A character indicating the names of covariate variables
 #' @param lv_model A description of the latent variable model, which is similar
 #' to the \pkg{lavaan} model syntax.
+#'  \itemize{
+#'    \item \code{=~} : Specify the association between factors and indicators (e.g., F1 =~ v1 + v2 + v3).
+#'    \item \code{+} : Specify a series of indicators
+#' }
+
 #' @param lv_type  A character indicating the type of latent variable models
 #' @param stan_options A list containing [rstan::stan()] options, using 'name = value'.
 #' @param ... Additional arguments for latent variable models information (e.g., nclass = 2).
@@ -70,7 +75,7 @@ runFLPS <- function(inp_data = NULL,
   argslist <- as.list(.call[-1])
 
   # validate ----------------------------------------------------------------
-  validate_data(inp_data, custome_data)
+  validate_data(inp_data, custom_data, custom_stan)
 
 
   # data and code -------------------------------------------------------------
