@@ -32,6 +32,50 @@ obv_lambda <- function(obs.v.partial, a_idx) {
 }
 
 #' @noRd
+addDefault <- function(sim_info) {
+
+  if(!"nfac" %in% names(sim_info)) {
+    sim_info$nfac <- 1
+  }
+
+  if(!"linear" %in% names(sim_info)) {
+    sim_info$linear <- T
+  }
+
+  if(!"yidst" %in% names(sim_info)) {
+    sim_info$yidst <- 'n'
+  }
+
+  if(!"relsize" %in% names(sim_info)) {
+    sim_info$relsize <- 0.6
+  }
+
+  if(!"cov.res" %in% names(sim_info)) {
+    sim_info$cov.res <- 0
+  }
+
+  if(!"misspec" %in% names(sim_info)) {
+    sim_info$misspec <- F
+  }
+
+  if(!"fcovmat" %in% names(sim_info)) {
+
+    if(sim_info$nfac > 1) {
+      sim_info$fcovmat <- diag(0, nfac)[lower.tri(diag(0, nfac))]
+    } else {
+      sim_info$fcovmat <- NULL
+    }
+  }
+
+  if(!"item.missing" %in% names(sim_info)) {
+    sim_info$item.missing <- T
+  }
+
+
+  sim_info
+}
+
+#' @noRd
 gen_a <- function(nitem, nfac, misspec = F) {
   # nitem = 20
   # nfac = 2
@@ -57,10 +101,15 @@ gen_a <- function(nitem, nfac, misspec = F) {
 }
 
 #' @noRd
-gen_a_idx <- function(nitem, nfac) {
-  idx_ <- rep(floor(nitem / nfac),nfac)
-  idx_[length(idx_)] <- nitem - sum(idx_[-length(idx_)])
+gen_a_idx <- function(item_factor, nfac) {
+
+  if(length(item_factor) != nfac)
+    stop("The number of factors inconsistent with the syntax")
+
+  idx_ <- sapply(item_factor, length)
+  nitem <- sum(idx_)
   idx_c <- c(0,cumsum(idx_))
+
   a    <- matrix(rep(0, nitem*nfac), ncol=nfac)
   a_idx <- matrix(rep(0, nitem*nfac), ncol=nfac)
   for(j in 1:nfac) { # j=1
@@ -187,7 +236,7 @@ makeStructureData <- function(N, YRes, tau0, omega, inteff, xtol, xtoy, EtaRes, 
 
   data <- data[, c(which(names(data)=="Y"),
                    which(names(data)=="Z"),
-                   which(names(data)!=c("Y","Z")))]
+                   which(!names(data) %in% c("Y","Z")))]
 
   names(data) <- c("Y","Z", paste0("X", 1:ncov), paste0("eta", 1:nfac))
 

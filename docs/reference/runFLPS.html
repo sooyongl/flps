@@ -71,11 +71,11 @@
 
 
 <dt>custom_data</dt>
-<dd><p>A list. should be provided with <code>custom_stan</code></p></dd>
+<dd><p>A list. should be provided with <code>custom_stan</code>.</p></dd>
 
 
 <dt>custom_stan</dt>
-<dd><p>A string. should be provided with <code>custom_data</code></p></dd>
+<dd><p>A string. should be provided with <code>custom_data</code>.</p></dd>
 
 
 <dt>outcome</dt>
@@ -87,11 +87,14 @@
 
 
 <dt>covariate</dt>
-<dd><p>A character indicating the names of covariates variables</p></dd>
+<dd><p>A character indicating the names of covariate variables</p></dd>
 
 
 <dt>lv_model</dt>
-<dd><p>A description of the latent variable model, which is similar to the <code>lavaan</code> model syntax.</p></dd>
+<dd><p>A description of the latent variable model, which is similar
+to the <span class="pkg">lavaan</span> model syntax.</p><ul><li><p><code>=~</code> : Specify the association between factors and indicators (e.g., F1 =~ v1 + v2 + v3).</p></li>
+<li><p><code>+</code> : Specify a series of indicators</p></li>
+</ul></dd>
 
 
 <dt>lv_type</dt>
@@ -99,7 +102,7 @@
 
 
 <dt>stan_options</dt>
-<dd><p>A list containing <code>stan</code> options, using 'name = value'.</p></dd>
+<dd><p>A list containing [rstan::stan()] options, using 'name = value'.</p></dd>
 
 
 <dt>...</dt>
@@ -110,9 +113,61 @@
     <h2>Value</h2>
     
 
-<p>an object of class <code>flps</code> which contains a  <code>stan</code> object.</p>
+<p>an object of class <code>flps</code> which contains a <code><a href="https://mc-stan.org/rstan/reference/stanfit-class.html" class="external-link">stanfit</a></code> object.</p>
+<dl><dt>call</dt>
+<dd><p>argument calls</p></dd>
+
+ <dt>inp_data</dt>
+<dd><p>A given data frame</p></dd>
+
+ <dt>flps_model</dt>
+<dd><p>a Stan syntax used in [rstan::stan()]</p></dd>
+
+ <dt>flps_data</dt>
+<dd><p>a list of data used in [rstan::stan()]</p></dd>
+
+ <dt>flps_fit</dt>
+<dd><p><code><a href="https://mc-stan.org/rstan/reference/stanfit-class.html" class="external-link">stanfit</a></code></p></dd>
+
+ <dt>time</dt>
+<dd><p>a numeric of timing</p></dd>
+
+</dl></div>
+    <div id="see-also">
+    <h2>See also</h2>
+    <div class="dont-index"><p>[rstan::stan()]</p></div>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">inp_data</span> <span class="op">&lt;-</span> <span class="fu">flps</span><span class="fu">::</span><span class="fu"><a href="makeInpData.html">makeInpData</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  N       <span class="op">=</span> <span class="fl">200</span>,</span></span>
+<span class="r-in"><span>  R2Y     <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>  R2eta   <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
+<span class="r-in"><span>  omega   <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>  tau0    <span class="op">=</span> <span class="fl">0.23</span>,</span></span>
+<span class="r-in"><span>  tau1    <span class="op">=</span> <span class="op">-</span><span class="fl">0.16</span>,</span></span>
+<span class="r-in"><span>  betaL   <span class="op">=</span> <span class="fl">0.1</span>,</span></span>
+<span class="r-in"><span>  betaY   <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>  lambda  <span class="op">=</span> <span class="fl">0.8</span>,</span></span>
+<span class="r-in"><span>  nitem    <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>  nfac    <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  lvmodel <span class="op">=</span> <span class="st">'rasch'</span> <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">runFLPS</span><span class="op">(</span></span></span>
+<span class="r-in"><span>   inp_data <span class="op">=</span> <span class="va">inp_data</span>,</span></span>
+<span class="r-in"><span>   outcome <span class="op">=</span> <span class="st">"Y"</span>,</span></span>
+<span class="r-in"><span>   group <span class="op">=</span> <span class="st">"Z"</span>,</span></span>
+<span class="r-in"><span>   covariate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X1"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   lv_type <span class="op">=</span> <span class="st">"rasch"</span>,</span></span>
+<span class="r-in"><span>   lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span></span>
+<span class="r-in"><span>   stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

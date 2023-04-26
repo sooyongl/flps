@@ -61,7 +61,13 @@
     <loc>http://sooyongl.github.io/flps/reference/plot.flps.html</loc>
   </url>
   <url>
+    <loc>http://sooyongl.github.io/flps/reference/plot.html</loc>
+  </url>
+  <url>
     <loc>http://sooyongl.github.io/flps/reference/print.flps.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/reference/print.html</loc>
   </url>
   <url>
     <loc>http://sooyongl.github.io/flps/reference/runFLPS.html</loc>

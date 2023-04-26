@@ -59,40 +59,12 @@ makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,betaL, betaY,
   # sim_info<-structure(sim_condition,class=tolower(sim_condition$lvmodel))
   # Data = sim_info
 
-  if(!"nfac" %in% names(sim_info)) {
-    sim_info$nfac <- 1
-  }
+  validate_siminfo(sim_info)
 
-  if(!"linear" %in% names(sim_info)) {
-    sim_info$linear <- T
-  }
-
-  if(!"yidst" %in% names(sim_info)) {
-    sim_info$yidst <- 'n'
-  }
-
-  if(!"relsize" %in% names(sim_info)) {
-    sim_info$relsize <- 0.6
-  }
-
-  if(!"cov.res" %in% names(sim_info)) {
-    sim_info$cov.res <- 0
-  }
-
-  if(!"misspec" %in% names(sim_info)) {
-    sim_info$misspec <- F
-  }
-
-  if(!"fcovmat" %in% names(sim_info)) {
-    sim_info$fcovmat <- NULL
-  }
-
-  if(!"item.missing" %in% names(sim_info)) {
-    sim_info$item.missing <- T
-  }
+  sim_info <- flps:::addDefault(sim_info)
 
   # Generate Latent Variable Model Information
-  sim_info <- genLVinfo(sim_info = sim_info)
+  sim_info <- flps:::genLVinfo(sim_info = sim_info)
   # Generate Structural model part
   sim_info <- genStructure(sim_info)
   # Generate Measurement model part
@@ -165,37 +137,9 @@ makeInpData <- function(N, R2Y, R2eta, omega, tau0, tau1, betaL, betaY,
   # sim_info<-structure(sim_condition,class=tolower(sim_condition$lvmodel))
   # Data = sim_info
 
-  if(!"nfac" %in% names(sim_info)) {
-    sim_info$nfac <- 1
-  }
+  validate_siminfo(sim_info)
 
-  if(!"linear" %in% names(sim_info)) {
-    sim_info$linear <- T
-  }
-
-  if(!"yidst" %in% names(sim_info)) {
-    sim_info$yidst <- 'n'
-  }
-
-  if(!"relsize" %in% names(sim_info)) {
-    sim_info$relsize <- 0.6
-  }
-
-  if(!"cov.res" %in% names(sim_info)) {
-    sim_info$cov.res <- 0
-  }
-
-  if(!"misspec" %in% names(sim_info)) {
-    sim_info$misspec <- F
-  }
-
-  if(!"fcovmat" %in% names(sim_info)) {
-    sim_info$fcovmat <- NULL
-  }
-
-  if(!"item.missing" %in% names(sim_info)) {
-    sim_info$item.missing <- T
-  }
+  sim_info <- addDefault(sim_info)
 
   # Generate Latent Variable Model Information
   sim_info <- genLVinfo(sim_info = sim_info)

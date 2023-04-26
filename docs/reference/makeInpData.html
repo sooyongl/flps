@@ -59,15 +59,17 @@ the given information.</p>
 <span>  <span class="va">omega</span>,</span>
 <span>  <span class="va">tau0</span>,</span>
 <span>  <span class="va">tau1</span>,</span>
-<span>  linear <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  <span class="va">betaL</span>,</span>
+<span>  <span class="va">betaY</span>,</span>
+<span>  linear <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  ydist <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>  <span class="va">lambda</span>,</span>
 <span>  <span class="va">nitem</span>,</span>
 <span>  nfac <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">lvmodel</span>,</span>
 <span>  <span class="va">fcovmat</span>,</span>
-<span>  item.missing <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  misspec <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  item.missing <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  misspec <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cov.res <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  relsize <span class="op">=</span> <span class="fl">0.6</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -101,12 +103,20 @@ between the treatment and the control.</p></dd>
 <dd><p>a numeric indicating the principal effect</p></dd>
 
 
+<dt>betaL</dt>
+<dd><p>a numeric vector indicating the effects of covariates on the latent factor</p></dd>
+
+
+<dt>betaY</dt>
+<dd><p>a numeric vector indicating the effects of covariates on the outcome</p></dd>
+
+
 <dt>linear</dt>
-<dd><p>a logical</p></dd>
+<dd><p>a logical whether the relationship between the outcome and covariates is linear (default is <code>TRUE</code>).</p></dd>
 
 
 <dt>ydist</dt>
-<dd><p>a character</p></dd>
+<dd><p>a character indicating the outcome distribution (default is <code>n</code>).</p></dd>
 
 
 <dt>lambda</dt>
@@ -134,21 +144,21 @@ factors when nfac &gt; 1</p></dd>
 
 <dt>item.missing</dt>
 <dd><p>a logical to make the measurement item data missing for
-the control group. Default is TRUE</p></dd>
+the control group (default is <code>TRUE</code>).</p></dd>
 
 
 <dt>misspec</dt>
 <dd><p>a logical to allow cross-loadings across latent factors
-when nfac &gt; 1.</p></dd>
+when nfac &gt; 1 (default is <code>FALSE</code>).</p></dd>
 
 
 <dt>cov.res</dt>
 <dd><p>a logical to allow for residual correlations
-(only for CFA model).</p></dd>
+(only for CFA model) (default is <code>0</code>).</p></dd>
 
 
 <dt>relsize</dt>
-<dd><p>a numeric indicating the degree to which the latent factor explain the variances of continous items (only for CFA model).</p></dd>
+<dd><p>a numeric indicating the degree to which the latent factor explain the variances of continuous items (only for CFA model) (default is <code>0.6</code>).</p></dd>
 
 </dl></div>
     <div id="value">
@@ -167,6 +177,8 @@ when nfac &gt; 1.</p></dd>
 <span class="r-in"><span>omega   <span class="op">=</span> <span class="fl">0.2</span>,  <span class="co"># the effect of eta</span></span></span>
 <span class="r-in"><span>tau0    <span class="op">=</span> <span class="fl">0.13</span>, <span class="co"># direct effect</span></span></span>
 <span class="r-in"><span>tau1    <span class="op">=</span> <span class="op">-</span><span class="fl">0.06</span>,<span class="co"># interaction effect between Z and eta</span></span></span>
+<span class="r-in"><span>betaL   <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>betaY   <span class="op">=</span> <span class="fl">0.4</span>,</span></span>
 <span class="r-in"><span>lambda  <span class="op">=</span> <span class="fl">0.8</span>,  <span class="co"># the proportion of administered items</span></span></span>
 <span class="r-in"><span>nitem    <span class="op">=</span> <span class="fl">10</span>,   <span class="co"># the total number of items</span></span></span>
 <span class="r-in"><span>nfac    <span class="op">=</span> <span class="fl">1</span>,    <span class="co"># the number of latent factors</span></span></span>

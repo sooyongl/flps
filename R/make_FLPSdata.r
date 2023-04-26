@@ -63,8 +63,17 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
     group.data <- unname(unlist(inp_data[group]))
     covariate.data <- inp_data[covariate]
 
+
     lv_model1 <- unlist(strsplit(lv_model, "\n"))
+
+    nfac <- length(grep("=~", lv_model1))
+
     lv_model2 <- do.call("rbind",strsplit(lv_model1, "=~"))
+    lv_model2 <- gsub(' |[\t\n]','',lv_model2)
+
+    item_factor <- strsplit(lv_model2[,2], "\\+")
+    item_factor <- item_factor[sapply(item_factor, function(x) length(x)!=0)]
+
     lv_model3 <- unlist(strsplit(lv_model2[, 2], "\\+"))
     lv_model4 <- unlist(strsplit(lv_model3, " "))
 
@@ -81,7 +90,7 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
     obs.v.vector <- sapply(1:nrow(obs.v.idx),
                            function(n) obs.v.matrix[obs.v.idx[n,1], obs.v.idx[n,2]])
 
-    a_idx <- gen_a_idx(nitem, nfac = 1) # temporary 1
+    a_idx <- gen_a_idx(item_factor, nfac = nfac) # temporary 1
     fi_idx <- detect_firstitem(a_idx)
 
     flps_data <- list(
@@ -101,7 +110,7 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
 
       firstitem = fi_idx,
       factoridx = a_idx,
-      nfac = 1
+      nfac = nfac
     )
 
     if(TRUE) {
