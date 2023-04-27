@@ -61,7 +61,7 @@ addDefault <- function(sim_info) {
   if(!"fcovmat" %in% names(sim_info)) {
 
     if(sim_info$nfac > 1) {
-      sim_info$fcovmat <- diag(0, nfac)[lower.tri(diag(0, nfac))]
+      sim_info$fcovmat <- diag(0, sim_info$nfac)[lower.tri(diag(0, sim_info$nfac))]
     } else {
       sim_info$fcovmat <- NULL
     }
