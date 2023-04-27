@@ -13,6 +13,7 @@ runFLPS(
   covariate = NULL,
   lv_model = NULL,
   lv_type = NULL,
+  priors_input = NULL,
   stan_options = list(),
   ...
 )
@@ -38,6 +39,8 @@ to the \pkg{lavaan} model syntax.
 }}
 
 \item{lv_type}{A character indicating the type of latent variable models}
+
+\item{priors_input}{A list of priors. Otherwise, the default priors are used (N(0, 5).}
 
 \item{stan_options}{A list containing [rstan::stan()] options, using 'name = value'.}
 

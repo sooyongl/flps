@@ -14,6 +14,7 @@
 #' }
 
 #' @param lv_type  A character indicating the type of latent variable models
+#' @param priors_input A list of priors. Otherwise, the default priors are used (N(0, 5).
 #' @param stan_options A list containing [rstan::stan()] options, using 'name = value'.
 #' @param ... Additional arguments for latent variable models information (e.g., nclass = 2).
 #' @return an object of class \code{flps} which contains a \code{\link[rstan]{stanfit}} object.
@@ -63,22 +64,23 @@ runFLPS <- function(inp_data = NULL,
                     covariate = NULL,
                     lv_model = NULL,
                     lv_type = NULL,
+                    priors_input = NULL,
                     stan_options = list(),
                     ...
 ) {
 
-  # time record ----------------------------------------------------------
+  # time record --------------------------------------------------------
   start.time <- proc.time()[3L]
 
-  # call -----------------------------------------------------------------
+  # call ---------------------------------------------------------------
   .call <- match.call()
   argslist <- as.list(.call[-1])
 
-  # validate ----------------------------------------------------------------
+  # validate -----------------------------------------------------------
   validate_data(inp_data, custom_data, custom_stan)
 
 
-  # data and code -------------------------------------------------------------
+  # data and code -------------------------------------------------------
   if(is.null(inp_data) && !is.null(custom_data) && !is.null(custom_stan)) {
     flps_data_class <- makeFLPSdata(custom_data, outcome, group, covariate,
                                     lv_model, lv_type, custom = T)
@@ -91,6 +93,7 @@ runFLPS <- function(inp_data = NULL,
                                     lv_model, lv_type)
 
     flps_model <- loadRstan(lv_type = flps_data_class$lv_type)
+    # flps_model <- paste(readLines("inst/stan/flps_IRT_multi.stan"), collapse = "\n")
     # flps_model <- mkStanModel(lv_type = flps_data_class$lv_type)
   }
 
@@ -116,13 +119,14 @@ runFLPS <- function(inp_data = NULL,
   # }
   # stan_options$init <- initf1
 
-  # Prior setting
-  # priors <- function() {    }
-
   ## S3
   stan_options <- stanOptions(stan_options,
                               data = flps_data_class$stan_data,
                               object = flps_model)
+
+  # Prior setting
+  # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
+  stan_options <- setPriors(priors_input, lv_model, stan_options)
 
   flps_fit <-  try(do.call(rstan::sampling, stan_options))
 

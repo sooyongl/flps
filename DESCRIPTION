@@ -45,6 +45,7 @@ Collate:
 	'load_rstan.r'
 	'make_FLPSdata.r'
 	'run_FLPS.r'
+	'priors.r'
 	'sim_gen_measurement.r'
 	'sim_gen_structure.r'
 	'sim_gen_standata.r'
