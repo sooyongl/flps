@@ -14,7 +14,13 @@
 #' }
 
 #' @param lv_type  A character indicating the type of latent variable models
-#' @param priors_input A list of priors. Otherwise, the default priors are used (N(0, 5).
+#' @param priors_input A list of priors. Otherwise, the default priors are used (N(0, 5). It takes three parameter names including \code{tau0}, \code{tau1}, and \code{omega}, which are the difference between groups, the principal effects, and the effect of latent factors on the outcome. If added, the length of \code{tau1} and \code{omega} must be matched with the number of factors.
+#' Examples of How to specify priors as follows:
+#'  \itemize{
+#'    \item \code{list(tau0 = c(0, 1), tau1 = c(0.5, 1))} : The first element is the mean and the second is the variance of normal priors.
+#'    \item \code{list(tau1 = list(c(0.5, 1), c(-0.4, 1))} : If there's two factors.
+#' }
+#'
 #' @param stan_options A list containing [rstan::stan()] options, using 'name = value'.
 #' @param ... Additional arguments for latent variable models information (e.g., nclass = 2).
 #' @return an object of class \code{flps} which contains a \code{\link[rstan]{stanfit}} object.
