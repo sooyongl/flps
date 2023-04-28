@@ -24,9 +24,9 @@ data{
   matrix[nstud,ncov] X;
   int<lower=0,upper=1> Z[nstud];
   real Y[nstud];
-  
+
   // Priors
-  matrix[nfac,2] ptau0;
+  matrix[1,2] ptau0;
   matrix[nfac,2] ptau1;
   matrix[nfac,2] pomega;
 }
@@ -118,10 +118,10 @@ model{
   XY ~ normal(0, 5);
   intcptY ~ normal(0, 5);
   tau0  ~ normal(ptau0[1,1], ptau0[1,2]);
-  
+
   for(i in 1:nfac) {
     XF[,i] ~ normal(0, 5);
-	
+
 	omega[i] ~ normal(pomega[i,1], pomega[i,2]);
     tau1[i] ~ normal(ptau1[i,1], ptau1[i,2]);
   };

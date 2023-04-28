@@ -16,9 +16,3 @@ root directory.
 \description{
 Generate compiled Stan object to facilitate the analysis
 }
-\examples{
-\dontrun{
-modelBuilder(type = "rasch")
-}
-
-}

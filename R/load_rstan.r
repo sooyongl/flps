@@ -5,11 +5,6 @@
 #' @return There's no return, but the compiled objects are saved in the package
 #' root directory.
 #'
-#' @examples
-#' \dontrun{
-#' modelBuilder(type = "rasch")
-#' }
-#'
 #' @export
 modelBuilder <- function(type = 'all') {
 
@@ -24,9 +19,14 @@ modelBuilder <- function(type = 'all') {
 
     for(i in 1:length(stanfiles)) {
 
-      stan_model <- paste(readLines(stanfiles[i]), collapse = "\n")
-      # cat(stan_model)
-      stanmodel_obj <- rstan::stan_model(model_code = stan_model)
+      # stan_model0 <- paste(readLines(stanfiles[i]), collapse = "\n")
+      # cat(stan_model0)
+      stanmodel_obj <- rstan::stan_model(
+        file = stanfiles,
+        # model_code = stan_model0
+        save_dso = T,
+        model_name = "FLPS")
+
       saveRDS(stanmodel_obj, gsub("\\.stan", "\\.rds", stanfiles[i] ))
 
       message(paste0("Complied Stan object saved as ", gsub("\\.stan", "\\.rds", stanfiles[i] )))
@@ -34,15 +34,21 @@ modelBuilder <- function(type = 'all') {
     }
   } else {
 
-    type <- ifelse(toupper(type) == "2PL", "IRT", type)
+    type <- ifelse(toupper(type) == "2PL", "IRT", toupper(type))
 
     stanfiles <- stan_list[grepl("stan$", stan_list)]
     stanfiles <- stanfiles[grepl(toupper(type), stanfiles)]
 
-    stan_model <- paste(readLines(stanfiles), collapse = "\n")
+    # stan_model <- paste(readLines(stanfiles), collapse = "\n")
     # cat(stan_model)
+    # stanmodel_obj <- rstan::stan_model(model_code = stan_model)
+    stanmodel_obj <- rstan::stan_model(
+      file = stanfiles,
+      # model_code = stan_model0,
+      save_dso = T,
+      model_name = "FLPS"
 
-    stanmodel_obj <- rstan::stan_model(model_code = stan_model)
+    )
     saveRDS(stanmodel_obj, gsub("\\.stan", "\\.rds", stanfiles ))
 
     message(paste0(type, " model saved as ", gsub("\\.stan", "\\.rds", stanfiles )))
@@ -82,37 +88,37 @@ loadRstan <- function(lv_type = "2PL", force.string = F) {
   stan_picked1 <- stan_list #[stan_picked]
 
   stan_picked <- grepl(toupper(lv_type), toupper(stan_picked1))
-  stan_model <- stan_picked1[stan_picked]
+  given_stan_model <- stan_picked1[stan_picked]
 
 
   if(force.string) {
-    stan_picked2 <- grepl(".stan$", stan_model)
-    stan_model <- stan_model[stan_picked2]
+    stan_picked2 <- grepl(".stan$", given_stan_model)
+    given_stan_model <- given_stan_model[stan_picked2]
 
-    stan_file <- file.path(stan_path, stan_model)
-    stan_model <- paste(readLines(stan_file), collapse = "\n")
+    stan_file <- file.path(stan_path, given_stan_model)
+    given_stan_model <- paste(readLines(stan_file), collapse = "\n")
 
   } else {
 
-    if(any(grepl(".rds$", stan_model))) {
+    if(any(grepl(".rds$", given_stan_model))) {
 
-      stan_picked2 <- grepl(".rds$", stan_model)
-      stan_model <- stan_model[stan_picked2]
+      stan_picked2 <- grepl(".rds$", given_stan_model)
+      given_stan_model <- given_stan_model[stan_picked2]
 
-      stan_file <- file.path(stan_path, stan_model)
-      stan_model <- readRDS(stan_file)
+      stan_file <- file.path(stan_path, given_stan_model)
+      given_stan_model <- readRDS(stan_file)
 
     } else {
 
-      stan_picked2 <- grepl(".stan$", stan_model)
-      stan_model <- stan_model[stan_picked2]
+      stan_picked2 <- grepl(".stan$", given_stan_model)
+      given_stan_model <- given_stan_model[stan_picked2]
 
-      stan_file <- file.path(stan_path, stan_model)
-      stan_model <- paste(readLines(stan_file), collapse = "\n")
+      stan_file <- file.path(stan_path, given_stan_model)
+      given_stan_model <- paste(readLines(stan_file), collapse = "\n")
     }
   }
 
-  return(stan_model)
+  return(given_stan_model)
 }
 
 #' Create Stanmodel class
@@ -145,9 +151,9 @@ mkStanModel <- function(lv_type = '2pl') {
   stan_picked1 <- stan_list[stan_picked]
 
   stan_picked <- grepl(toupper(lv_type), toupper(stan_picked1))
-  stan_model <- stan_picked1[stan_picked]
+  given_stan_model <- stan_picked1[stan_picked]
 
-  stan_file <- file.path(stan_path, stan_model)
+  stan_file <- file.path(stan_path, given_stan_model)
 
   stanfit <- rstan::stanc_builder(stan_file,
                                   allow_undefined = TRUE,
