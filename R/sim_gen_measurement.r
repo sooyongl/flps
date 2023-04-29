@@ -6,7 +6,7 @@ genLVinfo <- function(sim_info) {
   nfac    <- sim_info$nfac
   lvmodel <- sim_info$lvmodel
 
-  if(sim_info$lvmodel %in% c("rasch","2pl","3pl","gpcm","pcm","grm","ggrm")){
+  if(sim_info$lvmodel %in% c("rasch",'irt',"2pl","3pl","gpcm","pcm","grm","ggrm")){
 
     ipar <- genIRTpar(nitem, nfac, lvmodel, ncat = 4)
 
@@ -62,7 +62,7 @@ genIRTpar <- function(nitem=25, nfac=1, lvmodel, ncat = 4) {
     colnames(d) <- paste0("d",1:ncol(d))
     ipar <- data.frame(a, d)
 
-  } else if(lvmodel %in% c("rasch","1pl","2pl","3pl")) {
+  } else if(lvmodel %in% c("rasch","1pl","2pl","3pl","irt")) {
 
     g <- 0
     d <- c(0, rnorm(nitem-1))

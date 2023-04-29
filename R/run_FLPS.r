@@ -14,6 +14,13 @@
 #' }
 
 #' @param lv_type  A character indicating the type of latent variable models
+#' @param priors_input A list of priors. Otherwise, the default priors are used (N(0, 5). It takes three parameter names including \code{tau0}, \code{tau1}, and \code{omega}, which are the difference between groups, the principal effects, and the effect of latent factors on the outcome. If added, the length of \code{tau1} and \code{omega} must be matched with the number of factors.
+#' Examples of How to specify priors as follows:
+#'  \itemize{
+#'    \item \code{list(tau0 = c(0, 1), tau1 = c(0.5, 1))} : The first element is the mean and the second is the variance of normal priors.
+#'    \item \code{list(tau1 = list(c(0.5, 1), c(-0.4, 1))} : If there's two factors.
+#' }
+#'
 #' @param stan_options A list containing [rstan::stan()] options, using 'name = value'.
 #' @param ... Additional arguments for latent variable models information (e.g., nclass = 2).
 #' @return an object of class \code{flps} which contains a \code{\link[rstan]{stanfit}} object.
@@ -63,22 +70,23 @@ runFLPS <- function(inp_data = NULL,
                     covariate = NULL,
                     lv_model = NULL,
                     lv_type = NULL,
+                    priors_input = NULL,
                     stan_options = list(),
                     ...
 ) {
 
-  # time record ----------------------------------------------------------
+  # time record --------------------------------------------------------
   start.time <- proc.time()[3L]
 
-  # call -----------------------------------------------------------------
+  # call ---------------------------------------------------------------
   .call <- match.call()
   argslist <- as.list(.call[-1])
 
-  # validate ----------------------------------------------------------------
+  # validate -----------------------------------------------------------
   validate_data(inp_data, custom_data, custom_stan)
 
 
-  # data and code -------------------------------------------------------------
+  # data and code -------------------------------------------------------
   if(is.null(inp_data) && !is.null(custom_data) && !is.null(custom_stan)) {
     flps_data_class <- makeFLPSdata(custom_data, outcome, group, covariate,
                                     lv_model, lv_type, custom = T)
@@ -91,17 +99,12 @@ runFLPS <- function(inp_data = NULL,
                                     lv_model, lv_type)
 
     flps_model <- loadRstan(lv_type = flps_data_class$lv_type)
+    # flps_model <- paste(readLines("inst/stan/flps_IRT_multi.stan"), collapse = "\n")
     # flps_model <- mkStanModel(lv_type = flps_data_class$lv_type)
   }
 
   # flps_model
-  # fit FLPS ----------------------------------------------------------------
-  if(!inherits(flps_model, "stanmodel")) {
-
-    message("Compiling Stan code...")
-
-    flps_model <- rstan::stan_model(model_code = flps_model)
-  }
+  # fit FLPS --------------------------------------------------------------
 
   # STVAL
   # init.rlnorm <- function(n, m, v) {
@@ -116,31 +119,47 @@ runFLPS <- function(inp_data = NULL,
   # }
   # stan_options$init <- initf1
 
-  # Prior setting
-  # priors <- function() {    }
 
-  ## S3
-  stan_options <- stanOptions(stan_options,
-                              data = flps_data_class$stan_data,
-                              object = flps_model)
+  if(!inherits(flps_model, "stanmodel")) {
 
-  flps_fit <-  try(do.call(rstan::sampling, stan_options))
+    message("Compiling Stan code...")
+
+    ## S3
+    stan_options <- stanOptions(stan_options, model_code = flps_model,
+                                data = flps_data_class$stan_data)
+
+    # Prior setting
+    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
+    stan_options <- setPriors(priors_input, lv_model, stan_options)
+    flps_fit <-  try(do.call(rstan::stan, stan_options))
+
+  } else {
+
+    stan_options <- stanOptions(stan_options, object = flps_model,
+                                data = flps_data_class$stan_data)
+
+    # Prior setting
+    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
+    stan_options <- setPriors(priors_input, lv_model, stan_options)
+    flps_fit <-  try(do.call(rstan::sampling, stan_options))
+  }
+
 
   if(inherits(flps_fit, "try-error")) {
 
     message("Initial run failed, and re-compile and run.")
 
     flps_model <- loadRstan(lv_type = flps_data_class$lv_type, T)
-    flps_model <- rstan::stan_model(model_code = flps_model)
-    stan_options <- stanOptions(stan_options,
-                                data = flps_data_class$stan_data,
-                                object = flps_model)
 
-    flps_fit <-  try(do.call(rstan::sampling, stan_options))
+    ## S3
+    stan_options <- stanOptions(stan_options, model_code = flps_model,
+                                data = flps_data_class$stan_data)
+
+    # Prior setting
+    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
+    stan_options <- setPriors(priors_input, lv_model, stan_options)
+    flps_fit <-  try(do.call(rstan::stan, stan_options))
   }
-
-
-
 
   # class output ---------------------------------------------------
 

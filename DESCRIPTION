@@ -22,7 +22,7 @@ Description: Simulation and analysis of Fully-Latent Principal Stratification (F
 License: GPL-3 + file LICENSE
 Imports: 
     rstan,
-	  Rcpp,
+	  Rcpp (>= 1.0.8.3),
 	  methods,
     mirt,
     MASS,
@@ -45,6 +45,7 @@ Collate:
 	'load_rstan.r'
 	'make_FLPSdata.r'
 	'run_FLPS.r'
+	'priors.r'
 	'sim_gen_measurement.r'
 	'sim_gen_structure.r'
 	'sim_gen_standata.r'

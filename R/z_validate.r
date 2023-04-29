@@ -2,7 +2,7 @@
 validate_data <- function(inp_data, custom_data, custom_stan) {
 
   # validate ----------------------------------------------------------------
-  if(!is.null(inp_data) && !is.null(custom_data))
+  if(is.null(inp_data) && is.null(custom_data))
     stop("Data is not provided.")
 
   if((!is.null(custom_data) && is.null(custom_stan)) |

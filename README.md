@@ -84,13 +84,23 @@ runs FLPS.
 To avoid having to compile the Stan code every time you run it, you can
 pre-compile the code using the `modelBuilder()` function along with the
 relevant measurement model. This function will compile the Stan code and
-store the resulting stanmodel object in the `flps` package directory.
-The next time you run `runFLPS()`, the code will skip the compilation
-step, making your analysis faster and more efficient. Otherwise, it will
-take a while for `runFLPS()` to compile the Stan code.
+store the resulting stanmodel object in the `flps` package directory (If
+error, update the latest `Rcpp` package; After running `modelBuilder()`,
+it is recommended to refresh R session). The next time you run
+`runFLPS()`, the code will skip the compilation step, making your
+analysis faster and more efficient. Otherwise, it will take a while for
+`runFLPS()` to compile the Stan code.
 
 ``` r
 modelBuilder(type = "rasch")
+```
+
+Also, if you have any errors, try the latest `rstan` and `StanHeaders`
+packages.
+
+``` r
+remove.packages(c("rstan", "StanHeaders"))
+install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
 ```
 
 ``` r
@@ -105,13 +115,11 @@ res <- runFLPS(
 )
 ```
 
-    ## Compiling Stan code...
-
     ## 
-    ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
+    ## SAMPLING FOR MODEL 'FLPS' NOW (CHAIN 1).
     ## Chain 1: 
-    ## Chain 1: Gradient evaluation took 0.00086 seconds
-    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.6 seconds.
+    ## Chain 1: Gradient evaluation took 0.000804 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.04 seconds.
     ## Chain 1: Adjust your expectations accordingly!
     ## Chain 1: 
     ## Chain 1: 
@@ -128,9 +136,9 @@ res <- runFLPS(
     ## Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
     ## Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
     ## Chain 1: 
-    ## Chain 1:  Elapsed Time: 12.862 seconds (Warm-up)
-    ## Chain 1:                9.492 seconds (Sampling)
-    ## Chain 1:                22.354 seconds (Total)
+    ## Chain 1:  Elapsed Time: 15.46 seconds (Warm-up)
+    ## Chain 1:                10.842 seconds (Sampling)
+    ## Chain 1:                26.302 seconds (Total)
     ## Chain 1:
 
     ## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
