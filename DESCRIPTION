@@ -22,7 +22,7 @@ Description: Simulation and analysis of Fully-Latent Principal Stratification (F
 License: GPL-3 + file LICENSE
 Imports: 
     rstan,
-	  Rcpp,
+	  Rcpp (>= 1.0.8.3),
 	  methods,
     mirt,
     MASS,
@@ -32,7 +32,6 @@ Imports:
     ggplot2
 Suggests: 
     testthat (>= 3.0.0),
-    Rcpp (>= 1.0.8.3),
     knitr,
     rmarkdown,
     lavaan,

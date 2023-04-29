@@ -104,15 +104,7 @@ runFLPS <- function(inp_data = NULL,
   }
 
   # flps_model
-  # fit FLPS ----------------------------------------------------------------
-  if(!inherits(flps_model, "stanmodel")) {
-
-    message("Compiling Stan code...")
-
-    flps_model <- rstan::stan_model(model_code = flps_model,
-                                    save_dso = T,
-                                    model_name = "FLPS")
-  }
+  # fit FLPS --------------------------------------------------------------
 
   # STVAL
   # init.rlnorm <- function(n, m, v) {
@@ -127,34 +119,47 @@ runFLPS <- function(inp_data = NULL,
   # }
   # stan_options$init <- initf1
 
-  ## S3
-  stan_options <- stanOptions(stan_options,
-                              data = flps_data_class$stan_data,
-                              object = flps_model)
 
-  # Prior setting
-  # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
-  stan_options <- setPriors(priors_input, lv_model, stan_options)
+  if(!inherits(flps_model, "stanmodel")) {
 
-  flps_fit <-  try(do.call(rstan::sampling, stan_options))
+    message("Compiling Stan code...")
+
+    ## S3
+    stan_options <- stanOptions(stan_options, model_code = flps_model,
+                                data = flps_data_class$stan_data)
+
+    # Prior setting
+    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
+    stan_options <- setPriors(priors_input, lv_model, stan_options)
+    flps_fit <-  try(do.call(rstan::stan, stan_options))
+
+  } else {
+
+    stan_options <- stanOptions(stan_options, object = flps_model,
+                                data = flps_data_class$stan_data)
+
+    # Prior setting
+    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
+    stan_options <- setPriors(priors_input, lv_model, stan_options)
+    flps_fit <-  try(do.call(rstan::sampling, stan_options))
+  }
+
 
   if(inherits(flps_fit, "try-error")) {
 
     message("Initial run failed, and re-compile and run.")
 
     flps_model <- loadRstan(lv_type = flps_data_class$lv_type, T)
-    flps_model <- rstan::stan_model(
-      save_dso = T,
-      model_name = "FLPS",
-      model_code = flps_model)
-    stan_options <- stanOptions(stan_options,
-                                data = flps_data_class$stan_data,
-                                object = flps_model)
+
+    ## S3
+    stan_options <- stanOptions(stan_options, model_code = flps_model,
+                                data = flps_data_class$stan_data)
+
+    # Prior setting
+    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
     stan_options <- setPriors(priors_input, lv_model, stan_options)
-
-    flps_fit <-  try(do.call(rstan::sampling, stan_options))
+    flps_fit <-  try(do.call(rstan::stan, stan_options))
   }
-
 
   # class output ---------------------------------------------------
 
