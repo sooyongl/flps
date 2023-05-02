@@ -150,28 +150,28 @@ generateLV <- function(info, ...) {
 
 #' methods for rasch model
 #' @noRd
-generateLV.rasch <- function(.x, ...) {.Class <- "irt"; NextMethod()}
+generateLV.rasch <- function(info, ...) {.Class <- "irt"; NextMethod()}
 
 #' method for 1PL model
 #' @noRd
-generateLV.1pl   <- function(.x, ...) {.Class <- "irt"; NextMethod()}
+generateLV.1pl   <- function(info, ...) {.Class <- "irt"; NextMethod()}
 
 #' method for 2PL model
 #' @noRd
-generateLV.2pl   <- function(.x, ...) {.Class <- "irt"; NextMethod()}
+generateLV.2pl   <- function(info, ...) {.Class <- "irt"; NextMethod()}
 
 #' method for 3PL model
 #' @noRd
-generateLV.3pl   <- function(.x, ...) {.Class <- "irt"; NextMethod()}
+generateLV.3pl   <- function(info, ...) {.Class <- "irt"; NextMethod()}
 
 #' method for GPCM model
 #' @noRd
-generateLV.gpcm   <- function(.x, ...) {.Class <- "irt"; NextMethod()}
-generateLV.pcm   <- function(.x, ...) {.Class <- "irt"; NextMethod()}
+generateLV.gpcm   <- function(info, ...) {.Class <- "irt"; NextMethod()}
+generateLV.pcm   <- function(info, ...) {.Class <- "irt"; NextMethod()}
 #' method for GRM
 #' @noRd
-generateLV.ggrm   <- function(.x, ...) {.Class <- "irt"; NextMethod()}
-generateLV.grm   <- function(.x, ...) {.Class <- "irt"; NextMethod()}
+generateLV.ggrm   <- function(info, ...) {.Class <- "irt"; NextMethod()}
+generateLV.grm   <- function(info, ...) {.Class <- "irt"; NextMethod()}
 
 #' method for all IRT model
 #'
@@ -182,7 +182,7 @@ generateLV.grm   <- function(.x, ...) {.Class <- "irt"; NextMethod()}
 #' eta <- MASS::mvrnorm(100, rep(0, 2), matrix(c(1,0,0,1),ncol=2))
 #' generateLV.irt(lvmodel, eta, ipar)
 #' @noRd
-generateLV.irt <- function(info) {
+generateLV.irt <- function(info, ...) {
 
   theta <- as.matrix(info$theta, ncol = info$nfac);
   nitem <- info$nitem;
@@ -295,13 +295,13 @@ simData.pcm <- function(a,d,theta) {
 
 #' method for Polytomous Response: NRM
 #' @noRd
-generateLV.nominal <- function(info) {
+generateLV.nominal <- function(info, ...) {
   print("not yet")
 }
 
 #' method for Polytomous Response: Response Time (Lognormal)
 #' @noRd
-generateLV.ln <- function(info){
+generateLV.ln <- function(info, ...){
   # # set up for data generation
   # tau <- info$tau; ipar <- info$ipar
   #
@@ -324,7 +324,7 @@ generateLV.ln <- function(info){
 
 #' method for generating sem data
 #' @noRd
-generateLV.sem <- function(info) {
+generateLV.sem <- function(info, ...) {
 
   # set up for data generation
   nfac <- info$nfac
@@ -381,7 +381,7 @@ generateLV.sem <- function(info) {
 
 #' method for generating lgm data
 #' @noRd
-generateLV.lgm <- function(info) {
+generateLV.lgm <- function(info, ...) {
 
   # set up for data generation
   theta <- info$theta; ntp <- info$nitem; lv_info <- info$lvinfo
@@ -448,7 +448,7 @@ class_assign <- function(...) {
 
 #' generate lca data
 #' @noRd
-generateLV.lca <- function(info) {
+generateLV.lca <- function(info, ...) {
 
   # n_class <- info$n_class
 
@@ -504,7 +504,7 @@ generateLV.lca <- function(info) {
 
 #' genLV lpa data
 #' @noRd
-generateLV.lpa <- function(info) {
+generateLV.lpa <- function(info, ...) {
 
   n_indi <- info$nitem
   theta <- info$theta
@@ -563,7 +563,7 @@ generateLV.lpa <- function(info) {
 
 #' generate general mixture data
 #' @noRd
-generateLV.mixture <- function(info) {
+generateLV.mixture <- function(info, ...) {
 
   # return(data)
   print("not yet")

@@ -5,12 +5,12 @@ setData <- function(info, ...) {
 }
 
 #' @noRd
-setData.default <- function(info) {
+setData.default <- function(info, ...) {
 
 }
 
 #' @noRd
-setData.flpsIRT <- function(info) {
+setData.flpsIRT <- function(info, ...) {
 
 }
 
