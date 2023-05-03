@@ -19,7 +19,7 @@ Authors@R:
            role = "aut")
     )
 Description: Simulation and analysis of Fully-Latent Principal Stratification (FLPS) with measurement models. Sales & Pane (2019). <doi:10.1214/18-AOAS1196>.
-License: GPL-3 + file LICENSE
+License: GPL-3
 Imports: 
     rstan,
 	  Rcpp (>= 1.0.8.3),

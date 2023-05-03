@@ -1,13 +1,13 @@
 {
     "dialog-state": {
-        "query": "stanOptions",
+        "query": "setData",
         "path": "",
         "regex": false,
         "caseSensitive": false,
         "wholeWord": false,
         "filePatterns": [],
         "excludeFilePatterns": [],
-        "resultsCount": 5,
+        "resultsCount": 4,
         "errorCount": 0,
         "replaceErrors": "",
         "projectRelative": true
