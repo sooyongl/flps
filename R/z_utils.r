@@ -175,7 +175,7 @@ genData <- function(N, BETA, PSI, ALPHA) {
   COV = (IB.inv) %*% PSI %*% t(IB.inv)
   MU <- IB.inv %*% ALPHA
 
-  data <- MASS::mvrnorm(n = N, mu = MU, Sigma = COV, empirical = T)
+  data <- MASS::mvrnorm(n = N, mu = MU, Sigma = COV, empirical = TRUE)
   data <- data.frame(data)
 
   names(data) <- c("Y","X",paste0("eta", 1:(ncol(data)-2)))

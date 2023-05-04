@@ -83,9 +83,9 @@ flps_causal <- function(object) {
 
   p <- ggplot(inp_data, aes_string("lscores", outcome))
 
-  yint <- mean(out.val, na.rm = T) -
-    (mean(group.val, na.rm = T)*tau0 +
-       mean(lat.val, na.rm = T)*omega + mean(group.val*lat.val, na.rm = T)*tau1)
+  yint <- mean(out.val, na.rm = TRUE) -
+    (mean(group.val, na.rm = TRUE)*tau0 +
+       mean(lat.val, na.rm = TRUE)*omega + mean(group.val*lat.val, na.rm = TRUE)*tau1)
 
   slp.data <- data.frame(trt = factor(c("Treatment", "Contrl"), c("Treatment", "Contrl")),
                          intercept = yint,

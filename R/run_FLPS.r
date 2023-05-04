@@ -89,7 +89,7 @@ runFLPS <- function(inp_data = NULL,
   # data and code -------------------------------------------------------
   if(is.null(inp_data) && !is.null(custom_data) && !is.null(custom_stan)) {
     flps_data_class <- makeFLPSdata(custom_data, outcome, group, covariate,
-                                    lv_model, lv_type, custom = T)
+                                    lv_model, lv_type, custom = TRUE)
 
     flps_model <- custom_stan
   }
@@ -149,7 +149,7 @@ runFLPS <- function(inp_data = NULL,
 
     message("Initial run failed, and re-compile and run.")
 
-    flps_model <- loadRstan(lv_type = flps_data_class$lv_type, T)
+    flps_model <- loadRstan(lv_type = flps_data_class$lv_type, TRUE)
 
     ## S3
     stan_options <- stanOptions(stan_options, model_code = flps_model,

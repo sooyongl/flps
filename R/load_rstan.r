@@ -24,7 +24,7 @@ modelBuilder <- function(type = 'all') {
       stanmodel_obj <- rstan::stan_model(
         file = stanfiles,
         # model_code = stan_model0
-        save_dso = T,
+        save_dso = TRUE,
         model_name = "FLPS")
 
       saveRDS(stanmodel_obj, gsub("\\.stan", "\\.rds", stanfiles[i] ))
@@ -45,7 +45,7 @@ modelBuilder <- function(type = 'all') {
     stanmodel_obj <- rstan::stan_model(
       file = stanfiles,
       # model_code = stan_model0,
-      save_dso = T,
+      save_dso = TRUE,
       model_name = "FLPS"
 
     )
@@ -63,7 +63,7 @@ modelBuilder <- function(type = 'all') {
 #' @param force.string a logical indicating forcing the string stan code
 #' @return A string for Stan syntax
 #' @noRd
-loadRstan <- function(lv_type = "2PL", force.string = F) {
+loadRstan <- function(lv_type = "2PL", force.string = FALSE) {
 
   if(!dir.exists(system.file("stan", package = "flps")))
     stop("The stan code does not exist!")

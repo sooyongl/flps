@@ -371,7 +371,7 @@ generateLV.sem <- function(info, ...) {
   residuals <- MASS::mvrnorm(n_sample,
                              rep(0, nitem),
                              res.var,
-                             empirical = T)
+                             empirical = TRUE)
 
 
   resp <- latent + residuals

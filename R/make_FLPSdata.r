@@ -33,12 +33,12 @@ infoSetting <- function(...) {
 #' @param covariate A character indicating the names of covariates variables
 #' @param lv_model A description of the latent variable model, which is similar to the lavaan model syntax.
 #' @param lv_type  A character indicating the type of latent variable models
-#' @param custom a logical indicating whether the cumsom data is used.
+#' @param custom a logical indicating whether the cumstom data is used.
 #' @param ... Additional arguments for latent variable models information (e.g., nclass = 2).
 #'
 #' @returns a S3 class for a corresponding measurement model
 #' @noRd
-makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type, custom = F, ...) {
+makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type, custom = FALSE, ...) {
   # flps_data <- dataSetting() ; S3 class
   dotdotdot <- list(...)
 
@@ -85,7 +85,7 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
     nitem <- ncol(obs.v.partial)
     nstu <- nrow(obs.v.matrix)
 
-    obs.v.idx <- which(!is.na(obs.v.partial), arr.ind = T)
+    obs.v.idx <- which(!is.na(obs.v.partial), arr.ind = TRUE)
 
     obs.v.vector <- sapply(1:nrow(obs.v.idx),
                            function(n) obs.v.matrix[obs.v.idx[n,1], obs.v.idx[n,2]])

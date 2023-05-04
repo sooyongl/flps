@@ -49,7 +49,7 @@
 #'
 #' @export
 makeSimData <- function(N,R2Y,R2eta,omega,tau0,tau1,betaL, betaY,
-                        linear,ydist,lambda,nitem,nfac,lvmodel, fcovmat, item.missing=T, misspec=F, cov.res=0, relsize=0.6){
+                        linear=TRUE, ydist='n',lambda,nitem,nfac,lvmodel, fcovmat, item.missing=TRUE, misspec=FALSE, cov.res=0, relsize=0.6){
 
   mc <- match.call(expand.dots = TRUE)
   mc[[1L]] <- quote(list); # mc <- as.list(match.call()[-1])

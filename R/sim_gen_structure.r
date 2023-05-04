@@ -39,7 +39,7 @@ genMeasurement <- function(sim_info) {
   nitem   <- sim_info$nitem
   nfac   <- sim_info$nfac
   lambda <- sim_info$lambda
-  item.missing <- ifelse(is.null(sim_info$item.missing), T, sim_info$item.missing)
+  item.missing <- ifelse(is.null(sim_info$item.missing), TRUE, sim_info$item.missing)
 
   lv.gen.dt <- generateLV(sim_info)
 

@@ -30,7 +30,7 @@
     stop("Install the latest version of rstan")
   }
 
-  packageStartupMessage("It is a demo")
+  packageStartupMessage("Version: 0.1.0\n\nIt is a demo.")
 
 }
 
