@@ -65,7 +65,7 @@ an object of class \code{flps} which contains a \code{\link[rstan]{stanfit}} obj
 Conduct fully latent principal stratification
 }
 \examples{
-\dontrun{
+\donttest{
 inp_data <- flps::makeInpData(
   N       = 200,
   R2Y     = 0.2,

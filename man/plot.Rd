@@ -15,6 +15,10 @@
 
 \item{...}{additional options for future development}
 }
+\value{
+A \code{\link[ggplot2]{ggplot}} object that can be further customized
+using the \pkg{ggplot2} package.
+}
 \description{
 Plot
 }

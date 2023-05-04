@@ -33,7 +33,7 @@
 #'  \item{time}{a numeric of timing}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' inp_data <- flps::makeInpData(
 #'   N       = 200,
 #'   R2Y     = 0.2,

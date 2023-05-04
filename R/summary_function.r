@@ -3,6 +3,8 @@
 #' @param x an object of class \code{flps}
 #' @param ... additional options for future development
 #'
+#' @return Results of FLPS model are printed via the \pkg{rstan} package.
+#'
 #' @method print flps
 #' @rdname print
 #' @export
@@ -17,6 +19,8 @@ print.flps <- function(x, ...) {
 #' @param object an object of class \code{flps}
 #' @param type a string for the part of FLPS model
 #' @param ... additional options for future development
+#'
+#' @return Summary of FLPS model are printed via the \pkg{rstan} package.
 #'
 #' @method summary flps
 #' @rdname summary.flps

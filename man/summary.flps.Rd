@@ -13,6 +13,9 @@
 
 \item{...}{additional options for future development}
 }
+\value{
+Summary of FLPS model are printed via the \pkg{rstan} package.
+}
 \description{
 Summarize the results
 }

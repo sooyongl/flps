@@ -110,6 +110,9 @@ flps_causal <- function(object) {
 #' @param pars a character vector indicating the target parameters
 #' @param ... additional options for future development
 #'
+#' @return A \code{\link[ggplot2]{ggplot}} object that can be further customized
+#' using the \pkg{ggplot2} package.
+#'
 #' @method plot flps
 #' @rdname plot
 #' @export
