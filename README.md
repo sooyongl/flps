@@ -115,11 +115,13 @@ res <- runFLPS(
 )
 ```
 
+    ## Compiling Stan code...
+
     ## 
-    ## SAMPLING FOR MODEL 'FLPS' NOW (CHAIN 1).
+    ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
     ## Chain 1: 
-    ## Chain 1: Gradient evaluation took 0.000804 seconds
-    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.04 seconds.
+    ## Chain 1: Gradient evaluation took 0.000696 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.96 seconds.
     ## Chain 1: Adjust your expectations accordingly!
     ## Chain 1: 
     ## Chain 1: 
@@ -136,9 +138,9 @@ res <- runFLPS(
     ## Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
     ## Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
     ## Chain 1: 
-    ## Chain 1:  Elapsed Time: 15.46 seconds (Warm-up)
-    ## Chain 1:                10.842 seconds (Sampling)
-    ## Chain 1:                26.302 seconds (Total)
+    ## Chain 1:  Elapsed Time: 13.225 seconds (Warm-up)
+    ## Chain 1:                9.833 seconds (Sampling)
+    ## Chain 1:                23.058 seconds (Total)
     ## Chain 1:
 
     ## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
