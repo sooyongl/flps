@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flps</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -59,6 +59,7 @@
 <span>  covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lv_model <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lv_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  priors_input <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -101,6 +102,13 @@ to the <span class="pkg">lavaan</span> model syntax.</p><ul><li><p><code>=~</cod
 <dd><p>A character indicating the type of latent variable models</p></dd>
 
 
+<dt>priors_input</dt>
+<dd><p>A list of priors. Otherwise, the default priors are used (N(0, 5). It takes three parameter names including <code>tau0</code>, <code>tau1</code>, and <code>omega</code>, which are the difference between groups, the principal effects, and the effect of latent factors on the outcome. If added, the length of <code>tau1</code> and <code>omega</code> must be matched with the number of factors.
+Examples of How to specify priors as follows:</p><ul><li><p><code>list(tau0 = c(0, 1), tau1 = c(0.5, 1))</code> : The first element is the mean and the second is the variance of normal priors.</p></li>
+<li><p><code>list(tau1 = list(c(0.5, 1), c(-0.4, 1))</code> : If there's two factors.</p></li>
+</ul></dd>
+
+
 <dt>stan_options</dt>
 <dd><p>A list containing [rstan::stan()] options, using 'name = value'.</p></dd>
 
@@ -140,7 +148,7 @@ to the <span class="pkg">lavaan</span> model syntax.</p><ul><li><p><code>=~</cod
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">inp_data</span> <span class="op">&lt;-</span> <span class="fu">flps</span><span class="fu">::</span><span class="fu"><a href="makeInpData.html">makeInpData</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  N       <span class="op">=</span> <span class="fl">200</span>,</span></span>
 <span class="r-in"><span>  R2Y     <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
@@ -164,7 +172,48 @@ to the <span class="pkg">lavaan</span> model syntax.</p><ul><li><p><code>=~</cod
 <span class="r-in"><span>   lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span></span>
 <span class="r-in"><span>   stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span>   <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compiling Stan code...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 0.000646 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.46 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration:   1 / 1000 [  0%]  (Warmup)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 100 / 1000 [ 10%]  (Warmup)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 200 / 1000 [ 20%]  (Warmup)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 300 / 1000 [ 30%]  (Warmup)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 400 / 1000 [ 40%]  (Warmup)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 500 / 1000 [ 50%]  (Warmup)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 501 / 1000 [ 50%]  (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 600 / 1000 [ 60%]  (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 700 / 1000 [ 70%]  (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 11.851 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                8.326 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                20.177 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 1 divergent transitions after warmup. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> to find out why this is a problem and how to eliminate them.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 1 chains where the estimated Bayesian Fraction of Missing Information was low. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#bfmi-low</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Examine the pairs() plot to diagnose sampling problems</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The largest R-hat is NA, indicating chains have not mixed.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#r-hat</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#bulk-ess</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#tail-ess</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

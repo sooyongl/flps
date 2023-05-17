@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Fully-Latent Principal Stratification">
-<meta property="og:description" content="Simulation and analysis of Fully-Latent Principal Stratification (FLPS) with measurement models. Sales &amp; Pane (2019). &lt;doi:10.1214/18-AOAS1196&gt;.">
+<meta property="og:description" content="Simulation and analysis of Fully-Latent Principal Stratification (FLPS) with measurement models. Sales &amp; Pane (2019). &lt;doi:10.1214/18-AOAS1196&gt;. This package is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">flps</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -64,7 +64,8 @@
 
 
 <div class="section level2">
-<h2 id="fully-latent-principal-stratification-flps">Fully Latent Principal Stratification (FLPS)<a class="anchor" aria-label="anchor" href="#fully-latent-principal-stratification-flps"></a>
+<h2 id="fully-latent-principal-stratification-flps1">Fully Latent Principal Stratification (FLPS)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+<a class="anchor" aria-label="anchor" href="#fully-latent-principal-stratification-flps1"></a>
 </h2>
 <p>Fully Latent Principal Stratification (<strong>FLPS</strong>) is an extension of principal stratification.</p>
 </div>
@@ -128,10 +129,14 @@
 <li>Fit your FLPS model</li>
 </ul>
 <p>Now, provide information about your model. <code>runFLPS</code> internally coverts <code>inp_data</code> into the data format for <code>rstan</code> given the information, and runs FLPS.</p>
-<p>To avoid having to compile the Stan code every time you run it, you can pre-compile the code using the <code><a href="reference/modelBuilder.html">modelBuilder()</a></code> function along with the relevant measurement model. This function will compile the Stan code and store the resulting stanmodel object in the <code>flps</code> package directory. The next time you run <code><a href="reference/runFLPS.html">runFLPS()</a></code>, the code will skip the compilation step, making your analysis faster and more efficient. Otherwise, it will take a while for <code><a href="reference/runFLPS.html">runFLPS()</a></code> to compile the Stan code.</p>
+<p>To avoid having to compile the Stan code every time you run it, you can pre-compile the code using the <code><a href="reference/modelBuilder.html">modelBuilder()</a></code> function along with the relevant measurement model. This function will compile the Stan code and store the resulting stanmodel object in the <code>flps</code> package directory (If error, update the latest <code>Rcpp</code> package; After running <code><a href="reference/modelBuilder.html">modelBuilder()</a></code>, it is recommended to refresh R session). The next time you run <code><a href="reference/runFLPS.html">runFLPS()</a></code>, the code will skip the compilation step, making your analysis faster and more efficient. Otherwise, it will take a while for <code><a href="reference/runFLPS.html">runFLPS()</a></code> to compile the Stan code.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/modelBuilder.html">modelBuilder</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"rasch"</span><span class="op">)</span></span></code></pre></div>
+<p>Also, if you have any errors, try the latest <code>rstan</code> and <code>StanHeaders</code> packages.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rstan"</span>, <span class="st">"StanHeaders"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rstan"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://mc-stan.org/r-packages/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
 <span>  inp_data <span class="op">=</span> <span class="va">inp_data</span>,</span>
 <span>  outcome <span class="op">=</span> <span class="st">"Y"</span>,</span>
@@ -141,69 +146,80 @@
 <span>  lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span>
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Compiling Stan code...</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Gradient evaluation took 0.00086 seconds</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.6 seconds.</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Adjust your expectations accordingly!</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration:   1 / 1000 [  0%]  (Warmup)</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 100 / 1000 [ 10%]  (Warmup)</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 200 / 1000 [ 20%]  (Warmup)</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 300 / 1000 [ 30%]  (Warmup)</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 400 / 1000 [ 40%]  (Warmup)</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 500 / 1000 [ 50%]  (Warmup)</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 501 / 1000 [ 50%]  (Sampling)</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 600 / 1000 [ 60%]  (Sampling)</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 700 / 1000 [ 70%]  (Sampling)</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:  Elapsed Time: 12.862 seconds (Warm-up)</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:                9.492 seconds (Sampling)</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:                22.354 seconds (Total)</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Running the chains for more iterations may help. See</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="do">## https://mc-stan.org/misc/warnings.html#bulk-ess</span></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Running the chains for more iterations may help. See</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="do">## https://mc-stan.org/misc/warnings.html#tail-ess</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Compiling Stan code...</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Gradient evaluation took 0.000654 seconds</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.54 seconds.</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Adjust your expectations accordingly!</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration:   1 / 1000 [  0%]  (Warmup)</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 100 / 1000 [ 10%]  (Warmup)</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 200 / 1000 [ 20%]  (Warmup)</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 300 / 1000 [ 30%]  (Warmup)</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 400 / 1000 [ 40%]  (Warmup)</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 500 / 1000 [ 50%]  (Warmup)</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 501 / 1000 [ 50%]  (Sampling)</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 600 / 1000 [ 60%]  (Sampling)</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 700 / 1000 [ 70%]  (Sampling)</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1: </span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:  Elapsed Time: 11.496 seconds (Warm-up)</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:                8.236 seconds (Sampling)</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:                19.732 seconds (Total)</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="do">## Chain 1:</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="do">## Running the chains for more iterations may help. See</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="do">## https://mc-stan.org/misc/warnings.html#bulk-ess</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="do">## Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="do">## Running the chains for more iterations may help. See</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="do">## https://mc-stan.org/misc/warnings.html#tail-ess</span></span></code></pre></div>
 <p>The summary of results can be shown by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">##               mean     se_mean        sd        2.5%        25%        50%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## tau0     0.2292788 0.005370111 0.1353325 -0.04784608  0.1410179  0.2345303</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## tau1[1] -0.2288520 0.101820994 0.4674258 -0.92391714 -0.5972068 -0.3055769</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                75%     97.5%     n_eff      Rhat</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">## tau0    0.32088555 0.4838128 635.09305 0.9983786</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## tau1[1] 0.07374961 0.7885876  21.07418 1.0158583</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">##               mean     se_mean        sd        2.5%        25%        50%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">## tau0     0.2292788 0.005370111 0.1353325 -0.04784608  0.1410179  0.2345303</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## tau1[1] -0.2288520 0.101820994 0.4674258 -0.92391714 -0.5972068 -0.3055769</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                75%     97.5%     n_eff      Rhat</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## tau0    0.32088555 0.4838128 635.09305 0.9983786</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## tau1[1] 0.07374961 0.7885876  21.07418 1.0158583</span></span></code></pre></div>
 <p>The <code><a href="reference/flps_plot.html">flps_plot()</a></code> shows the plot related to FLPS models</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/causal_1.png" width="60%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"latent"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/latent_1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr>
+<ol>
+<li id="fn1"><p><strong>Acknowledgements.</strong> This package is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
 
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=flps" class="external-link">View on CRAN</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
 

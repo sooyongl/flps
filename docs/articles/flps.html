@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flps</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -74,12 +74,14 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sooyongl.github.io/flps/" class="external-link">flps</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; It is a demo</span></span></code></pre></div>
-<!-- badges: start -->
-<p><a href="https://CRAN.R-project.org/package=flps" class="external-link"><img src="https://www.r-pkg.org/badges/version/flps" alt="CRAN status"></a>
-<!-- badges: end --></p>
+<span><span class="co">#&gt; Version: 0.2.0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; It is a demo.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Acknowledgements. It is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="fully-latent-principal-stratification-flps">Fully Latent Principal Stratification (FLPS)<a class="anchor" aria-label="anchor" href="#fully-latent-principal-stratification-flps"></a>
+<h2 id="fully-latent-principal-stratification-flps">Fully Latent Principal Stratification (FLPS)<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a><a class="anchor" aria-label="anchor" href="#fully-latent-principal-stratification-flps"></a>
 </h2>
 <p>Fully Latent Principal Stratification (<strong>FLPS</strong>) is an
 extension of principal stratification.</p>
@@ -153,13 +155,20 @@ internally coverts <code>inp_data</code> into the data format for
 can pre-compile the code using the <code><a href="../reference/modelBuilder.html">modelBuilder()</a></code> function
 along with the relevant measurement model. This function will compile
 the Stan code and store the resulting stanmodel object in the
-<code>flps</code> package directory. The next time you run
+<code>flps</code> package directory (If error, update the latest
+<code>Rcpp</code> package; After running <code><a href="../reference/modelBuilder.html">modelBuilder()</a></code>, it
+is recommended to refresh R session). The next time you run
 <code><a href="../reference/runFLPS.html">runFLPS()</a></code>, the code will skip the compilation step, making
 your analysis faster and more efficient. Otherwise, it will take a while
 for <code><a href="../reference/runFLPS.html">runFLPS()</a></code> to compile the Stan code.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/modelBuilder.html">modelBuilder</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"rasch"</span><span class="op">)</span></span></code></pre></div>
+<p>Also, if you have any errors, try the latest <code>rstan</code> and
+<code>StanHeaders</code> packages</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/remove.packages.html" class="external-link">remove.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rstan"</span>, <span class="st">"StanHeaders"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rstan"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://mc-stan.org/r-packages/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
 <span>  inp_data <span class="op">=</span> <span class="va">inp_data</span>,</span>
 <span>  outcome <span class="op">=</span> <span class="st">"Y"</span>,</span>
@@ -168,50 +177,26 @@ for <code><a href="../reference/runFLPS.html">runFLPS()</a></code> to compile th
 <span>  lv_type <span class="op">=</span> <span class="st">"rasch"</span>,</span>
 <span>  lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span>
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">500</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Compiling Stan code...</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span></span>
-<span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000874 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.74 seconds.</span></span>
-<span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
-<span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Iteration:   1 / 1000 [  0%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 100 / 1000 [ 10%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 200 / 1000 [ 20%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 300 / 1000 [ 30%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 400 / 1000 [ 40%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 500 / 1000 [ 50%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 501 / 1000 [ 50%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 600 / 1000 [ 60%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 700 / 1000 [ 70%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 12.545 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                9.125 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                21.67 seconds (Total)</span></span>
-<span><span class="co">#&gt; Chain 1:</span></span>
-<span><span class="co">#&gt; Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span></span>
-<span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
-<span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#bulk-ess</span></span>
-<span><span class="co">#&gt; Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span></span>
-<span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
-<span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#tail-ess</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/flps_plot.html">flps_plot()</a></code> shows the plot related to FLPS
 models</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/causal_1.png" width="60%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>, type <span class="op">=</span> <span class="st">"latent"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/latent_1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr>
+<ol>
+<li id="fn1"><p><strong>Acknowledgements.</strong> This package is
+supported by the Institute of Education Sciences, U.S. Department of
+Education, through Grant R305D210036.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
   </div>
 
