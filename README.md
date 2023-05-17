@@ -5,7 +5,7 @@
 status](https://www.r-pkg.org/badges/version/flps)](https://CRAN.R-project.org/package=flps)
 <!-- badges: end -->
 
-## Fully Latent Principal Stratification (FLPS)
+## Fully Latent Principal Stratification (FLPS)[^1]
 
 Fully Latent Principal Stratification (**FLPS**) is an extension of
 principal stratification.
@@ -120,8 +120,8 @@ res <- runFLPS(
     ## 
     ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
     ## Chain 1: 
-    ## Chain 1: Gradient evaluation took 0.000696 seconds
-    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.96 seconds.
+    ## Chain 1: Gradient evaluation took 0.000654 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.54 seconds.
     ## Chain 1: Adjust your expectations accordingly!
     ## Chain 1: 
     ## Chain 1: 
@@ -138,9 +138,9 @@ res <- runFLPS(
     ## Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)
     ## Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)
     ## Chain 1: 
-    ## Chain 1:  Elapsed Time: 13.225 seconds (Warm-up)
-    ## Chain 1:                9.833 seconds (Sampling)
-    ## Chain 1:                23.058 seconds (Total)
+    ## Chain 1:  Elapsed Time: 11.496 seconds (Warm-up)
+    ## Chain 1:                8.236 seconds (Sampling)
+    ## Chain 1:                19.732 seconds (Total)
     ## Chain 1:
 
     ## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
@@ -177,3 +177,7 @@ flps_plot(res, type = "latent")
 ```
 
 <img src="man/figures/latent_1.png" width="60%" style="display: block; margin: auto;" />
+
+[^1]: **Acknowledgements.** This package is supported by the Institute
+    of Education Sciences, U.S. Department of Education, through Grant
+    R305D210036.

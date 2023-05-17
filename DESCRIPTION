@@ -1,7 +1,7 @@
 Package: flps
 Type: Package
 Title: Fully-Latent Principal Stratification
-Version: 0.1.0
+Version: 0.2.0
 Date: 2023-4-23
 Authors@R: 
     c(person(given = "Sooyong",
@@ -18,7 +18,7 @@ Authors@R:
            family = "Whittaker",
            role = "aut")
     )
-Description: Simulation and analysis of Fully-Latent Principal Stratification (FLPS) with measurement models. Sales & Pane (2019). <doi:10.1214/18-AOAS1196>.
+Description: Simulation and analysis of Fully-Latent Principal Stratification (FLPS) with measurement models. Sales & Pane (2019). <doi:10.1214/18-AOAS1196>. This package is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.
 License: GPL-3
 Imports: 
     rstan,

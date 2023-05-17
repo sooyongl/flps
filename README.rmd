@@ -13,7 +13,7 @@ library(flps)
 
 
 
-## Fully Latent Principal Stratification (FLPS)
+## Fully Latent Principal Stratification (FLPS)^[**Acknowledgements.** This package is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.]
 
 Fully Latent Principal Stratification (**FLPS**) is an extension of principal stratification.
 
@@ -139,3 +139,6 @@ flps_plot(res, type = "latent")
 # ggplot2::ggsave("man/figures/latent_1.png", a1)
 knitr::include_graphics('man/figures/latent_1.png')
 ```
+
+
+

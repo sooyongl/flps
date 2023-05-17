@@ -21,13 +21,8 @@ knitr::opts_chunk$set(
 library(flps)
 ```
 
-<!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/flps)](https://CRAN.R-project.org/package=flps)
-<!-- badges: end -->
 
-
-
-## Fully Latent Principal Stratification (FLPS)
+## Fully Latent Principal Stratification (FLPS)^[**Acknowledgements.** This package is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.]
 
 Fully Latent Principal Stratification (**FLPS**) is an extension of principal stratification.
 
