@@ -94,7 +94,7 @@ flps_causal <- function(object) {
   p +
     geom_point() +
     geom_abline(data = slp.data,
-                aes(intercept = .data$yint, slope = .data$slope,
+                aes(intercept = .data$intercept, slope = .data$slope,
                     color = .data$trt, linetype = .data$trt),
                 linewidth = 1) +
     scale_x_continuous(name = "Factor Scores") +
