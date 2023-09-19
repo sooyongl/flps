@@ -1,6 +1,6 @@
 #' The 'flps' package.
 #'
-#' @name FLPS-package
+#' @name flps-package
 #' @title Fully latent principal stratification
 #' @description The FLPS package conducts Bayesian analysis for fully latent principal stratification via rstan.
 #'
