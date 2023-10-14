@@ -4,7 +4,7 @@
 #' @param custom_data A list. should be provided with \code{custom_stan}.
 #' @param custom_stan A string. should be provided with \code{custom_data}.
 #' @param outcome A character indicating the name of an outcome variable
-#' @param group A character indicating the name of a treatment/control group variable
+#' @param trt A character indicating the name of a treatment/control group variable
 #' @param covariate A character indicating the names of covariate variables
 #' @param lv_model A description of the latent variable model, which is similar
 #' to the \pkg{lavaan} model syntax.
@@ -14,6 +14,7 @@
 #' }
 
 #' @param lv_type  A character indicating the type of latent variable models
+#' @multilevel A logical specifying multilevel structure.
 #' @param priors_input A list of priors. Otherwise, the default priors are used (N(0, 5). It takes three parameter names including \code{tau0}, \code{tau1}, and \code{omega}, which are the difference between groups, the principal effects, and the effect of latent factors on the outcome. If added, the length of \code{tau1} and \code{omega} must be matched with the number of factors.
 #' Examples of How to specify priors as follows:
 #'  \itemize{
@@ -51,7 +52,7 @@
 #' res <- runFLPS(
 #'    inp_data = inp_data,
 #'    outcome = "Y",
-#'    group = "Z",
+#'    trt = "Z",
 #'    covariate = c("X1"),
 #'    lv_type = "rasch",
 #'    lv_model = "F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10",
@@ -66,10 +67,11 @@ runFLPS <- function(inp_data = NULL,
                     custom_data = NULL,
                     custom_stan = NULL,
                     outcome = NULL,
-                    group = NULL,
+                    trt = NULL,
                     covariate = NULL,
                     lv_model = NULL,
                     lv_type = NULL,
+                    multilevel = FALSE,
                     priors_input = NULL,
                     stan_options = list(),
                     ...
@@ -81,10 +83,10 @@ runFLPS <- function(inp_data = NULL,
   # call ---------------------------------------------------------------
   .call <- match.call()
   argslist <- as.list(.call[-1])
+  all_args <- as.list(environment())
 
   # validate -----------------------------------------------------------
   validate_data(inp_data, custom_data, custom_stan)
-
 
   # data and code -------------------------------------------------------
   if(is.null(inp_data) && !is.null(custom_data) && !is.null(custom_stan)) {
@@ -95,10 +97,10 @@ runFLPS <- function(inp_data = NULL,
   }
 
   if (!is.null(inp_data) && is.null(custom_data)) {
-    flps_data_class <- makeFLPSdata(inp_data, outcome, group, covariate,
-                                    lv_model, lv_type)
+    flps_data_class <- makeFLPSdata(inp_data, outcome, trt, covariate,
+                                    lv_model, lv_type, ...)
 
-    flps_model <- loadRstan(lv_type = flps_data_class$lv_type)
+    flps_model <- loadRstan(lv_type = flps_data_class$lv_type, multilevel)
     # flps_model <- paste(readLines("inst/stan/flps_IRT_multi.stan"), collapse = "\n")
     # flps_model <- mkStanModel(lv_type = flps_data_class$lv_type)
   }

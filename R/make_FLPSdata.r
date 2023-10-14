@@ -98,8 +98,8 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
       nstud = nstu,
       nitem = nitem,
 
-      studentM = unname(obs.v.idx[,1]),
-      section = unname(obs.v.idx[,2]),
+      stud_idx = unname(obs.v.idx[,1]),
+      item_idx = unname(obs.v.idx[,2]),
 
       grad = obs.v.vector,
       X = covariate.data,
@@ -166,6 +166,8 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
 
     if(lv_type %in% c("LPA","LCA","MIXTURE","GMM")) {
       flps_data$nclass <- dotdotdot$nclass
+      flps_data$min_k <- min(obs.v.vector)
+      flps_data$max_k <- max(obs.v.vector)
 
       ## S3
       out <- S3class("flpsMixture")

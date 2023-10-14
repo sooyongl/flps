@@ -81,8 +81,10 @@ loadRstan <- function(lv_type = "2PL", multilevel = FALSE, force.string = FALSE)
   # stan_path <- "inst/stan"
   stan_list <- list.files(stan_path)
 
-  if(tolower(lv_type) != "lca") {
-    stan_list <- stan_list[grepl(toupper("flps"), toupper(stan_list))]
+  if(multilevel) {
+    stan_list <- stan_list[grepl("MULTI", toupper(stan_list))]
+  } else {
+    stan_list <- stan_list[grepl("SINGLE", toupper(stan_list))]
   }
 
   # stan_picked <- grepl("\\.stan", stan_list)
