@@ -1,5 +1,12 @@
 #' @noRd
-validate_data <- function(inp_data, custom_data, custom_stan) {
+validate_data <- function(all_args) {
+
+  inp_data <- all_args$inp_data
+  custom_data <- all_args$custom_data
+  custom_stan <- all_args$custom_stan
+
+  covariate <- all_args$covariate
+  multilevel <- all_args$multilevel
 
   # validate ----------------------------------------------------------------
   if(is.null(inp_data) && is.null(custom_data))
@@ -9,6 +16,14 @@ validate_data <- function(inp_data, custom_data, custom_stan) {
      (is.null(custom_data) && !is.null(custom_stan)))
     stop("Custom data and custome stan code must be provided at the same time!")
 
+
+  if(is.null(covariate)) {
+    stop("Covariates must be provided")
+  }
+
+  if(multilevel) {
+    stop("Multilevel structure will be supported")
+  }
 }
 
 #' @noRd
