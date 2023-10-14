@@ -2,3 +2,5 @@
 .Rproj.user
 CRAN-SUBMISSION
 cran-comments.md
+README_cache/
+test.R

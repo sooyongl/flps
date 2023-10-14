@@ -9,3 +9,5 @@
 ^README.rmd$
 ^\.github$
 ^CRAN-SUBMISSION$
+^test\.R$
+^README_cache$
