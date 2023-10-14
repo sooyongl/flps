@@ -20,9 +20,8 @@ devtools::install_github("sooyongl/flps")
 
 - Documentation is available [here](https://sooyongl.github.io/flps/).
 
-- For compiling errors on Windows, see the relevant guide. The
-  documentation is available at
-  [here](https://github.com/stan-dev/rstan/wiki/Configuring-C---Toolchain-for-Windows#r-42).
+- For compiling errors on Windows, see the relevant
+  [guide](https://github.com/stan-dev/rstan/wiki/Configuring-C---Toolchain-for-Windows#r-42).
 
 ## Basic working example
 
