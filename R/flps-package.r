@@ -10,6 +10,10 @@
 #'
 #' @references
 #' Sales, A. C., & Pane, J. F. (2019). The role of mastery learning in an intelligent tutoring system: Principal stratification on a latent variable. The Annals of Applied Statistics, 13(1), 420-443.
+#' Lee, S., Adam, S., Kang, H.-A., & Whittaker, T. A. (2022). Fully latent principal
+#' stratification: Combining ps with model-based measurement models. In The annual
+#' meeting of the psychometric society (pp. 287–298).
+#'
 #' @import Rcpp
 #' @import rstan
 #' @import methods
