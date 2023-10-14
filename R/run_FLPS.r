@@ -14,7 +14,7 @@
 #' }
 
 #' @param lv_type  A character indicating the type of latent variable models
-#' @multilevel A logical specifying multilevel structure.
+#' @param multilevel A logical specifying multilevel structure.
 #' @param priors_input A list of priors. Otherwise, the default priors are used (N(0, 5). It takes three parameter names including \code{tau0}, \code{tau1}, and \code{omega}, which are the difference between groups, the principal effects, and the effect of latent factors on the outcome. If added, the length of \code{tau1} and \code{omega} must be matched with the number of factors.
 #' Examples of How to specify priors as follows:
 #'  \itemize{
@@ -86,11 +86,11 @@ runFLPS <- function(inp_data = NULL,
   all_args <- as.list(environment())
 
   # validate -----------------------------------------------------------
-  validate_data(inp_data, custom_data, custom_stan)
+  validate_data(all_args)
 
   # data and code -------------------------------------------------------
   if(is.null(inp_data) && !is.null(custom_data) && !is.null(custom_stan)) {
-    flps_data_class <- makeFLPSdata(custom_data, outcome, group, covariate,
+    flps_data_class <- makeFLPSdata(custom_data, outcome, trt, covariate,
                                     lv_model, lv_type, custom = TRUE)
 
     flps_model <- custom_stan

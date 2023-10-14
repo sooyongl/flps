@@ -32,13 +32,13 @@ flps_latent <- function(object, type = "hist") {
   inputs <- as.list(object$call)
 
   outcome <- inputs$outcome
-  group <- inputs$group
+  trt <- inputs$trt
   covariate <- unlist(as.list(inputs$covariate[-1]))
 
   inp_data <- object$inp_data
 
   out.val <- inp_data[outcome]
-  group.val <- inp_data[group]
+  trt.val <- inp_data[trt]
   cov.val <- inp_data[covariate]
 
   fit <- summary(object, type = "measurement")
@@ -61,13 +61,13 @@ flps_causal <- function(object) {
   inputs <- as.list(object$call)
 
   outcome <- inputs$outcome
-  group <- inputs$group
+  trt <- inputs$trt
   covariate <- unlist(as.list(inputs$covariate[-1]))
 
   inp_data <- object$inp_data
 
   out.val <- unlist(inp_data[outcome])
-  group.val <- unlist(inp_data[group])
+  trt.val <- unlist(inp_data[trt])
   cov.val <- unlist(inp_data[covariate])
 
   fit <- summary(object)
@@ -84,8 +84,8 @@ flps_causal <- function(object) {
   p <- ggplot(inp_data, aes_string("lscores", outcome))
 
   yint <- mean(out.val, na.rm = TRUE) -
-    (mean(group.val, na.rm = TRUE)*tau0 +
-       mean(lat.val, na.rm = TRUE)*omega + mean(group.val*lat.val, na.rm = TRUE)*tau1)
+    (mean(trt.val, na.rm = TRUE)*tau0 +
+       mean(lat.val, na.rm = TRUE)*omega + mean(trt.val*lat.val, na.rm = TRUE)*tau1)
 
   slp.data <- data.frame(trt = factor(c("Treatment", "Contrl"), c("Treatment", "Contrl")),
                          intercept = yint,

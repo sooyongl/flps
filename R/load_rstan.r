@@ -1,15 +1,23 @@
 #' Generate compiled Stan object to facilitate the analysis
 #'
-#' @param type a character indicating the type of FLPS model. The default is \code{all} to compile all available Stan syntax.
+#' @param type a character indicating the type of FLPS model.
+#' The default is \code{all} to compile all available Stan syntax.
+#' @param multilevel a logical indicating multilevel Stan model.
 #'
 #' @return There's no return, but the compiled objects are saved in the package
 #' root directory.
 #'
 #' @export
-modelBuilder <- function(type = 'all') {
+modelBuilder <- function(type = 'all', multilevel = FALSE) {
 
   stan_path <- system.file("stan", package = "flps")
   stan_list <- list.files(stan_path,full.names = T)
+
+  if(multilevel) {
+    stan_list <- stan_list[grepl("MULTI", toupper(stan_list))]
+  } else {
+    stan_list <- stan_list[grepl("SINGLE", toupper(stan_list))]
+  }
 
   message("It will take a while....")
 
@@ -34,10 +42,10 @@ modelBuilder <- function(type = 'all') {
     }
   } else {
 
-    type <- ifelse(toupper(type) == "2PL", "IRT", toupper(type))
+    type <- ifelse(toupper(type) == "2PL", "irt", tolower(type))
 
     stanfiles <- stan_list[grepl("stan$", stan_list)]
-    stanfiles <- stanfiles[grepl(toupper(type), stanfiles)]
+    stanfiles <- stanfiles[grepl(type, stanfiles)]
 
     # stan_model <- paste(readLines(stanfiles), collapse = "\n")
     # cat(stan_model)
@@ -47,8 +55,8 @@ modelBuilder <- function(type = 'all') {
       # model_code = stan_model0,
       save_dso = TRUE,
       model_name = "FLPS"
-
     )
+
     saveRDS(stanmodel_obj, gsub("\\.stan", "\\.rds", stanfiles ))
 
     message(paste0(type, " model saved as ", gsub("\\.stan", "\\.rds", stanfiles )))

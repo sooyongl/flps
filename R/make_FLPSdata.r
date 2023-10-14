@@ -29,7 +29,7 @@ infoSetting <- function(...) {
 #'
 #' @param inp_data A matrix or a data frame
 #' @param outcome A character indicating the name of an outcome variable
-#' @param group A character indicating the name of a treatment/control group variable
+#' @param trt A character indicating the name of a treatment/control group variable
 #' @param covariate A character indicating the names of covariates variables
 #' @param lv_model A description of the latent variable model, which is similar to the lavaan model syntax.
 #' @param lv_type  A character indicating the type of latent variable models
@@ -38,7 +38,7 @@ infoSetting <- function(...) {
 #'
 #' @returns a S3 class for a corresponding measurement model
 #' @noRd
-makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type, custom = FALSE, ...) {
+makeFLPSdata <- function(inp_data, outcome, trt, covariate, lv_model, lv_type, custom = FALSE, ...) {
   # flps_data <- dataSetting() ; S3 class
   dotdotdot <- list(...)
 
@@ -48,7 +48,7 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
     out <- S3class("flpsData")
 
     out$outcome <- outcome
-    out$group <- group
+    out$trt <- trt
     out$covariate <- covariate
     out$lv_type <- class(inp_data)
     out$lv_model <- lv_model
@@ -60,7 +60,7 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
     inp_data <- data.frame(inp_data)
 
     outcome.data <- unname(unlist(inp_data[outcome]))
-    group.data <- unname(unlist(inp_data[group]))
+    trt.data <- unname(unlist(inp_data[trt]))
     covariate.data <- inp_data[covariate]
 
 
@@ -80,7 +80,7 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
     obs.v.name <- lv_model4[lv_model4 != ""]
     obs.v.matrix <- inp_data[obs.v.name]
 
-    obs.v.partial <- obs.v.matrix[group.data == 1, ]
+    obs.v.partial <- obs.v.matrix[trt.data == 1, ]
 
     nitem <- ncol(obs.v.partial)
     nstu <- nrow(obs.v.matrix)
@@ -105,7 +105,7 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
       X = covariate.data,
       ncov = ncol(covariate.data),
 
-      Z = group.data,
+      Z = trt.data,
       Y = outcome.data,
 
       firstitem = fi_idx,
@@ -176,7 +176,7 @@ makeFLPSdata <- function(inp_data, outcome, group, covariate, lv_model, lv_type,
 
     ## S3
     out$outcome <- outcome
-    out$group <- group
+    out$trt <- trt
     out$covariate <- covariate
     out$lv_type <- lv_type
     out$lv_model <- lv_model

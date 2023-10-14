@@ -1,6 +1,7 @@
 #' continuous.rda
 #'
 #' A data set containing continuous items information.
+#' Example data regenerated from CTA1
 #'
 #' @format A data frame with variables:
 #' \describe{
@@ -16,7 +17,7 @@
 #'   \item{q1-q20}{20 continuous items }
 #' }
 #'
-#' @source
+#' @source CTA1
 #' @examples
 #' data(continuous)
 #' summary(continuous)
@@ -25,6 +26,7 @@
 #' continuous.rda
 #'
 #' A data set containing binary items information.
+#' Example data regenerated from CTA1
 #'
 #' @format A data frame with variables:
 #' \describe{
@@ -40,7 +42,7 @@
 #'   \item{q1-q20}{20 binary items }
 #' }
 #'
-#' @source
+#' @source CTA1
 #' @examples
 #' data(binary)
 #' summary(binary)
@@ -49,6 +51,7 @@
 #' graded.rda
 #'
 #' A data set containing graded response items information.
+#' Example data regenerated from CTA1
 #'
 #' @format A data frame with variables:
 #' \describe{
@@ -64,7 +67,7 @@
 #'   \item{q1-q20}{20 graded response items }
 #' }
 #'
-#' @source
+#' @source CTA1
 #' @examples
 #' data(graded)
 #' summary(graded)
