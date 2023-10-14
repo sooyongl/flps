@@ -1,8 +1,8 @@
 Package: flps
 Type: Package
 Title: Fully-Latent Principal Stratification
-Version: 0.2.0
-Date: 2023-4-23
+Version: 1.0.0
+Date: 2023-10-14
 Authors@R: 
     c(person(given = "Sooyong",
              family = "Lee",
@@ -54,5 +54,6 @@ Collate:
 	'z_validate.r'
 	'plot_function.r'
 	'summary_function.r'
+	'data_desc.r'
 	'zzz.r'
 URL: https://sooyongl.github.io/flps/
