@@ -9,10 +9,11 @@ runFLPS(
   custom_data = NULL,
   custom_stan = NULL,
   outcome = NULL,
-  group = NULL,
+  trt = NULL,
   covariate = NULL,
   lv_model = NULL,
   lv_type = NULL,
+  multilevel = FALSE,
   priors_input = NULL,
   stan_options = list(),
   ...
@@ -27,7 +28,7 @@ runFLPS(
 
 \item{outcome}{A character indicating the name of an outcome variable}
 
-\item{group}{A character indicating the name of a treatment/control group variable}
+\item{trt}{A character indicating the name of a treatment/control group variable}
 
 \item{covariate}{A character indicating the names of covariate variables}
 
@@ -39,6 +40,8 @@ to the \pkg{lavaan} model syntax.
 }}
 
 \item{lv_type}{A character indicating the type of latent variable models}
+
+\item{multilevel}{A logical specifying multilevel structure.}
 
 \item{priors_input}{A list of priors. Otherwise, the default priors are used (N(0, 5). It takes three parameter names including \code{tau0}, \code{tau1}, and \code{omega}, which are the difference between groups, the principal effects, and the effect of latent factors on the outcome. If added, the length of \code{tau1} and \code{omega} must be matched with the number of factors.
 Examples of How to specify priors as follows:
@@ -83,7 +86,7 @@ inp_data <- flps::makeInpData(
 res <- runFLPS(
    inp_data = inp_data,
    outcome = "Y",
-   group = "Z",
+   trt = "Z",
    covariate = c("X1"),
    lv_type = "rasch",
    lv_model = "F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10",
