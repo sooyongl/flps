@@ -38,8 +38,8 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1) {
   // likelihood for the outcome 'Y'
   for (n in 1:nstud) {
     // Compute likelihood for Y
-    real mu_class1 = b00[1] + b01[1] * Z[n] + dot_product(X[n], betaY);
-    real mu_class2 = b00[2] + b01[2] * Z[n] + dot_product(X[n], betaY);
+    real mu_class1 = tau0[1] + tau1[1] * Z[n] + dot_product(X[n], betaY);
+    real mu_class2 = tau0[2] + tau1[2] * Z[n] + dot_product(X[n], betaY);
     target += log_mix(nu[n],
               normal_lpdf(Y[n] | mu_class1, sigY[1]),
               normal_lpdf(Y[n] | mu_class2, sigY[2])
@@ -59,8 +59,8 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1) {
   betaU ~ normal(0, 5);
 
   betaY ~ normal(0, 2);
-  b00 ~ normal(0, 2);
-  b01 ~ normal(0, 1);
+  tau0 ~ normal(0, 2);
+  tau1 ~ normal(0, 1);
   sigY ~ cauchy(0, 2.5);
 
  {{prior_type}}
@@ -75,19 +75,19 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1) {
   for (i in 1:nstud) {
       int g = sch[i];  // School for individual n
     // Compute likelihood for Y
-    real mu_class1 = b00[1]
+    real mu_class1 = tau0[1]
                      + uB_Y1[g]
-                     + b01_B[1] * cm_Z[g]
-                     + b01_W[1] * Z[i]
+                     + tau1_B[1] * cm_Z[g]
+                     + tau1_W[1] * Z[i]
 
                      + dot_product(cm_X[g], betaYB)
                      + dot_product(X[i], betaYW)
                      ;
 
-    real mu_class2 = b00[2]
+    real mu_class2 = tau0[2]
                      + uB_Y2[g]
-                     + b01_B[2] * cm_Z[g]
-                     + b01_W[2] * Z[i]
+                     + tau1_B[2] * cm_Z[g]
+                     + tau1_W[2] * Z[i]
 
                      + dot_product(cm_X[g], betaYB)
                      + dot_product(X[i], betaYW)
@@ -124,10 +124,10 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1) {
   betaUB ~ normal(0, 1);
   betaUW ~ normal(0, 2);
 
-  b01_W ~ normal(0, 1);
-  b01_B ~ normal(0, 1);
+  tau1_W ~ normal(0, 1);
+  tau1_B ~ normal(0, 1);
 
-  b00 ~ normal(0, 1);
+  tau0 ~ normal(0, 1);
   alphaB_nu ~ normal(0, 1);
 
   uB_Y1 ~ normal(0, sigmaYB[1]);

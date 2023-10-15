@@ -26,8 +26,8 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1) {
   real<lower=0, upper=1> mu_p;  // hyper parameter
   real<lower=0> sigma_p;        // hyper parameter
 
-  vector[nclass] b00;           // Intercept for Y for each class
-  vector[nclass] b01;           // Coefficient for Z for each class
+  vector[nclass] tau0;           // Intercept for Y for each class
+  vector[nclass] tau1;           // Coefficient for Z for each class
   vector<lower=0>[nclass] sigY; // Standard deviations for Y for each class
   {p_sig}")
 
@@ -46,12 +46,12 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1) {
   vector[ncov_lv2] betaUB;    // Between-
 
   // Treatment effects on the outcome
-  vector[nclass] b01_W;   // Within-
-  vector[nclass] b01_B;   // Between-
+  vector[nclass] tau1_W;   // Within-
+  vector[nclass] tau1_B;   // Between-
 
   // Outcome Mean differences by LC
   // Overall mean ?
-  vector[nclass] b00;
+  vector[nclass] tau0;
 
   // Intercept for class proportion
   real alphaB_nu;

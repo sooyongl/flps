@@ -82,6 +82,7 @@ runFLPS <- function(inp_data = NULL,
   .call <- match.call()
   argslist <- as.list(.call[-1])
   all_args <- as.list(environment())
+  all_args <- append(all_args, list(...))
 
   # validate -----------------------------------------------------------
   validate_data(all_args)

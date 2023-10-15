@@ -10,17 +10,79 @@
 #' @export
 flps_plot <- function(object, type = "latent") {
 
-  if(tolower(type) == "latent") {
+  type <- tolower(type)
+  type <- match.arg(type, c("latent","hist","causal","profile"))
+
+  if(type == "latent") {
 
     flps_latent(object, "hist")
   }
-  else if(tolower(type) == "causal") {
+  else if(type == "causal") {
 
     flps_causal(object)
+  }
+  else if(type == "profile") {
+
+    flps_profile(object)
+
   }
 
 }
 
+#' Class profiles by latent classes
+#'
+#' @param object a flps object
+#' @noRd
+#'
+flps_profile <- function(object, ...) {
+
+  inputs <- as.list(object$call)
+
+  out <- rstan::summary(object$flps_fit, ...)
+
+  out1 <- out$summary[grepl("^(p)\\[",rownames(out$summary)), ]
+
+  LatentClass <- paste0("C", gsub("p\\[(\\d+).*", "\\1", rownames(out1)))
+  param <- gsub("p.*\\,\\s*|\\]", "", rownames(out1))
+
+  out1 <- data.frame(out1, LatentClass, param)
+
+  out2 <- out$summary[grepl("^(nu)\\[",rownames(out$summary)), ]
+
+  LatentClass <- out2[, "mean"]
+  LatentClass[LatentClass >= 0.5] <- "C1"
+  LatentClass[LatentClass < 0.5] <- "C2"
+
+  class_counts = table(LatentClass) / sum(table(LatentClass))
+  class_probs <- data.frame(class_counts)
+
+  probs <- data.frame(out1)
+  merged_df <- merge(probs, class_probs, by = "LatentClass", all.x = TRUE)
+  merged_df$LatentClass <- paste0(merged_df$LatentClass, ":", merged_df$Freq)
+
+  p <- ggplot(merged_df) +
+
+    geom_line(aes(x = param, y = mean,
+                  group = LatentClass,
+                  color = LatentClass), linewidth = 1) +
+    geom_point(aes(x = param, y = mean,
+                   fill = LatentClass),
+               colour = "white",
+               shape=21, stroke = 2,
+               size = 4) +
+
+    labs(y = "Probs", x = "Items") +
+    scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
+    scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
+    scale_y_continuous(expand = c(0, 0)) +
+    theme_bw()
+
+  if(tolower(inputs$lv_type) == "lca") {
+    p <- p + coord_cartesian(ylim = c(0, 1))
+  }
+
+  p
+}
 
 #' Latent factor scores distribution by treatment assignment
 #'
@@ -71,6 +133,46 @@ flps_causal <- function(object) {
   cov.val <- unlist(inp_data[covariate])
 
   fit <- summary(object)
+
+  if(tolower(inputs$lv_type) %in% c("lca","lpa")) {
+
+    # message("Plots for mixture models are soon ready")
+    out2 <- fit[grepl("^(nu)\\[",rownames(fit)), ]
+
+    LatentClass <- out2[, "mean"]
+    LatentClass[LatentClass >= 0.5] <- "C1"
+    LatentClass[LatentClass < 0.5] <- "C2"
+    class_counts = table(LatentClass) / sum(table(LatentClass))
+    class_probs <- data.frame(class_counts)
+
+    tau0 <- fit[grepl("tau0", rownames(fit)), "mean"]
+    tau1 <- fit[grepl("tau1", rownames(fit)), "mean"]
+
+    cp <- class_probs$Freq
+
+    TRT = rep(c(0,1), 1000)
+    C1 = tau1[1]*TRT + tau0[1]
+    C2 = tau1[2]*TRT + tau0[2]
+
+    dt <- rbind(
+      data.frame(Yfitted = C1, TRT, C = paste0("C1:", cp[1])),
+      data.frame(Yfitted = C2, TRT, C = paste0("C2:", cp[2]))
+    )
+
+    dt$TRT <- factor(dt$TRT, labels = c("Control","Treatment"))
+
+    ggplot(dt) +
+      geom_bar(aes(TRT, Yfitted, fill = C), color = "white",
+               stat = 'summary', fun = mean,
+               position = position_dodge()
+      ) +
+      scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
+      theme_bw(base_size = 14)
+
+
+  } else {
+
+
   lat.val <- fit[grepl("fsc", rownames(fit)), "mean"]
   inp_data$lscores <- lat.val
 
@@ -87,7 +189,8 @@ flps_causal <- function(object) {
     (mean(trt.val, na.rm = TRUE)*tau0 +
        mean(lat.val, na.rm = TRUE)*omega + mean(trt.val*lat.val, na.rm = TRUE)*tau1)
 
-  slp.data <- data.frame(trt = factor(c("Treatment", "Contrl"), c("Treatment", "Contrl")),
+  slp.data <- data.frame(trt = factor(c("Treatment", "Contrl"),
+                                      c("Treatment", "Contrl")),
                          intercept = yint,
                          slope = c(tau0+tau1, tau0))
 
@@ -101,6 +204,8 @@ flps_causal <- function(object) {
     scale_linetype_discrete(name = "") +
     scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
     theme_bw()
+
+  }
 }
 
 #' Plot

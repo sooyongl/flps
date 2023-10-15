@@ -22,9 +22,9 @@ transparams_stan <- function(type = "irt", cate = TRUE, level = 1) {
   }
 
   // PS effects-Difference in Y on Z coefficient between classes
-  real b1 = b01[2] - b01[1];
+  real dtau1 = tau1[2] - tau1[1];
   // Omega-Difference in intercept in Y between classes
-  real a1 = b00[2] - b00[1]; ",.open = "{{", .close = "}}")
+  real omega = tau0[2] -  tau0[1]; ",.open = "{{", .close = "}}")
 
 
     } else {
@@ -45,10 +45,10 @@ transparams_stan <- function(type = "irt", cate = TRUE, level = 1) {
   }
 
   // PS effects-Difference in Y on Z coefficient between classes
-  real b1W = b01_W[2] - b01_W[1];
-  real b1B = b01_B[2] - b01_B[1];
+  real dtau1W = tau1_W[2] - tau1_W[1];
+  real dtau1B = tau1_B[2] - tau1_B[1];
   // Omega-Difference in intercept in Y between classes
-  real a1 = b00[2] - b00[1]; ",
+  real omega = tau0[2] - tau0[1]; ",
 
   .open = "{{", .close = "}}")
     }
