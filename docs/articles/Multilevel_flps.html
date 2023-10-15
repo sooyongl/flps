@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Multilevel FLPS">
-<meta property="og:description" content="flps">
+<meta property="og:description" content="FLPS based on multilevel structure.
+">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -93,9 +94,128 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sooyongl.github.io/flps/" class="external-link">flps</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="multilevel-flps">Multilevel FLPS<a class="anchor" aria-label="anchor" href="#multilevel-flps"></a>
+<h2 id="multilevel-flps-being-tested">Multilevel FLPS (being tested)<a class="anchor" aria-label="anchor" href="#multilevel-flps-being-tested"></a>
 </h2>
-<p>It will be soon updated.</p>
+<div class="section level3">
+<h3 id="flps-based-on-multilevel-latent-class-analysis">FLPS based on multilevel Latent Class analysis<a class="anchor" aria-label="anchor" href="#flps-based-on-multilevel-latent-class-analysis"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">$</span><span class="va">summary</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">est</span><span class="op">$</span><span class="va">par_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Tau0</span></span>
+<span><span class="va">est</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">par_name</span>, <span class="st">"^b00"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">X2.5.</span>, <span class="va">X97.5.</span>, <span class="va">par_name</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate_if</span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          mean    sd  X2.5. X97.5. par_name</span></span>
+<span><span class="co">#&gt; b00[1] -1.014 0.104 -1.219 -0.807   b00[1]</span></span>
+<span><span class="co">#&gt; b00[2] -0.174 0.134 -0.436  0.094   b00[2]</span></span>
+<span></span>
+<span><span class="co"># Tau1</span></span>
+<span><span class="va">est</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">par_name</span>, <span class="st">"^b01"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">X2.5.</span>, <span class="va">X97.5.</span>, <span class="va">par_name</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate_if</span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            mean    sd  X2.5. X97.5. par_name</span></span>
+<span><span class="co">#&gt; b01_W[1]  0.032 0.714 -1.350  1.454 b01_W[1]</span></span>
+<span><span class="co">#&gt; b01_W[2] -0.150 0.713 -1.545  1.240 b01_W[2]</span></span>
+<span><span class="co">#&gt; b01_B[1] -0.028 0.714 -1.455  1.350 b01_B[1]</span></span>
+<span><span class="co">#&gt; b01_B[2] -0.093 0.713 -1.456  1.318 b01_B[2]</span></span>
+<span></span>
+<span><span class="co"># Covariate effects on Y</span></span>
+<span><span class="va">est</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">par_name</span>, <span class="st">"^betaY"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">X2.5.</span>, <span class="va">X97.5.</span>, <span class="va">par_name</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate_if</span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             mean    sd  X2.5. X97.5.  par_name</span></span>
+<span><span class="co">#&gt; betaYW[1] -0.074 0.017 -0.107 -0.040 betaYW[1]</span></span>
+<span><span class="co">#&gt; betaYW[2]  0.017 0.025 -0.032  0.067 betaYW[2]</span></span>
+<span><span class="co">#&gt; betaYW[3]  0.019 0.002  0.015  0.023 betaYW[3]</span></span>
+<span><span class="co">#&gt; betaYW[4]  0.175 0.012  0.151  0.199 betaYW[4]</span></span>
+<span><span class="co">#&gt; betaYB[1] -0.006 0.183 -0.370  0.351 betaYB[1]</span></span>
+<span><span class="co">#&gt; betaYB[2]  0.109 0.059 -0.009  0.229 betaYB[2]</span></span>
+<span></span>
+<span><span class="co"># Covariate effects on Class memberships</span></span>
+<span><span class="va">est</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">par_name</span>, <span class="st">"^betaU"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">X2.5.</span>, <span class="va">X97.5.</span>, <span class="va">par_name</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate_if</span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             mean    sd  X2.5. X97.5.  par_name</span></span>
+<span><span class="co">#&gt; betaUW[1] -0.446 0.079 -0.604 -0.290 betaUW[1]</span></span>
+<span><span class="co">#&gt; betaUW[2]  0.110 0.118 -0.129  0.340 betaUW[2]</span></span>
+<span><span class="co">#&gt; betaUW[3] -0.095 0.010 -0.116 -0.077 betaUW[3]</span></span>
+<span><span class="co">#&gt; betaUW[4] -0.853 0.083 -1.024 -0.698 betaUW[4]</span></span>
+<span><span class="co">#&gt; betaUB[1] -0.245 0.732 -1.694  1.163 betaUB[1]</span></span>
+<span><span class="co">#&gt; betaUB[2] -0.318 0.418 -1.160  0.502 betaUB[2]</span></span>
+<span></span>
+<span><span class="co"># Class 1 profiles</span></span>
+<span><span class="va">est</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">par_name</span>, <span class="st">"^p\\[1"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">X2.5.</span>, <span class="va">X97.5.</span>, <span class="va">par_name</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate_if</span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          mean    sd X2.5. X97.5. par_name</span></span>
+<span><span class="co">#&gt; p[1,1]  0.138 0.014 0.111  0.165   p[1,1]</span></span>
+<span><span class="co">#&gt; p[1,2]  0.043 0.012 0.021  0.067   p[1,2]</span></span>
+<span><span class="co">#&gt; p[1,3]  0.823 0.015 0.791  0.852   p[1,3]</span></span>
+<span><span class="co">#&gt; p[1,4]  0.792 0.016 0.760  0.821   p[1,4]</span></span>
+<span><span class="co">#&gt; p[1,5]  0.686 0.020 0.644  0.724   p[1,5]</span></span>
+<span><span class="co">#&gt; p[1,6]  0.634 0.022 0.590  0.676   p[1,6]</span></span>
+<span><span class="co">#&gt; p[1,7]  0.772 0.018 0.735  0.806   p[1,7]</span></span>
+<span><span class="co">#&gt; p[1,8]  0.099 0.020 0.059  0.138   p[1,8]</span></span>
+<span><span class="co">#&gt; p[1,9]  0.789 0.017 0.755  0.819   p[1,9]</span></span>
+<span><span class="co">#&gt; p[1,10] 0.552 0.026 0.500  0.601  p[1,10]</span></span>
+<span><span class="co">#&gt; p[1,11] 0.616 0.025 0.566  0.662  p[1,11]</span></span>
+<span><span class="co">#&gt; p[1,12] 0.562 0.026 0.509  0.614  p[1,12]</span></span>
+<span><span class="co">#&gt; p[1,13] 0.026 0.019 0.000  0.068  p[1,13]</span></span>
+<span><span class="co">#&gt; p[1,14] 0.450 0.031 0.386  0.510  p[1,14]</span></span>
+<span><span class="co">#&gt; p[1,15] 0.075 0.025 0.026  0.124  p[1,15]</span></span>
+<span><span class="co">#&gt; p[1,16] 0.482 0.031 0.420  0.542  p[1,16]</span></span>
+<span><span class="co">#&gt; p[1,17] 0.378 0.033 0.310  0.442  p[1,17]</span></span>
+<span><span class="co">#&gt; p[1,18] 0.580 0.030 0.521  0.635  p[1,18]</span></span>
+<span><span class="co">#&gt; p[1,19] 0.536 0.031 0.474  0.595  p[1,19]</span></span>
+<span><span class="co">#&gt; p[1,20] 0.668 0.027 0.613  0.719  p[1,20]</span></span>
+<span></span>
+<span><span class="co"># Class 2 profiles</span></span>
+<span><span class="va">est</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">par_name</span>, <span class="st">"^p\\[2"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">X2.5.</span>, <span class="va">X97.5.</span>, <span class="va">par_name</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate_if</span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          mean    sd X2.5. X97.5. par_name</span></span>
+<span><span class="co">#&gt; p[2,1]  0.123 0.015 0.095  0.152   p[2,1]</span></span>
+<span><span class="co">#&gt; p[2,2]  0.209 0.017 0.177  0.244   p[2,2]</span></span>
+<span><span class="co">#&gt; p[2,3]  0.942 0.013 0.915  0.968   p[2,3]</span></span>
+<span><span class="co">#&gt; p[2,4]  0.950 0.013 0.924  0.974   p[2,4]</span></span>
+<span><span class="co">#&gt; p[2,5]  0.882 0.018 0.845  0.917   p[2,5]</span></span>
+<span><span class="co">#&gt; p[2,6]  0.857 0.020 0.816  0.896   p[2,6]</span></span>
+<span><span class="co">#&gt; p[2,7]  0.963 0.014 0.935  0.992   p[2,7]</span></span>
+<span><span class="co">#&gt; p[2,8]  0.482 0.026 0.431  0.534   p[2,8]</span></span>
+<span><span class="co">#&gt; p[2,9]  0.995 0.006 0.980  1.000   p[2,9]</span></span>
+<span><span class="co">#&gt; p[2,10] 0.915 0.020 0.874  0.954  p[2,10]</span></span>
+<span><span class="co">#&gt; p[2,11] 0.948 0.017 0.914  0.981  p[2,11]</span></span>
+<span><span class="co">#&gt; p[2,12] 0.841 0.023 0.796  0.884  p[2,12]</span></span>
+<span><span class="co">#&gt; p[2,13] 0.445 0.027 0.392  0.499  p[2,13]</span></span>
+<span><span class="co">#&gt; p[2,14] 0.807 0.026 0.755  0.857  p[2,14]</span></span>
+<span><span class="co">#&gt; p[2,15] 0.587 0.031 0.527  0.648  p[2,15]</span></span>
+<span><span class="co">#&gt; p[2,16] 0.925 0.021 0.881  0.965  p[2,16]</span></span>
+<span><span class="co">#&gt; p[2,17] 0.876 0.026 0.824  0.927  p[2,17]</span></span>
+<span><span class="co">#&gt; p[2,18] 0.810 0.026 0.760  0.860  p[2,18]</span></span>
+<span><span class="co">#&gt; p[2,19] 0.706 0.028 0.650  0.761  p[2,19]</span></span>
+<span><span class="co">#&gt; p[2,20] 0.936 0.018 0.899  0.970  p[2,20]</span></span>
+<span></span>
+<span><span class="co"># Class membership</span></span>
+<span><span class="va">classp</span> <span class="op">&lt;-</span> <span class="va">est</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">par_name</span>, <span class="st">"^nu"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span>, <span class="va">X2.5.</span>, <span class="va">X97.5.</span>, <span class="va">par_name</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">mutate_if</span><span class="op">(</span><span class="va">is.numeric</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">mean</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">class_membership</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">classp</span> <span class="op">&gt;</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">class_membership</span><span class="op">)</span></span>
+<span><span class="co">#&gt; class_membership</span></span>
+<span><span class="co">#&gt;    0    1 </span></span>
+<span><span class="co">#&gt; 1897 2869</span></span></code></pre></div>
+</div>
 </div>
   </div>
 
@@ -116,7 +236,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
