@@ -89,10 +89,11 @@ The `runFLPS` function internally converts `inp_data` into the appropriate data 
 
 In order to optimize your workflow, consider utilizing the `modelBuilder()` function to pre-compile the Stan code, especially if you're working with a relevant measurement model. This function compiles the `Stan` code and stores the resulting stanmodel object within the `flps` package directory. 
 
-Note: Should you encounter an error, ensure that your `Rcpp` package is updated to the latest version. Additionally, **refreshing your R session** is recommended after executing `modelBuilder()` to avoid potential conflicts. Upon subsequent usage of `runFLPS()`, this pre-compilation ensures the function operates more swiftly and efficiently by bypassing the compilation step, providing a smoother and faster analytical process.
+Note: Should you encounter an error, ensure that your `Rcpp` package is updated to the latest version. Additionally, **refreshing your R session** is recommended after executing `modelBuilder()` to avoid potential conflicts. Upon subsequent usage of `runFLPS()`, this pre-compilation ensures the function operates more swiftly and efficiently by bypassing the compilation step, providing a smoother and faster analytical process. Once the Stan model is compiled, use `importModel()` to bring in the compiled Stan code. This code can then be provided to the `compiled_stan` argument in `runFLPS.` If this step is omitted, `runFLPS()` will compile the Stan code during each execution of FLPS.
 
 ```{r eval = F}
 modelBuilder(type = "rasch")
+complied <- importModel(type = "rasch")
 ```
 
 
@@ -109,12 +110,13 @@ Now, execute your FLPS model.
 ```{r eval = F}
 res <- runFLPS(
   inp_data = inp_data,
+  # complied_stan = complied # if necessary
   outcome = "Y",
   trt = "Z",
   covariate = c("X1"),
   lv_type = "rasch",
   lv_model = "F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10",
-  stan_options = list(iter = 1000, warmup = 500, cores = 1, chains = 2)
+  stan_options = list(iter = 1000, warmup = 500, cores = 1, chains = 1)
 )
 ```
 
