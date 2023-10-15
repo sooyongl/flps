@@ -1,8 +1,10 @@
 ---
 title: "FLPS with mixture modeling"
+description: >
+  FLPS based on mixutre modeling.
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{flps}
+  %\VignetteIndexEntry{FLPS with mixture modeling}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,22 +17,26 @@ knitr::opts_chunk$set(
   # fig.width = 4,
   out.width = '55%'
 )
+
 ```
 
 
-```{r}
+```{r eval = T}
 library(flps)
 ```
 
 ## Latent-class-analysis-based FLPS
 
+### Example data
+
 ```{r}
 data(binary)
 ```
 
+### Fit LCA model
 
 ```{r}
-binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+binary <- binary[c(sample(which(binary$trt == 1), 200), sample(which(binary$trt == 0), 200)),]
 
 res <- runFLPS(
   inp_data = binary,
@@ -39,17 +45,45 @@ res <- runFLPS(
   covariate = c("sex","race","pretest","stdscore"),
   lv_type = "lca",
   lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  nclass = 2,
   stan_options = list(iter = 5000, cores = 1, chains = 2)
 )
+```
+
+```{r eval = T, echo = F}
+res <- readRDS("results/lcafit.RDS")
+```
+
+### Results
+
+```{r eval = T}
+summary(res,type = "classprop")
+```
+
+
+```{r eval = T}
+flps_plot(res,type = "profile")
+```
+
+
+```{r eval = T}
+summary(res,type = "causal")
+```
+
+```{r eval = T}
+flps_plot(res,type = "causal")
 ```
 
 
 ## Latent-profile-analysis-based FLPS
 
-```{r eval = T}
+### Example data
+
+```{r eval = F}
 data(continuous)
 ```
 
+### Fit LPA model
 
 ```{r}
 continuous <- continuous[c(sample(which(continuous$trt == 1), 500), sample(which(continuous$trt == 0), 500)),]
@@ -61,6 +95,31 @@ res <- runFLPS(
   covariate = c("sex","race","pretest","stdscore"),
   lv_type = "lpa",
   lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  nclass = 2,
   stan_options = list(iter = 5000, cores = 1, chains = 2)
 )
+```
+
+```{r eval = T, echo = F}
+res <- readRDS("results/lpafit.RDS")
+```
+
+### Results
+
+```{r eval = T}
+summary(res,type = "classprop")
+```
+
+
+```{r eval = T}
+flps_plot(res,type = "profile")
+```
+
+
+```{r eval = T}
+summary(res,type = "causal")
+```
+
+```{r eval = T}
+flps_plot(res,type = "causal")
 ```

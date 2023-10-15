@@ -1,8 +1,10 @@
 ---
 title: "FLPS with different measurement models"
+description: >
+  FLPS based on different measurement models.
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{flps}
+  %\VignetteIndexEntry{FLPS with different measurement models}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +24,9 @@ knitr::opts_chunk$set(
 library(flps)
 ```
 
-## FLPS with Rasch model
+## Example FLPS models
+
+### FLPS with Rasch model
 
 ```{r}
 data(binary)
@@ -43,7 +47,7 @@ res <- runFLPS(
 )
 ```
 
-## FLPS with 2PL model
+### FLPS with 2PL model
 
 ```{r}
 data(binary)
@@ -65,7 +69,7 @@ res <- runFLPS(
 ```
 
 
-## FLPS with graded response model
+### FLPS with graded response model
 
 ```{r}
 data(graded)
@@ -86,7 +90,7 @@ res <- runFLPS(
 )
 ```
 
-## FLPS with CFA model
+### FLPS with CFA model
 
 ```{r}
 data(continuous)

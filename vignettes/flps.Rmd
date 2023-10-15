@@ -1,5 +1,7 @@
 ---
 title: "flps"
+description: >
+  Basic usage of flps package with Rasch model
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{flps}
