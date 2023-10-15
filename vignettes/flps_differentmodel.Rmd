@@ -1,0 +1,109 @@
+---
+title: "FLPS with different measurement models"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{flps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval = F,
+  collapse = TRUE,
+  comment = "#>",
+  # fig.width = 4,
+  out.width = '55%'
+)
+```
+
+
+```{r}
+library(flps)
+```
+
+## FLPS with Rasch model
+
+```{r}
+data(binary)
+```
+
+
+```{r}
+binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+
+res <- runFLPS(
+  inp_data = binary,
+  outcome = "Y",
+  trt = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "rasch",
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 5000, cores = 1, chains = 2)
+)
+```
+
+## FLPS with 2PL model
+
+```{r}
+data(binary)
+```
+
+
+```{r}
+binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+
+res <- runFLPS(
+  inp_data = binary,
+  outcome = "Y",
+  trt = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "irt",
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 5000, cores = 1, chains = 2)
+)
+```
+
+
+## FLPS with graded response model
+
+```{r}
+data(graded)
+```
+
+
+```{r}
+binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+
+res <- runFLPS(
+  inp_data = binary,
+  outcome = "Y",
+  trt = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "grm",
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 5000, cores = 1, chains = 2)
+)
+```
+
+## FLPS with CFA model
+
+```{r}
+data(continuous)
+```
+
+
+```{r}
+binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+
+res <- runFLPS(
+  inp_data = binary,
+  outcome = "Y",
+  trt = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "sem",
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 5000, cores = 1, chains = 2)
+)
+```
+

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flps</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -28,6 +28,22 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/flpsMixture.html">FLPS with mixture modeling</a>
+    </li>
+    <li>
+      <a href="../articles/flps_differentmodel.html">FLPS with different measurement models</a>
+    </li>
+    <li>
+      <a href="../articles/Multilevel_flps.html">Multilevel FLPS</a>
+    </li>
+  </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -55,10 +71,11 @@
 <span>  custom_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  custom_stan <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  outcome <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trt <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lv_model <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lv_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  multilevel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  priors_input <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -83,7 +100,7 @@
 <dd><p>A character indicating the name of an outcome variable</p></dd>
 
 
-<dt>group</dt>
+<dt>trt</dt>
 <dd><p>A character indicating the name of a treatment/control group variable</p></dd>
 
 
@@ -100,6 +117,10 @@ to the <span class="pkg">lavaan</span> model syntax.</p><ul><li><p><code>=~</cod
 
 <dt>lv_type</dt>
 <dd><p>A character indicating the type of latent variable models</p></dd>
+
+
+<dt>multilevel</dt>
+<dd><p>A logical specifying multilevel structure.</p></dd>
 
 
 <dt>priors_input</dt>
@@ -166,7 +187,7 @@ Examples of How to specify priors as follows:</p><ul><li><p><code>list(tau0 = c(
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">runFLPS</span><span class="op">(</span></span></span>
 <span class="r-in"><span>   inp_data <span class="op">=</span> <span class="va">inp_data</span>,</span></span>
 <span class="r-in"><span>   outcome <span class="op">=</span> <span class="st">"Y"</span>,</span></span>
-<span class="r-in"><span>   group <span class="op">=</span> <span class="st">"Z"</span>,</span></span>
+<span class="r-in"><span>   trt <span class="op">=</span> <span class="st">"Z"</span>,</span></span>
 <span class="r-in"><span>   covariate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X1"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>   lv_type <span class="op">=</span> <span class="st">"rasch"</span>,</span></span>
 <span class="r-in"><span>   lv_model <span class="op">=</span> <span class="st">"F =~ v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10"</span>,</span></span>
@@ -176,8 +197,8 @@ Examples of How to specify priors as follows:</p><ul><li><p><code>list(tau0 = c(
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 0.000683 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 6.83 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 0.001373 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 13.73 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -194,16 +215,10 @@ Examples of How to specify priors as follows:</p><ul><li><p><code>list(tau0 = c(
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 12.404 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                9.611 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                22.015 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 33.628 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                20.158 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                53.786 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 10 divergent transitions after warmup. See</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> to find out why this is a problem and how to eliminate them.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There were 1 chains where the estimated Bayesian Fraction of Missing Information was low. See</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#bfmi-low</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Examine the pairs() plot to diagnose sampling problems</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The largest R-hat is NA, indicating chains have not mixed.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#r-hat</span>

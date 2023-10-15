@@ -7,7 +7,16 @@
     <loc>http://sooyongl.github.io/flps/articles/flps.html</loc>
   </url>
   <url>
+    <loc>http://sooyongl.github.io/flps/articles/flpsMixture.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/articles/flps_differentmodel.html</loc>
+  </url>
+  <url>
     <loc>http://sooyongl.github.io/flps/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/articles/Multilevel_flps.html</loc>
   </url>
   <url>
     <loc>http://sooyongl.github.io/flps/authors.html</loc>
@@ -20,6 +29,12 @@
   </url>
   <url>
     <loc>http://sooyongl.github.io/flps/news/index.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/reference/binary.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/reference/continuous.html</loc>
   </url>
   <url>
     <loc>http://sooyongl.github.io/flps/reference/FLPS-package.html</loc>
@@ -35,6 +50,9 @@
   </url>
   <url>
     <loc>http://sooyongl.github.io/flps/reference/genLVinfo.html</loc>
+  </url>
+  <url>
+    <loc>http://sooyongl.github.io/flps/reference/graded.html</loc>
   </url>
   <url>
     <loc>http://sooyongl.github.io/flps/reference/index.html</loc>
