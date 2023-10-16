@@ -3,7 +3,7 @@
 \docType{data}
 \name{binary}
 \alias{binary}
-\title{continuous.rda}
+\title{binary.rda}
 \format{
 A data frame with variables:
 \describe{
@@ -13,10 +13,28 @@ A data frame with variables:
   \item{race}{0 = White; 1 = Others}
   \item{pretest}{Pre test scores}
   \item{stdscore}{Standardized scores}
-  \item{stdscore}{Standardized scores}
   \item{trt}{Treatment assignment; 0 = control, 1 = treatment}
   \item{Y}{Outcome}
-  \item{q1-q20}{20 binary items }
+  \item{q1}{Binary item}
+  \item{q2}{Binary item}
+  \item{q3}{Binary item}
+  \item{q4}{Binary item}
+  \item{q5}{Binary item}
+  \item{q6}{Binary item}
+  \item{q7}{Binary item}
+  \item{q8}{Binary item}
+  \item{q9}{Binary item}
+  \item{q10}{Binary item}
+  \item{q11}{Binary item}
+  \item{q12}{Binary item}
+  \item{q13}{Binary item}
+  \item{q14}{Binary item}
+  \item{q15}{Binary item}
+  \item{q16}{Binary item}
+  \item{q17}{Binary item}
+  \item{q18}{Binary item}
+  \item{q19}{Binary item}
+  \item{q20}{Binary item}
 }
 }
 \source{

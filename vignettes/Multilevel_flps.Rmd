@@ -17,8 +17,6 @@ knitr::opts_chunk$set(
   # fig.width = 4,
   out.width = '55%'
 )
-library(rstan)
-library(tidyverse)
 ```
 
 

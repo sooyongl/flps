@@ -162,7 +162,7 @@ flps_causal <- function(object) {
     dt$TRT <- factor(dt$TRT, labels = c("Control","Treatment"))
 
     ggplot(dt) +
-      geom_bar(aes(TRT, Yfitted, fill = C), color = "white",
+      geom_bar(aes_string("TRT", "Yfitted", fill = "C"), color = "white",
                stat = 'summary', fun = mean,
                position = position_dodge()
       ) +

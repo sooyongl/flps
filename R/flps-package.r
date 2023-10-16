@@ -19,7 +19,7 @@
 #' @import methods
 #' @import ggplot2
 #' @import glue
-#' @importFrom stats runif rnorm rmultinom rlnorm quantile var cov cor
+#' @importFrom stats runif rnorm rmultinom rlnorm quantile var cov cor as.formula aggregate
 #' @importFrom utils read.csv packageVersion head tail
 #' @importFrom MASS mvrnorm
 #' @importFrom mvtnorm rmvnorm

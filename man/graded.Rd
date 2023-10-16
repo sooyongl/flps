@@ -13,10 +13,28 @@ A data frame with variables:
   \item{race}{0 = White; 1 = Others}
   \item{pretest}{Pre test scores}
   \item{stdscore}{Standardized scores}
-  \item{stdscore}{Standardized scores}
   \item{trt}{Treatment assignment; 0 = control, 1 = treatment}
   \item{Y}{Outcome}
-  \item{q1-q20}{20 graded response items }
+  \item{q1}{Graded response item}
+  \item{q2}{Graded response item}
+  \item{q3}{Graded response item}
+  \item{q4}{Graded response item}
+  \item{q5}{Graded response item}
+  \item{q6}{Graded response item}
+  \item{q7}{Graded response item}
+  \item{q8}{Graded response item}
+  \item{q9}{Graded response item}
+  \item{q10}{Graded response item}
+  \item{q11}{Graded response item}
+  \item{q12}{Graded response item}
+  \item{q13}{Graded response item}
+  \item{q14}{Graded response item}
+  \item{q15}{Graded response item}
+  \item{q16}{Graded response item}
+  \item{q17}{Graded response item}
+  \item{q18}{Graded response item}
+  \item{q19}{Graded response item}
+  \item{q20}{Graded response item}
 }
 }
 \source{

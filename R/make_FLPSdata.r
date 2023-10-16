@@ -109,8 +109,8 @@ makeFLPSdata <- function(inp_data, outcome, trt, covariate, lv_model, lv_type, m
 
       # Data
       grad = obs.v.vector,
-      X = covariate.data_1 %>% as.matrix(),
-      cm_X = covariate.data_2 %>% as.matrix(),
+      X = as.matrix(covariate.data_1),
+      cm_X = as.matrix(covariate.data_2),
       cm_Z = cm_Z,
       Z = trt.data,
       Y = outcome.data
