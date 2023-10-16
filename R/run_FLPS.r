@@ -89,10 +89,13 @@ runFLPS <- function(inp_data = NULL,
 
   # data and code -------------------------------------------------------
   flps_data_class <- makeFLPSdata(inp_data, outcome, trt, covariate,
-                                  lv_model, lv_type, ...)
+                                  lv_model, lv_type, multilevel,
+                                  nclass = all_args$nclass,
+                                  group_id = all_args$group_id)
 
   if(is.null(complied_stan)) {
     flps_model <- loadRstan(lv_type = flps_data_class$lv_type, multilevel)
+
   } else {
     flps_model <- compiled_stan
   }
@@ -114,25 +117,22 @@ runFLPS <- function(inp_data = NULL,
 
 
   if(!inherits(flps_model, "stanmodel")) {
-
     message("Compiling Stan code...")
-
     ## S3
     stan_options <- stanOptions(stan_options, model_code = flps_model,
                                 data = flps_data_class$stan_data)
 
     # Prior setting
-    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
     stan_options <- setPriors(priors_input, lv_model, stan_options)
     flps_fit <-  try(do.call(rstan::stan, stan_options))
 
   } else {
+    # message("Compiling Stan code...")
 
     stan_options <- stanOptions(stan_options, object = flps_model,
                                 data = flps_data_class$stan_data)
 
     # Prior setting
-    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
     stan_options <- setPriors(priors_input, lv_model, stan_options)
     flps_fit <-  try(do.call(rstan::sampling, stan_options))
   }
@@ -149,7 +149,6 @@ runFLPS <- function(inp_data = NULL,
                                 data = flps_data_class$stan_data)
 
     # Prior setting
-    # argslist$lv_model <- paste0("F =~ ", paste(paste0("v", 1:10), collapse = "+"))
     stan_options <- setPriors(priors_input, lv_model, stan_options)
     flps_fit <-  try(do.call(rstan::stan, stan_options))
   }

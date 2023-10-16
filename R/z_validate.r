@@ -27,7 +27,16 @@ validate_data <- function(all_args) {
 
   # Multilevel block----------------------------
   if(multilevel) {
-    stop("Multilevel structure will be supported")
+    if(length(covariate) > 2) {
+
+      stop("Covariates should be a list that contains the names for both Level 1 and Level 2.")
+    }
+
+    if(is.null(all_args$group_id)) {
+
+      stop("For multilevel modeling, `group_id` must be specified.")
+    }
+
   }
 
   # Mixture model block----------------------------
