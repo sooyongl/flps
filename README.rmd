@@ -4,7 +4,6 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = F,fig.width = 4)
-library(flps)
 ```
 
 <!-- badges: start -->
@@ -23,6 +22,12 @@ Install the latest release from CRAN or git repository:
 
 ```{r}
 devtools::install_github("sooyongl/flps")
+install.packages("flps")
+```
+
+
+```{r eval = T}
+library(flps)
 ```
 
 
@@ -35,19 +40,17 @@ devtools::install_github("sooyongl/flps")
 
 ### Load Example Data
 
+- `binary`: a data frame containing all the data for FLPS. It is used in `runFLPS` function.
+- This data will be converted to a list of data for [`rstan`](https://github.com/stan-dev/rstan) package.
+- For latent variable models, Rasch, 2PL, GRM, SEM (one-factor CFA), and mixture models (LCA and LPA) are available.
+- Multilevel structure will be supported soon.
+
 ```{r eval = T}
-set.seed(10000)
 data(binary)
 ```
 
-
-- `binary`: a data frame containing all the data for FLPS. It is used in `runFLPS` function.
-- This data will be converted to a list of data for [`rstan`](https://github.com/stan-dev/rstan) package.
-- For latent variable models, Rasch, 2PL, GRM, and SEM (one-factor CFA) are available.
-
-
 ```{r eval = T}
-# Input data matrix
+# Input data frame
 data.table::data.table(binary)
 ```
 
@@ -55,12 +58,15 @@ data.table::data.table(binary)
 
 ### Model Fitting with FLPS
 
-- `runFLPS` internally converts binary into the data format for rstan and executes FLPS.
+- `runFLPS()` internally transforms binary data into the format suitable for `rstan`, subsequently executing FLPS.
 
 - To avoid re-compiling the Stan code each time, pre-compile it using `modelBuilder()`, which stores the stanmodel object in the `flps` directory, accelerating subsequent analyses.
 
+- Once the Stan model is compiled, use `importModel()` to bring in the compiled Stan code. This code can then be provided to the `compiled_stan` argument in `runFLPS.` If this step is omitted, `runFLPS()` will compile the Stan code during each execution of FLPS.
+
 ```{r eval = F}
 modelBuilder(type = "rasch")
+complied_stan <- importModel(type = "rasch")
 ```
 
 - In case of errors, try the latest `rstan` and `StanHeaders` packages.
@@ -70,14 +76,16 @@ remove.packages(c("rstan", "StanHeaders"))
 install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
 ```
 
-Now, execute your FLPS model.
+Now, execute your FLPS model. Given the time-intensive nature of the process, chains and iterations have been initially limited to 1 and 5000, respectively. It is advisable to increase these values for your specific research needs.
 
 ```{r eval = T, cache=TRUE}
 # Subset of data: 1000 students
-binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+binary <- binary[c(sample(which(binary$trt == 1), 250), 
+                   sample(which(binary$trt == 0), 250)),]
 
 res <- runFLPS(
   inp_data = binary,
+  # complied_stan = complied # if necessary
   outcome = "Y",
   trt = "trt",
   covariate = c("sex","race","pretest","stdscore"),
@@ -100,7 +108,7 @@ summary(res, type = "causal")
 
 The `flps_plot()` shows the plot related to FLPS models
 
-```{r eval = F}
+```{r eval = T, fig.width = 8}
 
 flps_plot(res, type = "causal")
 
@@ -109,12 +117,12 @@ flps_plot(res, type = "causal")
 ```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='60%'}
 # a1 <- flps_plot(res, type = "causal")
 # ggplot2::ggsave("man/figures/causal_1.png", a1)
-knitr::include_graphics('man/figures/causal_1.png')
+# knitr::include_graphics('man/figures/causal_1.png')
 ```
 
 
 
-```{r eval = F}
+```{r eval = T}
 
 flps_plot(res, type = "latent")
 
@@ -124,7 +132,7 @@ flps_plot(res, type = "latent")
 ```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='60%'}
 # a1 <- flps_plot(res, type = "latent")
 # ggplot2::ggsave("man/figures/latent_1.png", a1)
-knitr::include_graphics('man/figures/latent_1.png')
+# knitr::include_graphics('man/figures/latent_1.png')
 ```
 
 

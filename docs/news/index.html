@@ -63,8 +63,12 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0" id="flps-100">flps 1.0.0<a class="anchor" aria-label="anchor" href="#flps-100"></a></h2>
 <div class="section level3">
+<h3 id="fix-1-0-0">Fix<a class="anchor" aria-label="anchor" href="#fix-1-0-0"></a></h3>
+<ul><li>flps/man/FLPS-package.Rd is changed to flps/man/flps-package.Rd.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-features-1-0-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-0-0"></a></h3>
-<ul><li>Added Latent Class Analysis and Latent Profile Analysis functionalities.</li>
+<ul><li>Added Latent Class Analysis and Latent Profile Analysis.</li>
 <li>Imported example data for binary, polytomous, and continuous items.</li>
 <li>[Note] Stan scripts for multilevel models have been added but are not yet activated.</li>
 <li>[Upcoming] Support for multilevel structures will be introduced in future updates.</li>
@@ -73,6 +77,9 @@
 <h3 id="updates-to-functions-1-0-0">Updates to Functions<a class="anchor" aria-label="anchor" href="#updates-to-functions-1-0-0"></a></h3>
 <ul><li>In <code><a href="../reference/runFLPS.html">runFLPS()</a></code>, renamed the argument <code>group</code> to <code>trt</code>.</li>
 <li>Added a new argument <code>multilevel</code> to <code><a href="../reference/runFLPS.html">runFLPS()</a></code>.</li>
+<li>
+<code><a href="../reference/flps_plot.html">flps_plot()</a></code> can visualize class profiles.</li>
+<li>Class proportions are obtained by <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> for LCA or LPA models.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -94,7 +101,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

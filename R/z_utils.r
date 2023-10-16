@@ -1,8 +1,28 @@
 #' make NULL S3 class
 #' @noRd
-S3class <- function(class) {
-  out <- structure(list(), class = class)
+S3class <- function(...) {
+
+  out <- structure(list(), class = unlist(list(...)))
   out
+}
+
+#' Obtain the name of items of measurement model
+#' @noRd
+getMeasurementItems <- function(lv_model) {
+  lv_model1 <- unlist(strsplit(lv_model, "\n"))
+
+  nfac <- length(grep("=~", lv_model1))
+
+  lv_model2 <- do.call("rbind",strsplit(lv_model1, "=~"))
+  lv_model2 <- gsub(' |[\t\n]','',lv_model2)
+
+  item_factor <- strsplit(lv_model2[,2], "\\+")
+  item_factor <- item_factor[sapply(item_factor, function(x) length(x)!=0)]
+
+  lv_model3 <- unlist(strsplit(lv_model2[, 2], "\\+"))
+  lv_model4 <- unlist(strsplit(lv_model3, " "))
+
+  return(list(nfac=nfac, item_name=lv_model4, item_factor = item_factor))
 }
 
 #' obtain the signs of factor loadings

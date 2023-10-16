@@ -18,6 +18,6 @@ stratification: Combining ps with model-based measurement models. In The annual
 meeting of the psychometric society (pp. 287–298).
 }
 \author{
-Sooyong Lee \email{sooyongl09@utexas.edu}
+Sooyong Lee \email{sooyongl09@gmail.com}
 }
 \keyword{package}

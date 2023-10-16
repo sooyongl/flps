@@ -16,7 +16,17 @@ Install the latest release from CRAN or git repository:
 
 ``` r
 devtools::install_github("sooyongl/flps")
+install.packages("flps")
 ```
+
+``` r
+library(flps)
+```
+
+    ## Version: 1.0.0
+    ## 
+    ## It is a demo.
+    ## Acknowledgements. It is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.
 
 - Documentation is available [here](https://sooyongl.github.io/flps/).
 
@@ -27,20 +37,20 @@ devtools::install_github("sooyongl/flps")
 
 ### Load Example Data
 
-``` r
-set.seed(10000)
-data(binary)
-```
-
 - `binary`: a data frame containing all the data for FLPS. It is used in
   `runFLPS` function.
 - This data will be converted to a list of data for
   [`rstan`](https://github.com/stan-dev/rstan) package.
-- For latent variable models, Rasch, 2PL, GRM, and SEM (one-factor CFA)
-  are available.
+- For latent variable models, Rasch, 2PL, GRM, SEM (one-factor CFA), and
+  mixture models (LCA and LPA) are available.
+- Multilevel structure will be supported soon.
 
 ``` r
-# Input data matrix
+data(binary)
+```
+
+``` r
+# Input data frame
 data.table::data.table(binary)
 ```
 
@@ -71,15 +81,21 @@ data.table::data.table(binary)
 
 ### Model Fitting with FLPS
 
-- `runFLPS` internally converts binary into the data format for rstan
-  and executes FLPS.
+- `runFLPS()` internally transforms binary data into the format suitable
+  for `rstan`, subsequently executing FLPS.
 
 - To avoid re-compiling the Stan code each time, pre-compile it using
   `modelBuilder()`, which stores the stanmodel object in the `flps`
   directory, accelerating subsequent analyses.
 
+- Once the Stan model is compiled, use `importModel()` to bring in the
+  compiled Stan code. This code can then be provided to the
+  `compiled_stan` argument in `runFLPS.` If this step is omitted,
+  `runFLPS()` will compile the Stan code during each execution of FLPS.
+
 ``` r
 modelBuilder(type = "rasch")
+complied_stan <- importModel(type = "rasch")
 ```
 
 - In case of errors, try the latest `rstan` and `StanHeaders` packages.
@@ -89,14 +105,19 @@ remove.packages(c("rstan", "StanHeaders"))
 install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
 ```
 
-Now, execute your FLPS model.
+Now, execute your FLPS model. Given the time-intensive nature of the
+process, chains and iterations have been initially limited to 1 and
+5000, respectively. It is advisable to increase these values for your
+specific research needs.
 
 ``` r
 # Subset of data: 1000 students
-binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+binary <- binary[c(sample(which(binary$trt == 1), 250), 
+                   sample(which(binary$trt == 0), 250)),]
 
 res <- runFLPS(
   inp_data = binary,
+  # complied_stan = complied # if necessary
   outcome = "Y",
   trt = "trt",
   covariate = c("sex","race","pretest","stdscore"),
@@ -111,8 +132,8 @@ res <- runFLPS(
     ## 
     ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
     ## Chain 1: 
-    ## Chain 1: Gradient evaluation took 0.002666 seconds
-    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 26.66 seconds.
+    ## Chain 1: Gradient evaluation took 0.00137 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 13.7 seconds.
     ## Chain 1: Adjust your expectations accordingly!
     ## Chain 1: 
     ## Chain 1: 
@@ -129,15 +150,19 @@ res <- runFLPS(
     ## Chain 1: Iteration: 4500 / 5000 [ 90%]  (Sampling)
     ## Chain 1: Iteration: 5000 / 5000 [100%]  (Sampling)
     ## Chain 1: 
-    ## Chain 1:  Elapsed Time: 445.085 seconds (Warm-up)
-    ## Chain 1:                171.302 seconds (Sampling)
-    ## Chain 1:                616.387 seconds (Total)
+    ## Chain 1:  Elapsed Time: 176.84 seconds (Warm-up)
+    ## Chain 1:                167.804 seconds (Sampling)
+    ## Chain 1:                344.644 seconds (Total)
     ## Chain 1:
 
     ## Warning: There were 1 chains where the estimated Bayesian Fraction of Missing Information was low. See
     ## https://mc-stan.org/misc/warnings.html#bfmi-low
 
     ## Warning: Examine the pairs() plot to diagnose sampling problems
+
+    ## Warning: The largest R-hat is NA, indicating chains have not mixed.
+    ## Running the chains for more iterations may help. See
+    ## https://mc-stan.org/misc/warnings.html#r-hat
 
     ## Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
     ## Running the chains for more iterations may help. See
@@ -155,12 +180,12 @@ Retrieve summaries and visualize results with the following:
 summary(res, type = "causal")
 ```
 
-    ##                mean    se_mean         sd        2.5%        25%        50%
-    ## tau0     0.09870803 0.00897165 0.07591859 -0.04815228  0.0466899  0.0966718
-    ## tau1[1] -0.23947726 0.01397899 0.08992263 -0.40228254 -0.2994709 -0.2440471
-    ##                75%       97.5%    n_eff     Rhat
-    ## tau0     0.1487354  0.25042594 71.60637 1.003115
-    ## tau1[1] -0.1846840 -0.04296181 41.37961 1.002802
+    ##               mean   se_mean        sd       2.5%        25%        50%
+    ## tau0     0.1241743 0.0171684 0.1288796 -0.1049686  0.0352080  0.1125942
+    ## tau1[1] -0.1919549 0.0266125 0.1460188 -0.4543385 -0.3054773 -0.1879231
+    ##                 75%      97.5%    n_eff     Rhat
+    ## tau0     0.20547890 0.41105125 56.35191 1.034108
+    ## tau1[1] -0.08906087 0.09349532 30.10552 1.057136
 
 The `flps_plot()` shows the plot related to FLPS models
 
@@ -168,13 +193,15 @@ The `flps_plot()` shows the plot related to FLPS models
 flps_plot(res, type = "causal")
 ```
 
-<img src="man/figures/causal_1.png" width="60%" style="display: block; margin: auto;" />
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 flps_plot(res, type = "latent")
 ```
 
-<img src="man/figures/latent_1.png" width="60%" style="display: block; margin: auto;" />
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 [^1]: **Acknowledgements.** This package is supported by the Institute
     of Education Sciences, U.S. Department of Education, through Grant

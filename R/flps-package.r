@@ -6,7 +6,7 @@
 #'
 #' @docType package
 #' @aliases flps
-#' @author Sooyong Lee \email{sooyongl09@utexas.edu}
+#' @author Sooyong Lee \email{sooyongl09@gmail.com}
 #'
 #' @references
 #' Sales, A. C., & Pane, J. F. (2019). The role of mastery learning in an intelligent tutoring system: Principal stratification on a latent variable. The Annals of Applied Statistics, 13(1), 420-443.
@@ -18,6 +18,7 @@
 #' @import rstan
 #' @import methods
 #' @import ggplot2
+#' @import glue
 #' @importFrom stats runif rnorm rmultinom rlnorm quantile var cov cor
 #' @importFrom utils read.csv packageVersion head tail
 #' @importFrom MASS mvrnorm
