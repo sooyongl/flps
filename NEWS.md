@@ -1,8 +1,5 @@
 # flps 1.0.0
 
-## Fix
-* flps/man/FLPS-package.Rd is changed to flps/man/flps-package.Rd.
-
 ## New Features
 * Added Latent Class Analysis and Latent Profile Analysis.
 * Imported example data for binary, polytomous, and continuous items.
