@@ -68,14 +68,15 @@ flps_profile <- function(object, ...) {
     geom_point(aes(x = param, y = mean,
                    fill = LatentClass),
                colour = "white",
-               shape=21, stroke = 2,
-               size = 4) +
+               shape=21, stroke = 1.5,
+               size = 3) +
 
     labs(y = "Probs", x = "Items") +
     scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
     scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
     scale_y_continuous(expand = c(0, 0)) +
-    theme_bw()
+    theme_bw() +
+    theme(legend.position="bottom")
 
   if(tolower(inputs$lv_type) == "lca") {
     p <- p + coord_cartesian(ylim = c(0, 1))
@@ -167,7 +168,7 @@ flps_causal <- function(object) {
                position = position_dodge()
       ) +
       scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
-      theme_bw(base_size = 14)
+      theme_bw() + theme(legend.position="bottom")
 
 
   } else {
@@ -203,7 +204,7 @@ flps_causal <- function(object) {
     scale_x_continuous(name = "Factor Scores") +
     scale_linetype_discrete(name = "") +
     scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
-    theme_bw()
+    theme_bw() + theme(legend.position="bottom")
 
   }
 }

@@ -5,3 +5,5 @@ cran-comments.md
 README_cache/
 README_files/
 test.R
+/doc/
+/Meta/
