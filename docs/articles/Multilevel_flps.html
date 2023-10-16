@@ -120,55 +120,6 @@
 <span>  group_id <span class="op">=</span> <span class="st">"schid"</span>,</span>
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">100</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># est &lt;- summary(fit)$summary %&gt;% data.frame()</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># est$par_name &lt;- rownames(est)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # Tau0</span></span>
-<span><span class="co"># est %&gt;% </span></span>
-<span><span class="co">#   filter(str_detect(par_name, "^b00")) %&gt;% </span></span>
-<span><span class="co">#   select(mean, sd, X2.5., X97.5., par_name) %&gt;% </span></span>
-<span><span class="co">#   mutate_if(is.numeric, round, 3)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # Tau1</span></span>
-<span><span class="co"># est %&gt;% </span></span>
-<span><span class="co">#   filter(str_detect(par_name, "^b01")) %&gt;% </span></span>
-<span><span class="co">#   select(mean, sd, X2.5., X97.5., par_name) %&gt;% </span></span>
-<span><span class="co">#   mutate_if(is.numeric, round, 3)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # Covariate effects on Y</span></span>
-<span><span class="co"># est %&gt;% </span></span>
-<span><span class="co">#   filter(str_detect(par_name, "^betaY")) %&gt;% </span></span>
-<span><span class="co">#   select(mean, sd, X2.5., X97.5., par_name) %&gt;% </span></span>
-<span><span class="co">#   mutate_if(is.numeric, round, 3)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # Covariate effects on Class memberships</span></span>
-<span><span class="co"># est %&gt;% </span></span>
-<span><span class="co">#   filter(str_detect(par_name, "^betaU")) %&gt;% </span></span>
-<span><span class="co">#   select(mean, sd, X2.5., X97.5., par_name) %&gt;% </span></span>
-<span><span class="co">#   mutate_if(is.numeric, round, 3)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # Class 1 profiles</span></span>
-<span><span class="co"># est %&gt;% </span></span>
-<span><span class="co">#   filter(str_detect(par_name, "^p\\[1")) %&gt;% </span></span>
-<span><span class="co">#   select(mean, sd, X2.5., X97.5., par_name) %&gt;% </span></span>
-<span><span class="co">#   mutate_if(is.numeric, round, 3)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # Class 2 profiles</span></span>
-<span><span class="co"># est %&gt;% </span></span>
-<span><span class="co">#   filter(str_detect(par_name, "^p\\[2")) %&gt;% </span></span>
-<span><span class="co">#   select(mean, sd, X2.5., X97.5., par_name) %&gt;% </span></span>
-<span><span class="co">#   mutate_if(is.numeric, round, 3)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># # Class membership</span></span>
-<span><span class="co"># classp &lt;- est %&gt;% </span></span>
-<span><span class="co">#   filter(str_detect(par_name, "^nu")) %&gt;% </span></span>
-<span><span class="co">#   select(mean, sd, X2.5., X97.5., par_name) %&gt;% </span></span>
-<span><span class="co">#   mutate_if(is.numeric, round, 3) %&gt;% pull(mean)</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># class_membership &lt;- as.numeric(classp &gt; 0.5)</span></span>
-<span><span class="co"># table(class_membership)</span></span></code></pre></div>
 </div>
 </div>
   </div>
@@ -190,7 +141,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

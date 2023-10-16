@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
   # fig.width = 4,
   out.width = '55%'
 )
+
 ```
 
 
@@ -28,9 +29,6 @@ library(flps)
 
 ### FLPS based on multilevel Latent Class analysis
 
-```{r echo = F, eval = T}
-# fit <- readRDS("results/LCA_2.RDS")
-```
 
 ```{r}
 binary <- binary %>%
@@ -53,57 +51,5 @@ res <- runFLPS(
   group_id = "schid",
   stan_options = list(iter = 100, cores = 1, chains = 1)
 )
-```
-
-
-```{r eval = F}
-# est <- summary(fit)$summary %>% data.frame()
-# 
-# est$par_name <- rownames(est)
-# 
-# # Tau0
-# est %>% 
-#   filter(str_detect(par_name, "^b00")) %>% 
-#   select(mean, sd, X2.5., X97.5., par_name) %>% 
-#   mutate_if(is.numeric, round, 3)
-# 
-# # Tau1
-# est %>% 
-#   filter(str_detect(par_name, "^b01")) %>% 
-#   select(mean, sd, X2.5., X97.5., par_name) %>% 
-#   mutate_if(is.numeric, round, 3)
-# 
-# # Covariate effects on Y
-# est %>% 
-#   filter(str_detect(par_name, "^betaY")) %>% 
-#   select(mean, sd, X2.5., X97.5., par_name) %>% 
-#   mutate_if(is.numeric, round, 3)
-# 
-# # Covariate effects on Class memberships
-# est %>% 
-#   filter(str_detect(par_name, "^betaU")) %>% 
-#   select(mean, sd, X2.5., X97.5., par_name) %>% 
-#   mutate_if(is.numeric, round, 3)
-# 
-# # Class 1 profiles
-# est %>% 
-#   filter(str_detect(par_name, "^p\\[1")) %>% 
-#   select(mean, sd, X2.5., X97.5., par_name) %>% 
-#   mutate_if(is.numeric, round, 3)
-# 
-# # Class 2 profiles
-# est %>% 
-#   filter(str_detect(par_name, "^p\\[2")) %>% 
-#   select(mean, sd, X2.5., X97.5., par_name) %>% 
-#   mutate_if(is.numeric, round, 3)
-# 
-# # Class membership
-# classp <- est %>% 
-#   filter(str_detect(par_name, "^nu")) %>% 
-#   select(mean, sd, X2.5., X97.5., par_name) %>% 
-#   mutate_if(is.numeric, round, 3) %>% pull(mean)
-# 
-# class_membership <- as.numeric(classp > 0.5)
-# table(class_membership)
 ```
 

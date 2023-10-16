@@ -132,8 +132,8 @@ res <- runFLPS(
     ## 
     ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
     ## Chain 1: 
-    ## Chain 1: Gradient evaluation took 0.00137 seconds
-    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 13.7 seconds.
+    ## Chain 1: Gradient evaluation took 0.001795 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 17.95 seconds.
     ## Chain 1: Adjust your expectations accordingly!
     ## Chain 1: 
     ## Chain 1: 
@@ -150,10 +150,14 @@ res <- runFLPS(
     ## Chain 1: Iteration: 4500 / 5000 [ 90%]  (Sampling)
     ## Chain 1: Iteration: 5000 / 5000 [100%]  (Sampling)
     ## Chain 1: 
-    ## Chain 1:  Elapsed Time: 176.84 seconds (Warm-up)
-    ## Chain 1:                167.804 seconds (Sampling)
-    ## Chain 1:                344.644 seconds (Total)
+    ## Chain 1:  Elapsed Time: 221.323 seconds (Warm-up)
+    ## Chain 1:                140.054 seconds (Sampling)
+    ## Chain 1:                361.377 seconds (Total)
     ## Chain 1:
+
+    ## Warning: There were 1 divergent transitions after warmup. See
+    ## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+    ## to find out why this is a problem and how to eliminate them.
 
     ## Warning: There were 1 chains where the estimated Bayesian Fraction of Missing Information was low. See
     ## https://mc-stan.org/misc/warnings.html#bfmi-low
@@ -180,12 +184,12 @@ Retrieve summaries and visualize results with the following:
 summary(res, type = "causal")
 ```
 
-    ##               mean   se_mean        sd       2.5%        25%        50%
-    ## tau0     0.1241743 0.0171684 0.1288796 -0.1049686  0.0352080  0.1125942
-    ## tau1[1] -0.1919549 0.0266125 0.1460188 -0.4543385 -0.3054773 -0.1879231
-    ##                 75%      97.5%    n_eff     Rhat
-    ## tau0     0.20547890 0.41105125 56.35191 1.034108
-    ## tau1[1] -0.08906087 0.09349532 30.10552 1.057136
+    ##               mean    se_mean        sd        2.5%         25%        50%
+    ## tau0     0.1332205 0.01317565 0.1098414 -0.05848257  0.05958877  0.1266737
+    ## tau1[1] -0.1875916 0.02120112 0.1323682 -0.42341767 -0.27890833 -0.1939362
+    ##                75%      97.5%    n_eff     Rhat
+    ## tau0     0.1991413 0.36759419 69.50043 1.070010
+    ## tau1[1] -0.1043238 0.08867978 38.98070 1.101409
 
 The `flps_plot()` shows the plot related to FLPS models
 
