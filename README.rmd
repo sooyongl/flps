@@ -22,6 +22,7 @@ Install the latest release from CRAN or git repository:
 
 ```{r}
 devtools::install_github("sooyongl/flps")
+install.packages("flps")
 ```
 
 
