@@ -5,7 +5,7 @@
 #' parameters_stan("irt", cate = T)
 #' parameters_stan("mixture", cate = FALSE, 2)
 #' @noRd
-parameters_stan <- function(type = "irt", cate = TRUE, level = 1) {
+parameters_stan <- function(type = "irt", cate = TRUE, level = 1, lv_randomeffect = FALSE) {
 
   type <- tolower(type)
 
@@ -33,6 +33,13 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1) {
 
 
     } else {
+
+      if(lv_randomeffect) {
+
+      } else {
+
+      }
+
 
       script <- glue("
   real{p_type} p[nclass, nitem];  // Item Response probabilities
@@ -119,6 +126,12 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1) {
   {p_sig}")
 
     } else {
+
+      if(lv_randomeffect) {
+
+      } else {
+
+      }
 
       measure_param <- switch(type,
       "irt" =

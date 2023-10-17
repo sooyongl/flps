@@ -13,8 +13,7 @@
 #' stanScriptGenerator(type = "irt", cate = TRUE, level = 1)
 #' stanScriptGenerator(type = "sem", cate = TRUE, level = 1)
 #' @noRd
-stanScriptGenerator <- function(type = c("irt","sem","rasch","grm0","grm","lca","lpa"),
-                                cate = TRUE, level = 1) {
+stanScriptGenerator <- function(type = c("irt","sem","rasch","grm0","grm","lca","lpa"), cate = TRUE, level = 1, lv_randomeffect = FALSE) {
 
   type <- tolower(type)
   type <- match.arg(type)

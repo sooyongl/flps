@@ -41,12 +41,13 @@ importModel <- function(type, multilevel = FALSE) {
 #' @param type A character string specifying the type of FLPS model.
 #' If not provided, the default is set to \code{"all"}, which compiles all available Stan syntax.
 #' @param multilevel a logical indicating multilevel Stan model.
+#' @param lv_randomeffect A logical indicating whether to estimate random effects for latent variables.
 #'
 #' @return There's no return, but the compiled objects are saved in the package
 #' root directory.
 #'
 #' @export
-modelBuilder <- function(type = 'all', multilevel = FALSE) {
+modelBuilder <- function(type = 'all', multilevel = FALSE, lv_randomeffect = FALSE) {
 
   type <- match.arg(tolower(type), c("all","rasch","irt","2pl","grm","sem","lca","lpa"))
 
@@ -71,7 +72,7 @@ modelBuilder <- function(type = 'all', multilevel = FALSE) {
         icate = F
       }
 
-      stanscript <- stanScriptGenerator(itype, icate, ilevel)
+      stanscript <- stanScriptGenerator(itype, icate, ilevel, lv_randomeffect)
 
       if(ilevel == 1) {
         ilevel = "Single"
@@ -95,7 +96,7 @@ modelBuilder <- function(type = 'all', multilevel = FALSE) {
       cate = FALSE
     }
 
-    stanscript <- stanScriptGenerator(type, cate, as.numeric(multilevel)+1)
+    stanscript <- stanScriptGenerator(type, cate, as.numeric(multilevel)+1,lv_randomeffect)
 
     if(multilevel) {
       level = "Multi"
@@ -118,9 +119,11 @@ modelBuilder <- function(type = 'all', multilevel = FALSE) {
 #'
 #' @param lv_type a character specifying a latent model
 #' @param multilevel a logical specifying multilevel structure
+#' @param lv_randomeffect A logical indicating whether to estimate random effects for latent variables.
+#'
 #' @return A string for Stan syntax
 #' @noRd
-loadRstan <- function(lv_type = "2PL", multilevel = FALSE) {
+loadRstan <- function(lv_type = "2PL", multilevel = FALSE, lv_randomeffect = FALSE) {
 
   if(!dir.exists(system.file("stan", package = "flps")))
     stop("The stan code does not exist!")
@@ -138,7 +141,7 @@ loadRstan <- function(lv_type = "2PL", multilevel = FALSE) {
     cate = FALSE
   }
 
-  given_stan_model <- stanScriptGenerator(lv_type, cate, as.numeric(multilevel) + 1)
+  given_stan_model <- stanScriptGenerator(lv_type, cate, as.numeric(multilevel) + 1, lv_randomeffect)
 
   return(given_stan_model)
 }

@@ -15,6 +15,7 @@
 #'
 #' @param lv_type A character string indicating the type of latent variable models.
 #' @param multilevel A logical indicating if a multilevel structure is present.
+#' @param lv_randomeffect A logical indicating whether to estimate random effects for latent variables.
 #' @param priors_input A list specifying the priors or defaults to N(0, 5) if not provided.
 #' Relevant parameters: \code{tau0} (group difference), \code{tau1} (principal effects),
 #' and \code{omega} (effect of latent factors on outcome).
@@ -75,6 +76,7 @@ runFLPS <- function(inp_data = NULL,
                     lv_model = NULL,
                     lv_type = NULL,
                     multilevel = FALSE,
+                    lv_randomeffect = FALSE,
                     priors_input = NULL,
                     stan_options = list(),
                     ...

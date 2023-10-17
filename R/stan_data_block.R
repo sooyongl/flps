@@ -5,7 +5,7 @@
 #' data_stan("irt", cate = T)
 #' data_stan("mixture", cate = FALSE, 2)
 #' @noRd
-data_stan <- function(type = "irt", cate = TRUE, level = 1) {
+data_stan <- function(type = "irt", cate = TRUE, level = 1, lv_randomeffect = FALSE) {
 
   type <- tolower(type)
 
@@ -122,6 +122,9 @@ int<lower=1> ncov_lv2;        // number of covariates level 2"
 ")
 
   } else {
+
+
+
     script <- glue(
       "
 {script}

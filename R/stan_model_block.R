@@ -3,7 +3,7 @@
 #' model_stan('mixture', T, 2)
 #' model_stan('irt', T, 2)
 #' @noRd
-model_stan <- function(type = 'irt', cate = TRUE, level = 1) {
+model_stan <- function(type = 'irt', cate = TRUE, level = 1, lv_randomeffect = FALSE) {
 
   if(type %in% c("lca","lpa")) {
 
@@ -68,6 +68,14 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1) {
 ",.open = "{{", .close = "}}")
 
     } else {
+
+      if(lv_randomeffect) {
+
+      } else {
+
+      }
+
+
       script <- glue(
         "
   //  Outcome model with random effects
@@ -245,6 +253,14 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1) {
 
     } else {
 
+
+      if(lv_randomeffect) {
+
+      } else {
+
+      }
+
+
       script <- glue(
         "
 {{script}}
@@ -312,6 +328,14 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1) {
 ",.open = "{{", .close = "}}")
 
     } else {
+
+
+      if(lv_randomeffect) {
+
+      } else {
+
+      }
+
 
       script <- glue(
         "

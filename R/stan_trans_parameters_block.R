@@ -2,7 +2,7 @@
 #'
 #' transparams_stan()
 #' @noRd
-transparams_stan <- function(type = "irt", cate = TRUE, level = 1) {
+transparams_stan <- function(type = "irt", cate = TRUE, level = 1, lv_randomeffect = FALSE) {
 
   type <- tolower(type)
 
@@ -28,6 +28,14 @@ transparams_stan <- function(type = "irt", cate = TRUE, level = 1) {
 
 
     } else {
+
+
+      if(lv_randomeffect) {
+
+      } else {
+
+      }
+
 
       script <- glue("
   vector[nstud] nu; // Probability of class membership for all nstud
