@@ -34,7 +34,7 @@
 
 }
 
-globalVariables(c("compiled_stan"))
+# globalVariables(c("compiled_stan"))
 
 #' #' @noRd
 #' .onLoad <- function(...) {

@@ -34,7 +34,8 @@ data(binary)
 
 
 ```{r}
-binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+binary <- binary[c(sample(which(binary$trt == 1), 500), 
+                   sample(which(binary$trt == 0), 500)),]
 
 res <- runFLPS(
   inp_data = binary,
@@ -55,7 +56,8 @@ data(binary)
 
 
 ```{r}
-binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+binary <- binary[c(sample(which(binary$trt == 1), 500), 
+                   sample(which(binary$trt == 0), 500)),]
 
 res <- runFLPS(
   inp_data = binary,
@@ -77,10 +79,11 @@ data(graded)
 
 
 ```{r}
-binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+graded <- graded[c(sample(which(graded$trt == 1), 500), 
+                   sample(which(graded$trt == 0), 500)),]
 
 res <- runFLPS(
-  inp_data = binary,
+  inp_data = graded,
   outcome = "Y",
   trt = "trt",
   covariate = c("sex","race","pretest","stdscore"),
@@ -98,10 +101,11 @@ data(continuous)
 
 
 ```{r}
-binary <- binary[c(sample(which(binary$trt == 1), 500), sample(which(binary$trt == 0), 500)),]
+continuous <- continuous[c(sample(which(continuous$trt == 1), 500),
+                           sample(which(continuous$trt == 0), 500)),]
 
 res <- runFLPS(
-  inp_data = binary,
+  inp_data = continuous,
   outcome = "Y",
   trt = "trt",
   covariate = c("sex","race","pretest","stdscore"),

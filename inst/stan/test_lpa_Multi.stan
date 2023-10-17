@@ -2,11 +2,11 @@ data {
  // Data dimensions
 int<lower=1> nitemWorked;  // number of rows in long-format data
 int<lower=1> nitem;        // number of items
-int<lower=1> nstud;       // number of respondents
+int<lower=1> nstud;        // number of respondents
 
 int<lower=1> ncov_lv1;        // number of covariates level 1
 int<lower=1> ncov_lv2;        // number of covariates level 2
-int<lower=1> nclass;      // number of latent class
+int<lower=1> nclass;       // number of latent class
 
   // Item Data indices
   int stud_idx[nitemWorked];  // student index for long-format data
@@ -18,10 +18,11 @@ int<lower=1> nclass;      // number of latent class
 
 
   // data data
-  real grad[nitemWorked]; // Item data    
+  real grad[nitemWorked]; // Item data
+
   matrix[nstud, ncov_lv1] X;
   matrix[nsch, ncov_lv2] cm_X;
-  
+
   int<lower=0, upper=1> cm_Z[nsch];
   int<lower=0, upper=1> Z[nstud];
   real Y[nstud];
@@ -31,7 +32,7 @@ int<lower=1> nclass;      // number of latent class
   
 }
 
-     
+ 
 parameters{
  real p[nclass, nitem];  // Item Response probabilities
 
@@ -44,15 +45,15 @@ vector[ncov_lv1] betaUW;     // Within-
 vector[ncov_lv2] betaUB;    // Between-
 
 // Treatment effects on the outcome
-vector[nclass] b01_W;   // Within-
-vector[nclass] b01_B;   // Between-
+vector[nclass] tau1_W;   // Within-
+vector[nclass] tau1_B;   // Between-
 
 // Outcome Mean differences by LC
 // Overall mean ?
-vector[nclass] b00; 
+vector[nclass] tau0;
 
 // Intercept for class proportion
-real alphaB_nu; 
+real alphaB_nu;
 
 // Random effects
 vector[nsch] uB_Y1;
@@ -76,46 +77,46 @@ transformed parameters{
 // with random effects
  for (i in 1:nstud) {
     int g = sch[i];  // School for individual n
-    nu[i] = inv_logit(alphaB_nu 
+    nu[i] = inv_logit(alphaB_nu
                     + uB_nu[g]
-                    + dot_product(cm_X[g], betaUB) 
+                    + dot_product(cm_X[g], betaUB)
                     + dot_product(X[i], betaUW)
                     );
 
 }
 
 // PS effects-Difference in Y on Z coefficient between classes
-real b1W = b01_W[2] - b01_W[1]; 
-real b1B = b01_B[2] - b01_B[1]; 
+real dtau1W = tau1_W[2] - tau1_W[1];
+real dtau1B = tau1_B[2] - tau1_B[1];
 // Omega-Difference in intercept in Y between classes
-real a1 = b00[2] - b00[1]; 
+real omega = tau0[2] - tau0[1]; 
 }
  
 model {
  //  Outcome model with random effects
-// likelihood for the outcome 'Y' 
+// likelihood for the outcome 'Y'
 for (i in 1:nstud) {
     int g = sch[i];  // School for individual n
   // Compute likelihood for Y
-  real mu_class1 = b00[1] 
+  real mu_class1 = tau0[1]
                    + uB_Y1[g]
-                   + b01_B[1] * cm_Z[g]
-                   + b01_W[1] * Z[i] 
-                   
+                   + tau1_B[1] * cm_Z[g]
+                   + tau1_W[1] * Z[i]
+
                    + dot_product(cm_X[g], betaYB)
                    + dot_product(X[i], betaYW)
                    ;
-                   
-  real mu_class2 = b00[2]
+
+  real mu_class2 = tau0[2]
                    + uB_Y2[g]
-                   + b01_B[2] * cm_Z[g]
-                   + b01_W[2] * Z[i] 
-                   
+                   + tau1_B[2] * cm_Z[g]
+                   + tau1_W[2] * Z[i]
+
                    + dot_product(cm_X[g], betaYB)
                    + dot_product(X[i], betaYW)
                    ;
-                   
-  target += log_mix(nu[i], 
+
+  target += log_mix(nu[i],
                     normal_lpdf(Y[i] | mu_class1, sigmaYW[1]),
                     normal_lpdf(Y[i] | mu_class2, sigmaYW[2])
                     );
@@ -123,9 +124,9 @@ for (i in 1:nstud) {
 
 // likelihood for item data'
 for (w in 1:nitemWorked) {
-  
-  target += log_mix(nu[stud_idx[w]], 
-                      normal_lpdf(grad[w] | p[1,item_idx[w]], sigR[item_idx[w]]),
+
+  target += log_mix(nu[stud_idx[w]],
+                     normal_lpdf(grad[w] | p[1,item_idx[w]], sigR[item_idx[w]]),
                       normal_lpdf(grad[w] | p[2,item_idx[w]], sigR[item_idx[w]])
   );
 }
@@ -147,10 +148,10 @@ betaYB ~ normal(0, 1);
 betaUB ~ normal(0, 1);
 betaUW ~ normal(0, 2);
 
-b01_W ~ normal(0, 1);
-b01_B ~ normal(0, 1);
+tau1_W ~ normal(0, 1);
+tau1_B ~ normal(0, 1);
 
-b00 ~ normal(0, 1);
+tau0 ~ normal(0, 1);
 alphaB_nu ~ normal(0, 1);
 
 uB_Y1 ~ normal(0, sigmaYB[1]);
