@@ -1,13 +1,10 @@
 data {
- // Data dimensions
-int<lower=1> nitemWorked;  // number of rows in long-format data
-int<lower=1> nitem;        // number of items
-int<lower=1> nstud;        // number of respondents
-
-int<lower=1> ncov;        // number of covariates
-int<lower=1> nfac;         // number of latent factors
-  int<lower=0> min_k;       // min category
-  int<lower=1> max_k;       // max category
+  // Data dimensions
+  int<lower=1> nitemWorked;  // number of rows in long-format data
+  int<lower=1> nitem;        // number of items
+  int<lower=1> nstud;        // number of respondents
+  int<lower=1> ncov;        // number of covariates
+  int<lower=1> nfac;         // number of latent factors
 
   // Item Data indices
   int stud_idx[nitemWorked];  // student index for long-format data
@@ -18,39 +15,38 @@ int<lower=1> nfac;         // number of latent factors
   int<lower=0> firstitem[nitem];
 
   // data data
-  int<lower=min_k,upper=max_k> grad[nitemWorked]; // Item data
-
+  real grad[nitemWorked]; // Item data    
   matrix[nstud, ncov] X;                  // Covariates
   int<lower=0, upper=1> Z[nstud];         // Treatment assignments
-  real Y[nstud];
+  real Y[nstud]; 
 
   // Priors
   // prior information
-   matrix[nitem, nfac] loading_prior;
+  matrix[nitem, nfac] loading_prior;
   matrix[1,2] ptau0;
   matrix[nfac,2] ptau1;
   matrix[nfac,2] pomega;
 }
 
- 
+     
 parameters{
- // IRT model
-vector[nfac] fsc[nstud];       // person scores for each factor
-cholesky_factor_corr[nfac] L;  // Cholesky decomp of corr mat of random slopes
+  // IRT model
+  vector[nfac] fsc[nstud];       // person scores for each factor
+  cholesky_factor_corr[nfac] L;  // Cholesky decomp of corr mat of random slopes
 
- matrix[nitem, nfac] loading_free;   // Item slopes
-  ordered[max_k-1] intcpt[nitem];     // Item intercepts
+  matrix[nitem, nfac] loading_free;      // Item slopes
+  real intcpt[nitem];               // Item intercepts
 
-matrix[ncov, nfac] betaU;
-vector[ncov] betaY;
-
-real intcptY;
-vector[nfac] omega;
-real tau0;
-
-vector[nfac] tau1;
-real<lower=0> sigY[2];
-
+  matrix[ncov, nfac] betaU;
+  vector[ncov] betaY;
+  
+  real intcptY;
+  vector[nfac] omega;
+  real tau0;
+  
+  vector[nfac] tau1;
+  real<lower=0> sigY;
+  vector<lower=0>[nitem] sigR; // Standard deviations for indicators with equality
 }
  
 transformed parameters{
@@ -70,44 +66,46 @@ transformed parameters{
 }
  
 model {
- real linPred[nitemWorked];
-vector[nfac] A = rep_vector(1, nfac);
-matrix[nfac, nfac] A0;
-vector[nfac] muEta[nstud];
-vector[nstud] muY0;
-vector[nstud] muY;
-real sigYI[nstud];
+  real linPred[nitemWorked];
+  vector[nfac] A = rep_vector(1, nfac);
+  matrix[nfac, nfac] A0;
+  vector[nfac] muEta[nstud];
+  vector[nstud] muY0;
+  vector[nstud] muY;
 
-// Prior on correlation matrix
-L ~ lkj_corr_cholesky(nfac);
-A0 = diag_pre_multiply(A, L);
+  // Prior on correlation matrix
+  L ~ lkj_corr_cholesky(nfac);
+  A0 = diag_pre_multiply(A, L);
 
   // FLPS model
   for(i in 1:nstud) {
     muEta[i] = to_vector(X[i, ] * betaU);
-    muY0[i] = intcptY
-            + dot_product(to_row_vector(omega), fsc[i])
+    muY0[i] = intcptY 
+            + dot_product(to_row_vector(omega), fsc[i]) 
             + Z[i] * (tau0 + dot_product(to_row_vector(tau1), fsc[i]));
     muY[i] = muY0[i] + dot_product(X[i, ], betaY);
-    sigYI[i] = sigY[Z[i] + 1];
+    
   }
 
   // Likelihoods
   // Outcome
-  Y ~ normal(muY, sigYI);
+  Y ~ normal(muY, sigY);
 
 
   // Latent variable model
   fsc ~ multi_normal_cholesky(muEta, A0);
-   for(i in 1:nitemWorked) {
-      grad[i] ~ ordered_logistic(loading[item_idx[i], 1:nfac] * fsc[stud_idx[i]], intcpt[item_idx[i]]);
+  for(j in 1:nitemWorked) {
+    linPred[j] = intcpt[item_idx[j]] 
+               + dot_product(loading[item_idx[j], 1:nfac], fsc[stud_idx[j]]);
+			   
+	grad[j] ~ normal(linPred[j], item_idx[j]);
   }
-
+  
 
   //priors
   // Priors for IRT
-   for(i in 1:nitem) {
-    intcpt[i] ~ normal(0, 2.5);
+  intcpt ~ normal(0, 2.5);
+  for(i in 1:nitem) {
     for(j in 1:nfac) {
       loading_free[i, j] ~ normal(loading_prior[i, j], 1);
     }
