@@ -37,11 +37,7 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1, lv_randomeffec
       if(lv_randomeffect) {
 
       } else {
-
-      }
-
-
-      script <- glue("
+        script <- glue("
   real{p_type} p[nclass, nitem];  // Item Response probabilities
 
   // Covariates effects on Outcome
@@ -77,6 +73,8 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1, lv_randomeffec
   real<lower=0> sigmaNuB;
 
   ")
+      }
+
     }
 
   }
@@ -127,33 +125,67 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1, lv_randomeffec
 
     } else {
 
-      if(lv_randomeffect) {
-
-      } else {
-
-      }
-
       measure_param <- switch(type,
-      "irt" =
-" matrix[nitem, nfac] loading_free;      // Item slopes
+                              "irt" =
+                                " matrix[nitem, nfac] loading_free;      // Item slopes
   real intcpt[nitem];               // Item intercepts",
 
-"rasch" =
-" real intcpt[nitem];               // Item intercepts",
+  "rasch" =
+    " real intcpt[nitem];               // Item intercepts",
 
-"sem" =
-"  matrix[nitem, nfac] loading_free;      // Item slopes
+  "sem" =
+    "  matrix[nitem, nfac] loading_free;      // Item slopes
    real intcpt[nitem];               // Item intercepts",
 
-"grm" =
-" matrix[nitem, nfac] loading_free;   // Item slopes
+  "grm" =
+    " matrix[nitem, nfac] loading_free;   // Item slopes
   ordered[max_k-1] intcpt[nitem];     // Item intercepts",
 
-"grm0" =
-" ordered[max_k-1] intcpt[nitem];     // Item intercepts"
-)
+  "grm0" =
+    " ordered[max_k-1] intcpt[nitem];     // Item intercepts"
+      )
 
-      script <- glue("
+      if(lv_randomeffect) {
+
+        script <- glue("
+// IRT model
+  vector[nfac] fscW[nstud]; // person scores for each factor
+  cholesky_factor_corr[nfac] LW;  // Cholesky decomp of corr mat of random slopes
+  vector[nfac] fscB[nsch]; // person scores for each factor
+  cholesky_factor_corr[nfac] LB;  // Cholesky decomp of corr mat of random slopes
+
+  {measure_param}
+
+  // Covariates effects on Outcome
+  matrix[ncov_lv1, nfac] betaUW;     // Within-
+  matrix[ncov_lv2, nfac] betaUB;     // Between-
+
+  vector[ncov_lv1] betaYW;     // Within-
+  vector[ncov_lv2] betaYB;     // Between-
+
+  real intcptY;
+  vector[nfac] omegaW;
+  vector[nfac] omegaB;
+
+  real tau0_W;
+  real tau0_B;
+
+  vector[nfac] tau1_W;
+  vector[nfac] tau1_B;
+
+
+  real<lower=0> sigY;
+  real<lower=0> sigYB;
+
+  //vector[nfac]<lower=0> sigGrad;
+
+  vector[nsch] uY;
+  //vector[nsch] ugrad;
+  vector[nitem] ugrad[nsch];
+")
+
+      } else {
+        script <- glue("
   // IRT model
   vector[nfac] fsc[nstud]; // person scores for each factor
   cholesky_factor_corr[nfac] L; // Cholesky decomp of corr mat of random slopes
@@ -162,7 +194,6 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1, lv_randomeffec
 
   // Covariates effects on Outcome
   matrix[ncov_lv1, nfac] betaUW;     // Within-
-  matrix[ncov_lv2, nfac] betaUB;     // Between-
 
   vector[ncov_lv1] betaYW;     // Within-
   vector[ncov_lv2] betaYB;     // Between-
@@ -178,6 +209,7 @@ parameters_stan <- function(type = "irt", cate = TRUE, level = 1, lv_randomeffec
   real<lower=0> sigYB;
 
   vector[nsch] uY;")
+      }
 
     }
   }

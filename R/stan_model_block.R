@@ -334,11 +334,8 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1, lv_randomeffect = F
 
       } else {
 
-      }
-
-
-      script <- glue(
-        "
+        script <- glue(
+          "
 {{script}}
 
   //priors
@@ -353,13 +350,18 @@ model_stan <- function(type = 'irt', cate = TRUE, level = 1, lv_randomeffect = F
 
   for(i in 1:nfac) {
     betaUW[:, i] ~ normal(0, 5);
-    betaUB[:, i] ~ normal(0, 5);
 
     omega[i] ~ normal(pomega[i, 1], pomega[i, 2]);
     tau1[i] ~ normal(ptau1[i, 1], ptau1[i, 2]);
   }
 
 ",.open = "{{", .close = "}}")
+
+      }
+
+
+
+
     }
 
 
