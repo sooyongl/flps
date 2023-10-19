@@ -49,10 +49,7 @@ transformed parameters{
     }
     nu[n] = softmax(to_vector(eta[n, ]));
   }
-  // PS effects-Difference in Y on Z coefficient between classes
-  real b1 = b01[2] - b01[1]; 
-  // Omega-Difference in intercept in Y between classes
-  real a1 = b00[2] - b00[1]; 
+  
 }
 
 model {
