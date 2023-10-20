@@ -36,7 +36,8 @@ data(binary)
 ### Fit LCA model
 
 ```{r}
-binary <- binary[c(sample(which(binary$trt == 1), 200), sample(which(binary$trt == 0), 200)),]
+binary <- binary[c(sample(which(binary$trt == 1), 200), 
+                   sample(which(binary$trt == 0), 200)),]
 
 res <- runFLPS(
   inp_data = binary,
@@ -86,7 +87,8 @@ data(continuous)
 ### Fit LPA model
 
 ```{r}
-continuous <- continuous[c(sample(which(continuous$trt == 1), 500), sample(which(continuous$trt == 0), 500)),]
+continuous <- continuous[c(sample(which(continuous$trt == 1), 500),
+                           sample(which(continuous$trt == 0), 500)),]
 
 res <- runFLPS(
   inp_data = continuous,

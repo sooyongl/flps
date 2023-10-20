@@ -110,7 +110,8 @@
 <h3 id="fit-lca-model">Fit LCA model<a class="anchor" aria-label="anchor" href="#fit-lca-model"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">binary</span> <span class="op">&lt;-</span> <span class="va">binary</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">binary</span><span class="op">$</span><span class="va">trt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">200</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">binary</span><span class="op">$</span><span class="va">trt</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="va">binary</span> <span class="op">&lt;-</span> <span class="va">binary</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">binary</span><span class="op">$</span><span class="va">trt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">200</span><span class="op">)</span>, </span>
+<span>                   <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">binary</span><span class="op">$</span><span class="va">trt</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span></span>
 <span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
 <span>  inp_data <span class="op">=</span> <span class="va">binary</span>,</span>
@@ -133,7 +134,7 @@
 <span><span class="co">#&gt; 306 694</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>,type <span class="op">=</span> <span class="st">"profile"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="flpsMixture_files/figure-html/unnamed-chunk-7-1.png" width="55%"></p>
+<p><img src="flpsMixture_files/figure-html/unnamed-chunk-7-1.png" width="70%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>,type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                mean     se_mean         sd         2.5%         25%         50%</span></span>
@@ -148,7 +149,7 @@
 <span><span class="co">#&gt; tau1[2] -0.01850267  0.05152358 1866.9011 0.9996086</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>,type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="flpsMixture_files/figure-html/unnamed-chunk-9-1.png" width="55%"></p>
+<p><img src="flpsMixture_files/figure-html/unnamed-chunk-9-1.png" width="70%"></p>
 </div>
 </div>
 <div class="section level2">
@@ -164,7 +165,8 @@
 <h3 id="fit-lpa-model">Fit LPA model<a class="anchor" aria-label="anchor" href="#fit-lpa-model"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">continuous</span> <span class="op">&lt;-</span> <span class="va">continuous</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">$</span><span class="va">trt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">500</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">$</span><span class="va">trt</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>, <span class="fl">500</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="va">continuous</span> <span class="op">&lt;-</span> <span class="va">continuous</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">$</span><span class="va">trt</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span>, <span class="fl">500</span><span class="op">)</span>,</span>
+<span>                           <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">$</span><span class="va">trt</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span>, <span class="fl">500</span><span class="op">)</span><span class="op">)</span>,<span class="op">]</span></span>
 <span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
 <span>  inp_data <span class="op">=</span> <span class="va">continuous</span>,</span>
@@ -187,7 +189,7 @@
 <span><span class="co">#&gt; 1000</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>,type <span class="op">=</span> <span class="st">"profile"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="flpsMixture_files/figure-html/unnamed-chunk-14-1.png" width="55%"></p>
+<p><img src="flpsMixture_files/figure-html/unnamed-chunk-14-1.png" width="70%"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span>,type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 mean    se_mean         sd       2.5%         25%           50%</span></span>
@@ -202,7 +204,7 @@
 <span><span class="co">#&gt; tau1[2]  0.04161402  0.10911867 11.575762 0.9997540</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/flps_plot.html">flps_plot</a></span><span class="op">(</span><span class="va">res</span>,type <span class="op">=</span> <span class="st">"causal"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="flpsMixture_files/figure-html/unnamed-chunk-16-1.png" width="55%"></p>
+<p><img src="flpsMixture_files/figure-html/unnamed-chunk-16-1.png" width="70%"></p>
 </div>
 </div>
   </div>

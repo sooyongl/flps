@@ -7,8 +7,8 @@
 modelBuilder(type = "all", multilevel = FALSE)
 }
 \arguments{
-\item{type}{a character indicating the type of FLPS model.
-The default is \code{all} to compile all available Stan syntax.}
+\item{type}{A character string specifying the type of FLPS model.
+If not provided, the default is set to \code{"all"}, which compiles all available Stan syntax.}
 
 \item{multilevel}{a logical indicating multilevel Stan model.}
 }
