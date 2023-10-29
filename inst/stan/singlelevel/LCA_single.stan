@@ -32,8 +32,8 @@ parameters{
  vector[ncov] betaY;     // Coefficients for the outcome Y
  vector[ncov] betaU;     // Coefficients for class membership
 
- vector[nclass] tau00;           // Intercept for Y for each class
- vector[nclass] tau01;           // Coefficient for Z for each class
+ vector[nclass] tau0;           // Intercept for Y for each class
+ vector[nclass] tau1;           // Coefficient for Z for each class
  vector<lower=0>[nclass] sigY; // Standard deviations for Y for each class
 }
  
@@ -46,17 +46,17 @@ transformed parameters{
   }
 
   // PS effects-Difference in Y on Z coefficient between classes
-  real b1 = tau01[2] - tau01[1]; 
+  real b1 = tau1[2] - tau1[1]; 
   // Omega-Difference in intercept in Y between classes
-  real a1 = tau00[2] - tau00[1]; 
+  real a1 = tau0[2] - tau0[1]; 
 }
  
 model {
  // likelihood for the outcome 'Y' 
  for (n in 1:nstud) {
     // Compute likelihood for Y
-   real mu_class1 = tau00[1] + tau01[1] * Z[n] + dot_product(X[n], betaY);
-   real mu_class2 = tau00[2] + tau01[2] * Z[n] + dot_product(X[n], betaY);
+   real mu_class1 = tau0[1] + tau1[1] * Z[n] + dot_product(X[n], betaY);
+   real mu_class2 = tau0[2] + tau1[2] * Z[n] + dot_product(X[n], betaY);
    target += log_mix(nu[n], 
              normal_lpdf(Y[n] | mu_class1, sigY[1]),
              normal_lpdf(Y[n] | mu_class2, sigY[2])
@@ -76,8 +76,8 @@ model {
  betaU ~ normal(0, 5);
  
  betaY ~ normal(0, 2);
- tau00 ~ normal(0, 2);
- tau01 ~ normal(0, 1);
+ tau0 ~ normal(0, 2);
+ tau1 ~ normal(0, 1);
  sigY ~ cauchy(0, 2.5);
  
   mu_p ~ beta(2, 2);

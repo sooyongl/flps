@@ -59,11 +59,11 @@ parameters{
   vector[nfac] omegaW;
   vector[nfac] omegaB;
   
-  real tau0_W;
-  real tau0_B;
+  real tau0W;
+  real tau0B;
   
-  vector[nfac] tau1_W;
-  vector[nfac] tau1_B;
+  vector[nfac] tau1W;
+  vector[nfac] tau1B;
   
   real<lower=0> sigY;
   real<lower=0> sigYB;
@@ -117,12 +117,12 @@ model{
            
            + dot_product(to_row_vector(omegaB), fscB[g]) 
            + cm_Z[g] * tau0_B 
-           + cm_Z[g] * dot_product(to_row_vector(tau1_B), fscB[g])
+           + cm_Z[g] * dot_product(to_row_vector(tau1B), fscB[g])
            + dot_product(cm_X[g, ], betaYB)
            
            + dot_product(to_row_vector(omegaW), fscW[i]) 
-           + Z[i] * tau0_W 
-           + Z[i] * dot_product(to_row_vector(tau1_W), fscW[i])
+           + Z[i] * tau0W 
+           + Z[i] * dot_product(to_row_vector(tau1W), fscW[i])
            + dot_product(X[i, ], betaYW);
     
   }
@@ -166,8 +166,8 @@ model{
   betaYB ~ normal(0, 5);
   intcptY ~ normal(0, 5);
   
-  tau0_W ~ normal(ptau0[1, 1], ptau0[1, 2]);
-  tau0_B ~ normal(ptau0[1, 1], ptau0[1, 2]);
+  tau0W ~ normal(ptau0[1, 1], ptau0[1, 2]);
+  tau0B ~ normal(ptau0[1, 1], ptau0[1, 2]);
   
   for(i in 1:nfac) {
     betaUW[, i] ~ normal(0, 5);
@@ -176,8 +176,8 @@ model{
     omegaW[i] ~ normal(pomega[i, 1], pomega[i, 2]);
     omegaB[i] ~ normal(pomega[i, 1], pomega[i, 2]);
     
-    tau1_W[i] ~ normal(ptau1[i, 1], ptau1[i, 2]);
-    tau1_B[i] ~ normal(ptau1[i, 1], ptau1[i, 2]);
+    tau1W[i] ~ normal(ptau1[i, 1], ptau1[i, 2]);
+    tau1B[i] ~ normal(ptau1[i, 1], ptau1[i, 2]);
     
   }
 }

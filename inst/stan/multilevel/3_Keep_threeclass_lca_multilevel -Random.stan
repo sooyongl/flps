@@ -48,15 +48,15 @@ vector[ncov_lv1] betaUW;     // Within-
 vector[ncov_lv2] betaUB;    // Between-
 
 // Treatment effects on the outcome
-vector[nclass] b01_W;   // Within-
-vector[nclass] b01_B;   // Between-
+vector[nclass] tau1W;   // Within-
+vector[nclass] tau1B;   // Between-
 
 // Outcome Mean differences by LC
 // Overall mean ?
-vector[nclass] b00; 
+vector[nclass] tau0; 
 
 // Intercept for class proportion
-real alphaB_nu[nclass];
+real alphaB[nclass];
   
 // Random effects
 vector[nclass] uB_Y[nsch];
@@ -81,7 +81,7 @@ transformed parameters{
     int g = sch[n];  // School for individual n
     
     for (k in 1:nclass) {
-      eta[n, k] = alphaB_nu[k] 
+      eta[n, k] = alphaB[k] 
  	            + uB_nu[g][k]
                 + dot_product(cm_X[g], betaUB) 
  	            + dot_product(X[n], betaUW);
@@ -104,11 +104,11 @@ model {
     real cmXg_betaYB = dot_product(cm_X[g], betaYB);
     
     for (k in 1:nclass) {
-      real mu_class = b00[k] 
-	                + b01_W[k] * Z[n] 
+      real mu_class = tau0[k] 
+	                + tau1W[k] * Z[n] 
 			        + Xn_betaYW // Use precomputed value
 					+ uB_Y[g][k]
-					+ b01_B[k] * cm_Z[g]
+					+ tau1B[k] * cm_Z[g]
 					+ cmXg_betaYB // Use precomputed value
 					;
 			log_nu_n_k = log(nu[n][k]);
@@ -135,7 +135,7 @@ model {
  sigmaYW ~ cauchy(0, 2);
  sigmaYB ~ cauchy(0, 2);
  sigmaNuB ~ cauchy(0, 2);
- alphaB_nu ~ normal(0, 1);
+ alphaB ~ normal(0, 1);
 
  for (g in 1:nsch) {
   for (k in 1:nclass) {
@@ -151,9 +151,9 @@ model {
  betaYB ~ normal(0, 2);
  betaYW ~ normal(0, 2);
  
- b00 ~ normal(0, 2);
- b01_W ~ normal(0, 1);
- b01_B ~ normal(0, 1);
+ tau0 ~ normal(0, 2);
+ tau1W ~ normal(0, 1);
+ tau1B ~ normal(0, 1);
  
  for (k in 1:nclass) {
     for (j in 1:nitem) {

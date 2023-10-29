@@ -26,12 +26,12 @@ parameters{
   real<lower=0, upper=1> mu_p;  // hyper parameter
   real<lower=0> sigma_p;        // hyper parameter
   
-  real alpha[nclass];             // Intercept for class proportion
+  vector[nclass] alpha;             // Intercept for class proportion
   vector[ncov] betaY;     // Coefficients for the outcome Y
   vector[ncov] betaU;     // Coefficients for class membership
       
-  vector[nclass] tau00;           // Intercept for Y for each class
-  vector[nclass] tau01;           // Coefficient for Z for each class
+  vector[nclass] tau0;           // Intercept for Y for each class
+  vector[nclass] tau1;           // Coefficient for Z for each class
   vector<lower=0>[nclass] sigY; // Standard deviations for Y for each class
   vector<lower=0>[nitem] sigR; // Standard deviations for indicators with equality
   
@@ -48,17 +48,23 @@ transformed parameters{
     }
     nu[n] = softmax(to_vector(eta[n, ]));
   }
-  
+
 }
 
 model {
   // likelihood for the outcome 'Y' 
+  vector[nstud] cov_eff;
+  for (n in 1:nstud) {
+    cov_eff[n] = dot_product(X[n], betaY);
+  }
+  
   for (n in 1:nstud) {
     real lpdf_class[nclass];
+    //real cov_eff = dot_product(X[n], betaY);
     
     for (k in 1:nclass) {
-      real mu_class = tau00[k] + tau01[k] * Z[n] + dot_product(X[n], betaY);
-      lpdf_class[k] = log(nu[n][k]) + normal_lpdf(Y[n] | mu_class, sigY[k]);
+      //real mu_class = tau00[k] + tau01[k] * Z[n] + cov_eff[n];
+      lpdf_class[k] = log(nu[n][k]) + normal_lpdf(Y[n] | tau0[k] + tau1[k] * Z[n] + cov_eff[n], sigY[k]);
     }
     
     target += log_sum_exp(lpdf_class);
@@ -80,8 +86,8 @@ model {
  betaU ~ normal(0, 5);
  
  betaY ~ normal(0, 2);
- tau00 ~ normal(0, 2);
- tau01 ~ normal(0, 1);
+ tau0 ~ normal(0, 2);
+ tau1 ~ normal(0, 1);
  sigY ~ cauchy(0, 2.5);
  
   mu_p ~ normal(0, 2);

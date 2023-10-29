@@ -58,8 +58,8 @@ parameters{
   real intcptY;
   vector[nfac] omega;
   
-  real tau0_W;
-  real tau0_B;
+  real tau0W;
+  real tau0B;
   vector[nfac] tau1;
   
   real<lower=0> sigY;
@@ -106,7 +106,7 @@ model {
     muY[i] = intcptY
            + uY[g]
            + dot_product(cm_X[g, ], betaYB)
-           + cm_Z[g] * tau0_B
+           + cm_Z[g] * tau0B
            + dot_product(to_row_vector(omega), fsc[i]) 
            + Z[i] * (tau0_W + dot_product(to_row_vector(tau1), fsc[i]))
            + dot_product(X[i, ], betaYW);
@@ -142,8 +142,8 @@ model {
   betaYB ~ normal(0, 5);
   intcptY ~ normal(0, 5);
   
-  tau0_W ~ normal(ptau0[1, 1], ptau0[1, 2]);
-  tau0_B ~ normal(ptau0[1, 1], ptau0[1, 2]);
+  tau0W ~ normal(ptau0[1, 1], ptau0[1, 2]);
+  tau0B ~ normal(ptau0[1, 1], ptau0[1, 2]);
   
   for(i in 1:nfac) {
     betaUW[:, i] ~ normal(0, 5);

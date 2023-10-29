@@ -46,15 +46,15 @@ vector[ncov_lv1] betaUW;     // Within-
 vector[ncov_lv2] betaUB;    // Between-
 
 // Treatment effects on the outcome
-vector[nclass] b01_W;   // Within-
-vector[nclass] b01_B;   // Between-
+vector[nclass] tau1W;   // Within-
+vector[nclass] tau1B;   // Between-
 
 // Outcome Mean differences by LC
 // Overall mean ?
-vector[nclass] b00; 
+vector[nclass] tau0; 
 
 // Intercept for class proportion
-real alphaB_nu; 
+real alphaB; 
 
 // Random effects
 vector[nsch] uB_Y1;
@@ -78,7 +78,7 @@ transformed parameters{
 // with random effects
  for (i in 1:nstud) {
     int g = sch[i];  // School for individual n
-    nu[i] = inv_logit(alphaB_nu 
+    nu[i] = inv_logit(alphaB 
                     + uB_nu[g]
                     + dot_product(cm_X[g], betaUB) 
                     + dot_product(X[i], betaUW)
@@ -87,10 +87,10 @@ transformed parameters{
 }
 
 // PS effects-Difference in Y on Z coefficient between classes
-real b1W = b01_W[2] - b01_W[1]; 
-real b1B = b01_B[2] - b01_B[1]; 
+real b1W = tau1W[2] - tau1W[1]; 
+real b1B = tau1B[2] - tau1B[1]; 
 // Omega-Difference in intercept in Y between classes
-real a1 = b00[2] - b00[1]; 
+real a1 = tau0[2] - tau0[1]; 
 }
  
 model {
@@ -99,19 +99,19 @@ model {
 for (i in 1:nstud) {
     int g = sch[i];  // School for individual n
   // Compute likelihood for Y
-  real mu_class1 = b00[1] 
+  real mu_class1 = tau0[1] 
                    + uB_Y1[g]
-                   + b01_B[1] * cm_Z[g]
-                   + b01_W[1] * Z[i] 
+                   + tau1B[1] * cm_Z[g]
+                   + tau1W[1] * Z[i] 
                    
                    + dot_product(cm_X[g], betaYB)
                    + dot_product(X[i], betaYW)
                    ;
                    
-  real mu_class2 = b00[2]
+  real mu_class2 = tau0[2]
                    + uB_Y2[g]
-                   + b01_B[2] * cm_Z[g]
-                   + b01_W[2] * Z[i] 
+                   + tau1B[2] * cm_Z[g]
+                   + tau1W[2] * Z[i] 
                    
                    + dot_product(cm_X[g], betaYB)
                    + dot_product(X[i], betaYW)
@@ -149,11 +149,11 @@ betaYB ~ normal(0, 1);
 betaUB ~ normal(0, 1);
 betaUW ~ normal(0, 2);
 
-b01_W ~ normal(0, 1);
-b01_B ~ normal(0, 1);
+tau1W ~ normal(0, 1);
+tau1B ~ normal(0, 1);
 
-b00 ~ normal(0, 1);
-alphaB_nu ~ normal(0, 1);
+tau0 ~ normal(0, 1);
+alphaB ~ normal(0, 1);
 
 uB_Y1 ~ normal(0, sigmaYB[1]);
 uB_Y2 ~ normal(0, sigmaYB[2]);
