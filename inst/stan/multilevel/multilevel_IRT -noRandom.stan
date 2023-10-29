@@ -108,7 +108,7 @@ model {
            + dot_product(cm_X[g, ], betaYB)
            + cm_Z[g] * tau0B
            + dot_product(to_row_vector(omega), fsc[i]) 
-           + Z[i] * (tau0_W + dot_product(to_row_vector(tau1), fsc[i]))
+           + Z[i] * (tau0W + dot_product(to_row_vector(tau1), fsc[i]))
            + dot_product(X[i, ], betaYW);
            
   }

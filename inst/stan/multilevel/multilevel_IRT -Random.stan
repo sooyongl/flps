@@ -116,7 +116,7 @@ model{
            + uY[g]
            
            + dot_product(to_row_vector(omegaB), fscB[g]) 
-           + cm_Z[g] * tau0_B 
+           + cm_Z[g] * tau0B 
            + cm_Z[g] * dot_product(to_row_vector(tau1B), fscB[g])
            + dot_product(cm_X[g, ], betaYB)
            

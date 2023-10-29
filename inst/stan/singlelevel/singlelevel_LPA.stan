@@ -46,9 +46,9 @@ transformed parameters{
   }
 
   // PS effects-Difference in Y on Z coefficient between classes
-  real b1 = tau01[2] - tau01[1]; 
+  // real b1 = tau1[2] - tau1[1]; 
   // Omega-Difference in intercept in Y between classes
-  real a1 = tau00[2] - tau00[1]; 
+  // real a1 = tau0[2] - tau0[1]; 
 }
  
 model {

@@ -29,6 +29,8 @@ importModel <- function(lv_type, multilevel = FALSE, lv_randomeffect = FALSE) {
 
   stanfiles <- stan_list[grepl("RDS$", stan_list)]
 
+  stan_code <- stanfiles[!grepl("threeclass", stanfiles)]
+
   stan_code <- stanfiles[grepl(level, stanfiles)]
   stan_code <- stan_code[grepl(randomeff, stan_code)]
   stan_code <- stan_code[grepl(lv_type, tolower(stan_code))]
@@ -74,6 +76,8 @@ modelBuilder <- function(lv_type, multilevel = FALSE, lv_randomeffect = FALSE) {
   }
 
   stanfiles <- stan_list[grepl("stan$", stan_list)]
+
+  stan_code <- stanfiles[!grepl("threeclass", stanfiles)]
 
   stan_code <- stanfiles[grepl(level, stanfiles)]
   stan_code <- stan_code[grepl(randomeff, stan_code)]
