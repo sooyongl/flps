@@ -13,6 +13,7 @@ runFLPS(
   lv_model = NULL,
   lv_type = NULL,
   multilevel = FALSE,
+  lv_randomeffect = FALSE,
   priors_input = NULL,
   stan_options = list(),
   ...
@@ -40,6 +41,8 @@ akin to the \pkg{lavaan} package. Key operators include:
 \item{lv_type}{A character string indicating the type of latent variable models.}
 
 \item{multilevel}{A logical indicating if a multilevel structure is present.}
+
+\item{lv_randomeffect}{A logical indicating whether to estimate random effects for latent variables.}
 
 \item{priors_input}{A list specifying the priors or defaults to N(0, 5) if not provided.
 Relevant parameters: \code{tau0} (group difference), \code{tau1} (principal effects),

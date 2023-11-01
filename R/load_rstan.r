@@ -29,17 +29,17 @@ importModel <- function(lv_type, multilevel = FALSE, lv_randomeffect = FALSE) {
 
   stanfiles <- stan_list[grepl("RDS$", stan_list)]
 
-  stan_code <- stanfiles[!grepl("threeclass", stanfiles)]
+  stanfiles <- stanfiles[!grepl("threeclass", stanfiles)]
 
-  stan_code <- stanfiles[grepl(level, stanfiles)]
-  stan_code <- stan_code[grepl(randomeff, stan_code)]
-  stan_code <- stan_code[grepl(lv_type, tolower(stan_code))]
+  stanfiles <- stanfiles[grepl(level, stanfiles)]
+  stanfiles <- stanfiles[grepl(randomeff, stanfiles)]
+  stanfiles <- stanfiles[grepl(lv_type, tolower(stanfiles))]
 
-  if(length(stan_code) == 0) {
+  if(length(stanfiles) == 0) {
     stop("No compiled Stan code ready.")
   }
 
-  readRDS(stan_list)
+  readRDS(stanfiles)
 }
 
 #' Generate compiled Stan object to facilitate the analysis
@@ -77,11 +77,11 @@ modelBuilder <- function(lv_type, multilevel = FALSE, lv_randomeffect = FALSE) {
 
   stanfiles <- stan_list[grepl("stan$", stan_list)]
 
-  stan_code <- stanfiles[!grepl("threeclass", stanfiles)]
+  stanfiles <- stanfiles[!grepl("threeclass", stanfiles)]
 
-  stan_code <- stanfiles[grepl(level, stanfiles)]
-  stan_code <- stan_code[grepl(randomeff, stan_code)]
-  stan_code <- stan_code[grepl(lv_type, tolower(stan_code))]
+  stanfiles <- stanfiles[grepl(level, stanfiles)]
+  stanfiles <- stanfiles[grepl(randomeff, stanfiles)]
+  stanfiles <- stanfiles[grepl(lv_type, tolower(stanfiles))]
 
   stanmodel_obj <- rstan::stan_model(
     file = stanfiles,
@@ -92,7 +92,7 @@ modelBuilder <- function(lv_type, multilevel = FALSE, lv_randomeffect = FALSE) {
   )
   saveRDS(stanmodel_obj, gsub("\\.stan", "\\.RDS", stanfiles ))
 
-  message(paste0(lv_type, " model saved as ", gsub("\\.stan", "\\.RDS", stanfiles )))
+  message(paste0(toupper(lv_type), " model saved as ", gsub("\\.stan", "\\.RDS", stanfiles )))
 }
 
 #' Load rstan model
@@ -132,12 +132,14 @@ loadRstan <- function(lv_type = "2PL", multilevel = FALSE, lv_randomeffect = FAL
 
   stanfiles <- stan_list[grepl("stan$", stan_list)]
 
-  stan_code <- stanfiles[grepl(level, stanfiles)]
-  stan_code <- stan_code[grepl(randomeff, stan_code)]
-  stan_code <- stan_code[grepl(lv_type, tolower(stan_code))]
+  stanfiles <- stanfiles[!grepl("threeclass", stanfiles)]
+
+  stanfiles <- stanfiles[grepl(level, stanfiles)]
+  stanfiles <- stanfiles[grepl(randomeff, stanfiles)]
+  stanfiles <- stanfiles[grepl(lv_type, tolower(stanfiles))]
 
   given_stan_model <-
-    suppressWarnings(paste(readLines(stan_code), collapse = "\n"))
+    suppressWarnings(paste(readLines(stanfiles), collapse = "\n"))
   # cat(given_stan_model)
   return(given_stan_model)
 }

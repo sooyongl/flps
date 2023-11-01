@@ -11,6 +11,10 @@
 #'   \item{race}{0 = White; 1 = Others}
 #'   \item{pretest}{Pre test scores}
 #'   \item{stdscore}{Standardized scores}
+#'   \item{cm_sex}{Cluster-mean of sex}
+#'   \item{cm_race}{Cluster-mean of race}
+#'   \item{cm_pretest}{Cluster-mean of Pre test scores}
+#'   \item{cm_stdscore}{Cluster-mean of of Standardized scores}
 #'   \item{trt}{Treatment assignment; 0 = control, 1 = treatment}
 #'   \item{Y}{Outcome}
 #'   \item{q1}{Continuous item}
@@ -54,6 +58,11 @@
 #'   \item{race}{0 = White; 1 = Others}
 #'   \item{pretest}{Pre test scores}
 #'   \item{stdscore}{Standardized scores}
+#'   \item{stdscore}{Standardized scores}
+#'   \item{cm_sex}{Cluster-mean of sex}
+#'   \item{cm_race}{Cluster-mean of race}
+#'   \item{cm_pretest}{Cluster-mean of Pre test scores}
+#'   \item{cm_stdscore}{Cluster-mean of of Standardized scores}
 #'   \item{trt}{Treatment assignment; 0 = control, 1 = treatment}
 #'   \item{Y}{Outcome}
 #'   \item{q1}{Binary item}
@@ -97,6 +106,11 @@
 #'   \item{race}{0 = White; 1 = Others}
 #'   \item{pretest}{Pre test scores}
 #'   \item{stdscore}{Standardized scores}
+#'   \item{stdscore}{Standardized scores}
+#'   \item{cm_sex}{Cluster-mean of sex}
+#'   \item{cm_race}{Cluster-mean of race}
+#'   \item{cm_pretest}{Cluster-mean of Pre test scores}
+#'   \item{cm_stdscore}{Cluster-mean of of Standardized scores}
 #'   \item{trt}{Treatment assignment; 0 = control, 1 = treatment}
 #'   \item{Y}{Outcome}
 #'   \item{q1}{Graded response item}

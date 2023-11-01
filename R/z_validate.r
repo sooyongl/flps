@@ -61,7 +61,7 @@ validate_data <- function(all_args) {
   }
 
   # Others block ----------------------------
-  if(tolower(all_args$lv_type) %in% c("irt","2pl","rasch","lpa","lca","grm","sem")) {
+  if(!tolower(all_args$lv_type) %in% c("irt","2pl","rasch","lpa","lca","grm","sem")) {
     stop('`lv_type` should be one of “irt”, “2pl”, “rasch”, “lpa”, “lca”, “grm”, “sem”')
   }
 

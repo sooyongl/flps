@@ -4,13 +4,14 @@
 \alias{modelBuilder}
 \title{Generate compiled Stan object to facilitate the analysis}
 \usage{
-modelBuilder(type = "all", multilevel = FALSE)
+modelBuilder(lv_type, multilevel = FALSE, lv_randomeffect = FALSE)
 }
 \arguments{
-\item{type}{A character string specifying the type of FLPS model.
-If not provided, the default is set to \code{"all"}, which compiles all available Stan syntax.}
+\item{lv_type}{A character string specifying the type of FLPS model}
 
 \item{multilevel}{a logical indicating multilevel Stan model.}
+
+\item{lv_randomeffect}{A logical indicating whether to estimate random effects for latent variables.}
 }
 \value{
 There's no return, but the compiled objects are saved in the package
