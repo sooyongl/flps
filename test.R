@@ -17,7 +17,7 @@ pkgdown::build_site()
 # release()
 
 # devtools::build_vignettes()
-
+spell_check()
 devtools::test()
 
 # devtools::check()
