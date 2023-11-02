@@ -96,10 +96,10 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"flps"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sooyongl.github.io/flps/" class="external-link">flps</a></span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Version: 1.0.0</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## It is a demo.</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Acknowledgements. It is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">## Version: 1.0.0</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="do">## It is a demo.</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="do">## Acknowledgements. It is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.</span></span></code></pre></div>
 <ul>
 <li><p>Documentation is available <a href="https://sooyongl.github.io/flps/" class="external-link">here</a>.</p></li>
 <li><p>For compiling errors on Windows, see the relevant <a href="https://github.com/stan-dev/rstan/wiki/Configuring-C---Toolchain-for-Windows#r-42" class="external-link">guide</a>.</p></li>
@@ -123,42 +123,42 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Input data frame</span></span>
 <span><span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">binary</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">##       schid   id sex race pretest stdscore    cm_sex   cm_race cm_pretest</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    1:     1 2383   0    1      20  -0.3296 0.4406780 0.9322034   14.81356</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    2:     1 2384   1    0       8   1.1597 0.4406780 0.9322034   14.81356</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    3:     1 2385   0    1      14  -0.7385 0.4406780 0.9322034   14.81356</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">##    4:     1 2387   0    1      12  -1.3518 0.4406780 0.9322034   14.81356</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">##    5:     1 2388   0    1       6  -1.2057 0.4406780 0.9322034   14.81356</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   ---                                                                    </span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 4762:    63 4761   0    1      16   0.6457 0.4860558 0.3944223   17.03187</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4763:    63 4763   0    0      11   0.3168 0.4860558 0.3944223   17.03187</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 4764:    63 4764   0    0      18  -0.4114 0.4860558 0.3944223   17.03187</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 4765:    63 4765   1    0      31   2.2116 0.4860558 0.3944223   17.03187</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 4766:    63 4766   1    1      13  -0.0668 0.4860558 0.3944223   17.03187</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="do">##       cm_stdscore trt      Y q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 q14 q15</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="do">##    1:  -0.4068119   1 -0.487  0 NA  1  1  1  1  1 NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="do">##    2:  -0.4068119   1  0.487  1 NA  1  1  1  1  1  1  1   1   1   1  NA  NA  NA</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="do">##    3:  -0.4068119   1 -1.073  0 NA  1  1  0 NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="do">##    4:  -0.4068119   1 -1.087  0 NA  1  1  1 NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="do">##    5:  -0.4068119   1 -1.171  0 NA  1  1 NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="do">##   ---                                                                          </span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 4762:   0.0997502   0 -0.114  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 4763:   0.0997502   0 -0.438  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 4764:   0.0997502   0 -1.047  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 4765:   0.0997502   0  0.765  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 4766:   0.0997502   0  0.539  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="do">##       q16 q17 q18 q19 q20</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="do">##    1:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="do">##    2:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="do">##    3:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="do">##    4:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="do">##    5:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="do">##   ---                    </span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 4762:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="do">## 4763:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="do">## 4764:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="do">## 4765:  NA  NA  NA  NA  NA</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="do">## 4766:  NA  NA  NA  NA  NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="do">##       schid   id sex race pretest stdscore    cm_sex   cm_race cm_pretest</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="do">##    1:     1 2383   0    1      20  -0.3296 0.4406780 0.9322034   14.81356</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="do">##    2:     1 2384   1    0       8   1.1597 0.4406780 0.9322034   14.81356</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="do">##    3:     1 2385   0    1      14  -0.7385 0.4406780 0.9322034   14.81356</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="do">##    4:     1 2387   0    1      12  -1.3518 0.4406780 0.9322034   14.81356</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="do">##    5:     1 2388   0    1       6  -1.2057 0.4406780 0.9322034   14.81356</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="do">##   ---                                                                    </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="do">## 4762:    63 4761   0    1      16   0.6457 0.4860558 0.3944223   17.03187</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="do">## 4763:    63 4763   0    0      11   0.3168 0.4860558 0.3944223   17.03187</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="do">## 4764:    63 4764   0    0      18  -0.4114 0.4860558 0.3944223   17.03187</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="do">## 4765:    63 4765   1    0      31   2.2116 0.4860558 0.3944223   17.03187</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="do">## 4766:    63 4766   1    1      13  -0.0668 0.4860558 0.3944223   17.03187</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="do">##       cm_stdscore trt      Y q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 q14 q15</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="do">##    1:  -0.4068119   1 -0.487  0 NA  1  1  1  1  1 NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="do">##    2:  -0.4068119   1  0.487  1 NA  1  1  1  1  1  1  1   1   1   1  NA  NA  NA</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="do">##    3:  -0.4068119   1 -1.073  0 NA  1  1  0 NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="do">##    4:  -0.4068119   1 -1.087  0 NA  1  1  1 NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="do">##    5:  -0.4068119   1 -1.171  0 NA  1  1 NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="do">##   ---                                                                          </span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="do">## 4762:   0.0997502   0 -0.114  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="do">## 4763:   0.0997502   0 -0.438  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="do">## 4764:   0.0997502   0 -1.047  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="do">## 4765:   0.0997502   0  0.765  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="do">## 4766:   0.0997502   0  0.539  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="do">##       q16 q17 q18 q19 q20</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="do">##    1:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="do">##    2:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="do">##    3:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="do">##    4:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="do">##    5:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="do">##   ---                    </span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="do">## 4762:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="do">## 4763:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="do">## 4764:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="do">## 4765:  NA  NA  NA  NA  NA</span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="do">## 4766:  NA  NA  NA  NA  NA</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="model-fitting-with-flps">Model Fitting with FLPS<a class="anchor" aria-label="anchor" href="#model-fitting-with-flps"></a>
@@ -269,7 +269,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
