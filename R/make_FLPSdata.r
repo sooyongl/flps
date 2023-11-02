@@ -11,13 +11,6 @@
 #'
 #' @returns a S3 class for a corresponding measurement model
 #' @noRd
-
-# makeFLPSdata <- function(...) {
-#   dotdotdot <- list(...)
-#   print(dotdotdot$group_id)
-# }
-# makeFLPSdata(group_id = 1)
-
 makeFLPSdata <- function(inp_data, outcome, trt, covariate, lv_model, lv_type, multilevel,
                          # nclass = NULL, group_id = NULL
                          ...
@@ -62,7 +55,6 @@ makeFLPSdata <- function(inp_data, outcome, trt, covariate, lv_model, lv_type, m
     obtain_prior <- match.fun("latent_lambda")
   }
 
-
   #
   if(multilevel) {
     group_id <- dotdotdot$group_id
@@ -78,9 +70,6 @@ makeFLPSdata <- function(inp_data, outcome, trt, covariate, lv_model, lv_type, m
     formula_obj <- as.formula(paste(trt, "~", group_id))
     cm_Z <- aggregate(formula_obj,data = inp_data, FUN = mean)
     cm_Z <- cm_Z[[2]]
-
-    # inp_data[[group_id]] <- as.numeric(as.factor(inp_data[[group_id]]))
-    # group_indices <- split(1:nrow(inp_data), inp_data[[group_id]])
 
     flps_data <- list(
       # Data info
@@ -159,15 +148,3 @@ makeFLPSdata <- function(inp_data, outcome, trt, covariate, lv_model, lv_type, m
 
   return(out)
 }
-
-# dataSetting <- function(x, ...) {
-#   UseMethod("dataSetting", x)
-# }
-#
-# dataSetting.Single <- function(x, ...) {
-#
-# }
-
-
-
-

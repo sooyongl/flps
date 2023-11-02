@@ -9,7 +9,8 @@
 #' @param lv_model A description of the latent variable model using syntax
 #' akin to the \pkg{lavaan} package. Key operators include:
 #'  \itemize{
-#'    \item \code{=~} : Denotes associations between factors and indicators (e.g., F1 =~ v1 + v2 + v3).
+#'    \item \code{=~} : Denotes associations between factors and indicators (e.g., F1 =~ v1 + v2 + v3). All indicators associated with the corresponding factor should be
+#'    written in the same line with \code{+}.
 #'    \item \code{+} : Specifies a series of indicators.
 #'  }
 #'
