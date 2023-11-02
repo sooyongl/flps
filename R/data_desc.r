@@ -58,7 +58,6 @@
 #'   \item{race}{0 = White; 1 = Others}
 #'   \item{pretest}{Pre test scores}
 #'   \item{stdscore}{Standardized scores}
-#'   \item{stdscore}{Standardized scores}
 #'   \item{cm_sex}{Cluster-mean of sex}
 #'   \item{cm_race}{Cluster-mean of race}
 #'   \item{cm_pretest}{Cluster-mean of Pre test scores}
@@ -105,7 +104,6 @@
 #'   \item{sex}{0 = boys; 1 = girls}
 #'   \item{race}{0 = White; 1 = Others}
 #'   \item{pretest}{Pre test scores}
-#'   \item{stdscore}{Standardized scores}
 #'   \item{stdscore}{Standardized scores}
 #'   \item{cm_sex}{Cluster-mean of sex}
 #'   \item{cm_race}{Cluster-mean of race}

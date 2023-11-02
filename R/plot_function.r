@@ -1,6 +1,6 @@
 #' Make plots related to FLPS models
 #'
-#' @param object a flps object
+#' @param object a \code{\link[flps]{flps}} object
 #' @param type a character indicating the type of plots
 #'
 #' @return
@@ -31,7 +31,7 @@ flps_plot <- function(object, type = "latent") {
 
 #' Class profiles by latent classes
 #'
-#' @param object a flps object
+#' @param object a \code{\link[flps]{flps}} object
 #' @noRd
 #'
 flps_profile <- function(object, ...) {
@@ -87,7 +87,7 @@ flps_profile <- function(object, ...) {
 
 #' Latent factor scores distribution by treatment assignment
 #'
-#' @param object a flps object
+#' @param object a \code{\link[flps]{flps}} object
 #' @param type a character indicating the type of plots
 #' @noRd
 flps_latent <- function(object, type = "hist") {
@@ -211,7 +211,7 @@ flps_causal <- function(object) {
 
 #' Plot
 #'
-#' @param x an object of class \code{flps}
+#' @param x an object of class \code{\link[flps]{flps}}
 #' @param type a string for the type of plot
 #' @param pars a character vector indicating the target parameters
 #' @param ... additional options for future development

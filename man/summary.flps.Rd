@@ -7,7 +7,7 @@
 \method{summary}{flps}(object, type = "all", ...)
 }
 \arguments{
-\item{object}{an object of class \code{flps}}
+\item{object}{an object of class \code{\link[flps]{flps}}}
 
 \item{type}{a string for the part of FLPS model}
 

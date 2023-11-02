@@ -1,6 +1,6 @@
 #' Print results
 #'
-#' @param x an object of class \code{flps}
+#' @param x an object of class \code{\link[flps]{flps}}
 #' @param ... additional options for future development
 #'
 #' @return Results of FLPS model are printed via the \pkg{rstan} package.
@@ -16,7 +16,7 @@ print.flps <- function(x, ...) {
 
 #' Summarize the results
 #'
-#' @param object an object of class \code{flps}
+#' @param object an object of class \code{\link[flps]{flps}}
 #' @param type a string for the part of FLPS model
 #' @param ... additional options for future development
 #'

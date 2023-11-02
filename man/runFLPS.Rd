@@ -22,7 +22,7 @@ runFLPS(
 \arguments{
 \item{inp_data}{A matrix or data frame containing the input data.}
 
-\item{compiled_stan}{An object of S4 class \code{\link[rstan]{stanmodel}} produced by the
+\item{compiled_stan}{An object of S4 class stanmodel produced by the
 \code{modelBuilder} function.}
 
 \item{outcome}{A character string specifying the outcome variable's name.}

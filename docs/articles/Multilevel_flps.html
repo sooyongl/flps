@@ -97,9 +97,57 @@
 <h2 id="multilevel-flps-being-tested">Multilevel FLPS (being tested)<a class="anchor" aria-label="anchor" href="#multilevel-flps-being-tested"></a>
 </h2>
 <div class="section level3">
+<h3 id="flps-based-on-multilevel-factor-model">FLPS based on multilevel factor model<a class="anchor" aria-label="anchor" href="#flps-based-on-multilevel-factor-model"></a>
+</h3>
+<div class="section level4">
+<h4 id="without-random-effects-for-latent-factors">Without random effects for latent factors<a class="anchor" aria-label="anchor" href="#without-random-effects-for-latent-factors"></a>
+</h4>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
+<span>  inp_data <span class="op">=</span> <span class="va">continuous</span>,</span>
+<span>  <span class="co"># complied_stan = importModel('sem', T, F),</span></span>
+<span>  outcome  <span class="op">=</span> <span class="st">"Y"</span>,</span>
+<span>  trt      <span class="op">=</span> <span class="st">"trt"</span>,</span>
+<span>  covariate <span class="op">=</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span>,<span class="st">"race"</span>,<span class="st">"pretest"</span>,<span class="st">"stdscore"</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cm_sex"</span>,<span class="st">"cm_race"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  lv_type <span class="op">=</span> <span class="st">"sem"</span>,</span>
+<span>  multilevel <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  lv_randomeffect <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  lv_model <span class="op">=</span> <span class="st">"F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10"</span>,</span>
+<span>  group_id <span class="op">=</span> <span class="st">"schid"</span>,</span>
+<span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">10</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="with-random-effects-for-latent-factors">With random effects for latent factors<a class="anchor" aria-label="anchor" href="#with-random-effects-for-latent-factors"></a>
+</h4>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
+<span>  inp_data <span class="op">=</span> <span class="va">continuous</span>,</span>
+<span>  <span class="co"># complied_stan = importModel('sem', T, T),</span></span>
+<span>  outcome  <span class="op">=</span> <span class="st">"Y"</span>,</span>
+<span>  trt      <span class="op">=</span> <span class="st">"trt"</span>,</span>
+<span>  covariate <span class="op">=</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span>,<span class="st">"race"</span>,<span class="st">"pretest"</span>,<span class="st">"stdscore"</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cm_sex"</span>,<span class="st">"cm_race"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  lv_type <span class="op">=</span> <span class="st">"sem"</span>,</span>
+<span>  multilevel <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  lv_randomeffect <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  lv_model <span class="op">=</span> <span class="st">"F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10"</span>,</span>
+<span>  group_id <span class="op">=</span> <span class="st">"schid"</span>,</span>
+<span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">10</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
 <h3 id="flps-based-on-multilevel-latent-class-analysis">FLPS based on multilevel Latent Class analysis<a class="anchor" aria-label="anchor" href="#flps-based-on-multilevel-latent-class-analysis"></a>
 </h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="section level4">
+<h4 id="without-random-effects-for-latent-classes">Without random effects for latent classes<a class="anchor" aria-label="anchor" href="#without-random-effects-for-latent-classes"></a>
+</h4>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">binary</span> <span class="op">&lt;-</span> <span class="va">binary</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">schid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>cm_sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span>,</span>
@@ -115,11 +163,39 @@
 <span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cm_sex"</span>,<span class="st">"cm_race"</span><span class="op">)</span><span class="op">)</span>,               <span class="co"># Level 2 covariates</span></span>
 <span>  lv_type <span class="op">=</span> <span class="st">"lca"</span>,</span>
 <span>  multilevel <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  lv_randomeffect <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  lv_model <span class="op">=</span> <span class="st">"F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10"</span>,</span>
 <span>  nclass <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  group_id <span class="op">=</span> <span class="st">"schid"</span>,</span>
 <span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">100</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="with-random-effects-for-latent-classes">With random effects for latent classes<a class="anchor" aria-label="anchor" href="#with-random-effects-for-latent-classes"></a>
+</h4>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">binary</span> <span class="op">&lt;-</span> <span class="va">binary</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">schid</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>cm_sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span>,</span>
+<span>         cm_race <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">race</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/runFLPS.html">runFLPS</a></span><span class="op">(</span></span>
+<span>  inp_data <span class="op">=</span> <span class="va">binary</span>,</span>
+<span>  <span class="co"># complied_stan = importModel('irt'),</span></span>
+<span>  outcome  <span class="op">=</span> <span class="st">"Y"</span>,</span>
+<span>  trt      <span class="op">=</span> <span class="st">"trt"</span>,</span>
+<span>  covariate <span class="op">=</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span>,<span class="st">"race"</span>,<span class="st">"pretest"</span>,<span class="st">"stdscore"</span><span class="op">)</span>, <span class="co"># Level 1 covariates</span></span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cm_sex"</span>,<span class="st">"cm_race"</span><span class="op">)</span><span class="op">)</span>,               <span class="co"># Level 2 covariates</span></span>
+<span>  lv_type <span class="op">=</span> <span class="st">"lca"</span>,</span>
+<span>  multilevel <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  lv_randomeffect <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>  lv_model <span class="op">=</span> <span class="st">"F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10"</span>,</span>
+<span>  nclass <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  group_id <span class="op">=</span> <span class="st">"schid"</span>,</span>
+<span>  stan_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>iter <span class="op">=</span> <span class="fl">100</span>, cores <span class="op">=</span> <span class="fl">1</span>, chains <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </div>
@@ -141,7 +217,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

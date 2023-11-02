@@ -1,7 +1,7 @@
 #' Conduct fully latent principal stratification
 #'
 #' @param inp_data A matrix or data frame containing the input data.
-#' @param compiled_stan An object of S4 class \code{\link[rstan]{stanmodel}} produced by the
+#' @param compiled_stan An object of S4 class stanmodel produced by the
 #'  \code{modelBuilder} function.
 #' @param outcome A character string specifying the outcome variable's name.
 #' @param trt A character string specifying the treatment or control group variable's name.
@@ -134,7 +134,6 @@ runFLPS <- function(inp_data = NULL,
     flps_fit <-  try(do.call(rstan::stan, stan_options))
 
   } else {
-    # message("Compiling Stan code...")
 
     stan_options <- stanOptions(stan_options, object = flps_model,
                                 data = flps_data_class$stan_data)

@@ -78,7 +78,7 @@ install.packages("rstan", repos = c("https://mc-stan.org/r-packages/", getOption
 
 Now, execute your FLPS model. Given the time-intensive nature of the process, chains and iterations have been initially limited to 1 and 5000, respectively. It is advisable to increase these values for your specific research needs.
 
-```{r eval = T, cache=TRUE}
+```{r eval = F}
 # Subset of data: 1000 students
 binary <- binary[c(sample(which(binary$trt == 1), 250), 
                    sample(which(binary$trt == 0), 250)),]
@@ -99,16 +99,17 @@ res <- runFLPS(
 
 Retrieve summaries and visualize results with the following:
 
-```{r eval = T}
+```{r eval = F}
 
 summary(res, type = "causal")
 
 ```
 
 
+
 The `flps_plot()` shows the plot related to FLPS models
 
-```{r eval = T, fig.width = 8}
+```{r eval = F}
 
 flps_plot(res, type = "causal")
 
@@ -117,12 +118,12 @@ flps_plot(res, type = "causal")
 ```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='60%'}
 # a1 <- flps_plot(res, type = "causal")
 # ggplot2::ggsave("man/figures/causal_1.png", a1)
-# knitr::include_graphics('man/figures/causal_1.png')
+knitr::include_graphics('man/figures/causal_1.png')
 ```
 
 
 
-```{r eval = T}
+```{r eval = F}
 
 flps_plot(res, type = "latent")
 
@@ -132,7 +133,7 @@ flps_plot(res, type = "latent")
 ```{r eval = T, echo=FALSE, fig.align='center', fig.cap='', out.width='60%'}
 # a1 <- flps_plot(res, type = "latent")
 # ggplot2::ggsave("man/figures/latent_1.png", a1)
-# knitr::include_graphics('man/figures/latent_1.png')
+knitr::include_graphics('man/figures/latent_1.png')
 ```
 
 
