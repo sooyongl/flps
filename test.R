@@ -20,11 +20,11 @@ pkgdown::build_site()
 spell_check()
 devtools::test()
 
-# devtools::check()
-# devtools::check_rhub()
+devtools::check()
+devtools::check_rhub()
 
-devtools::check(vignettes = FALSE)
-devtools::check_rhub(check_args = "--no-build-vignettes")
+# devtools::check(vignettes = FALSE)
+# devtools::check_rhub(check_args = "--no-build-vignettes")
 
 
 devtools::check_win_devel()
