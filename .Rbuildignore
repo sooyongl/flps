@@ -16,3 +16,7 @@ LCAfit.RDS$
 LPAfit.RDS$
 ^doc$
 ^Meta$
+^vignettes/results
+^vignettes/flps_differentmodel\.Rmd$
+^vignettes/flpsMixture\.Rmd$
+^vignettes/Multilevel_flps\.Rmd$
