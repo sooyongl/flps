@@ -13,6 +13,7 @@ runFLPS(
   lv_model = NULL,
   lv_type = NULL,
   multilevel = FALSE,
+  lv_randomeffect = FALSE,
   priors_input = NULL,
   stan_options = list(),
   ...
@@ -21,7 +22,7 @@ runFLPS(
 \arguments{
 \item{inp_data}{A matrix or data frame containing the input data.}
 
-\item{compiled_stan}{An object of S4 class \code{\link[rstan]{stanmodel}} produced by the
+\item{compiled_stan}{An object of S4 class stanmodel produced by the
 \code{modelBuilder} function.}
 
 \item{outcome}{A character string specifying the outcome variable's name.}
@@ -33,13 +34,16 @@ runFLPS(
 \item{lv_model}{A description of the latent variable model using syntax
 akin to the \pkg{lavaan} package. Key operators include:
  \itemize{
-   \item \code{=~} : Denotes associations between factors and indicators (e.g., F1 =~ v1 + v2 + v3).
+   \item \code{=~} : Denotes associations between factors and indicators (e.g., F1 =~ v1 + v2 + v3). All indicators associated with the corresponding factor should be
+   written in the same line with \code{+}.
    \item \code{+} : Specifies a series of indicators.
  }}
 
 \item{lv_type}{A character string indicating the type of latent variable models.}
 
 \item{multilevel}{A logical indicating if a multilevel structure is present.}
+
+\item{lv_randomeffect}{A logical indicating whether to estimate random effects for latent variables.}
 
 \item{priors_input}{A list specifying the priors or defaults to N(0, 5) if not provided.
 Relevant parameters: \code{tau0} (group difference), \code{tau1} (principal effects),

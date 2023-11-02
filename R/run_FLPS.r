@@ -1,7 +1,7 @@
 #' Conduct fully latent principal stratification
 #'
 #' @param inp_data A matrix or data frame containing the input data.
-#' @param compiled_stan An object of S4 class \code{\link[rstan]{stanmodel}} produced by the
+#' @param compiled_stan An object of S4 class stanmodel produced by the
 #'  \code{modelBuilder} function.
 #' @param outcome A character string specifying the outcome variable's name.
 #' @param trt A character string specifying the treatment or control group variable's name.
@@ -9,12 +9,14 @@
 #' @param lv_model A description of the latent variable model using syntax
 #' akin to the \pkg{lavaan} package. Key operators include:
 #'  \itemize{
-#'    \item \code{=~} : Denotes associations between factors and indicators (e.g., F1 =~ v1 + v2 + v3).
+#'    \item \code{=~} : Denotes associations between factors and indicators (e.g., F1 =~ v1 + v2 + v3). All indicators associated with the corresponding factor should be
+#'    written in the same line with \code{+}.
 #'    \item \code{+} : Specifies a series of indicators.
 #'  }
 #'
 #' @param lv_type A character string indicating the type of latent variable models.
 #' @param multilevel A logical indicating if a multilevel structure is present.
+#' @param lv_randomeffect A logical indicating whether to estimate random effects for latent variables.
 #' @param priors_input A list specifying the priors or defaults to N(0, 5) if not provided.
 #' Relevant parameters: \code{tau0} (group difference), \code{tau1} (principal effects),
 #' and \code{omega} (effect of latent factors on outcome).
@@ -75,6 +77,7 @@ runFLPS <- function(inp_data = NULL,
                     lv_model = NULL,
                     lv_type = NULL,
                     multilevel = FALSE,
+                    lv_randomeffect = FALSE,
                     priors_input = NULL,
                     stan_options = list(),
                     ...
@@ -99,7 +102,7 @@ runFLPS <- function(inp_data = NULL,
                                   group_id = all_args$group_id)
 
   if(is.null(compiled_stan)) {
-    flps_model <- loadRstan(lv_type = flps_data_class$lv_type, multilevel)
+    flps_model <- loadRstan(flps_data_class$lv_type, multilevel, lv_randomeffect)
 
   } else {
     flps_model <- compiled_stan
@@ -132,7 +135,6 @@ runFLPS <- function(inp_data = NULL,
     flps_fit <-  try(do.call(rstan::stan, stan_options))
 
   } else {
-    # message("Compiling Stan code...")
 
     stan_options <- stanOptions(stan_options, object = flps_model,
                                 data = flps_data_class$stan_data)

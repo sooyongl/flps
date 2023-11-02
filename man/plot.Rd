@@ -7,7 +7,7 @@
 \method{plot}{flps}(x, type = NULL, pars = c("tau0", "tau1"), ...)
 }
 \arguments{
-\item{x}{an object of class \code{flps}}
+\item{x}{an object of class \code{\link[flps]{flps}}}
 
 \item{type}{a string for the type of plot}
 

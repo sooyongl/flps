@@ -56,11 +56,5 @@ Collate:
 	'plot_function.r'
 	'summary_function.r'
 	'data_desc.r'
-	'stan_data_block.R'
-	'stan_generated_param_block.R'
-	'stan_model_block.R'
-	'stan_parameter_block.R'
-	'stan_scriptGenerator.R'
-	'stan_trans_parameters_block.R'
 	'zzz.r'
 URL: https://sooyongl.github.io/flps/

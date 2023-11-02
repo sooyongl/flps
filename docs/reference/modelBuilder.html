@@ -66,18 +66,21 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">modelBuilder</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"all"</span>, multilevel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">modelBuilder</span><span class="op">(</span><span class="va">lv_type</span>, multilevel <span class="op">=</span> <span class="cn">FALSE</span>, lv_randomeffect <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>type</dt>
-<dd><p>a character indicating the type of FLPS model.
-The default is <code>all</code> to compile all available Stan syntax.</p></dd>
+    <dl><dt>lv_type</dt>
+<dd><p>A character string specifying the type of FLPS model</p></dd>
 
 
 <dt>multilevel</dt>
 <dd><p>a logical indicating multilevel Stan model.</p></dd>
+
+
+<dt>lv_randomeffect</dt>
+<dd><p>A logical indicating whether to estimate random effects for latent variables.</p></dd>
 
 </dl></div>
     <div id="value">

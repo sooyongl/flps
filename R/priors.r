@@ -7,8 +7,25 @@ defaultPriors <- function(nfac) {
 
   priors_set$ptau0 <- matrix(c(0, 5), nrow = 1)
   priors_set$ptau1 <- matrix(rep(c(0, 5),each=nfac), nfac)
-  priors_set$pomega <- matrix(rep(c(0, 5),each=nfac), nfac)
 
+  priors_set$ptau0W <- matrix(c(0, 5), nrow = 1)
+  priors_set$ptau0B <- matrix(c(0, 5), nrow = 1)
+  priors_set$ptau1W <- matrix(rep(c(0, 5),each=nfac), nfac)
+  priors_set$ptau1B <- matrix(rep(c(0, 5),each=nfac), nfac)
+
+  priors_set$pomega <- matrix(rep(c(0, 5),each=nfac), nfac)
+  priors_set$pomegaW <- matrix(rep(c(0, 5),each=nfac), nfac)
+  priors_set$pomegaB <- matrix(rep(c(0, 5),each=nfac), nfac)
+
+  priors_set$pbetaU <- c(0, 5)
+  priors_set$pbetaUW <- c(0, 5)
+  priors_set$pbetaUB <- c(0, 5)
+  priors_set$pbetaY <- c(0, 5)
+  priors_set$pbetaYW <- c(0, 5)
+  priors_set$pbetaYB <- c(0, 5)
+
+  priors_set$ploading <- c(0, 5)
+  priors_set$pintcpt <- c(0, 5)
   # priors_set$intcpt <- c(0,5)
   # priors_set$loading_free <- c(0,1)
 

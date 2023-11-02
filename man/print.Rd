@@ -7,7 +7,7 @@
 \method{print}{flps}(x, ...)
 }
 \arguments{
-\item{x}{an object of class \code{flps}}
+\item{x}{an object of class \code{\link[flps]{flps}}}
 
 \item{...}{additional options for future development}
 }

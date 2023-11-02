@@ -7,7 +7,7 @@
 flps_plot(object, type = "latent")
 }
 \arguments{
-\item{object}{a flps object}
+\item{object}{a \code{\link[flps]{flps}} object}
 
 \item{type}{a character indicating the type of plots}
 }

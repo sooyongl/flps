@@ -27,8 +27,54 @@ library(flps)
 
 ## Multilevel FLPS (being tested)
 
+### FLPS based on multilevel factor model
+
+#### Without random effects for latent factors
+
+```{r}
+res <- runFLPS(
+  inp_data = continuous,
+  # complied_stan = importModel('sem', T, F),
+  outcome  = "Y",
+  trt      = "trt",
+  covariate =
+    list(c("sex","race","pretest","stdscore"),
+         c("cm_sex","cm_race")),
+  lv_type = "sem",
+  multilevel = T,
+  lv_randomeffect = F,
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  group_id = "schid",
+  stan_options = list(iter = 10, cores = 1, chains = 1)
+)
+```
+
+
+#### With random effects for latent factors
+
+```{r}
+
+res <- runFLPS(
+  inp_data = continuous,
+  # complied_stan = importModel('sem', T, T),
+  outcome  = "Y",
+  trt      = "trt",
+  covariate =
+    list(c("sex","race","pretest","stdscore"),
+         c("cm_sex","cm_race")),
+  lv_type = "sem",
+  multilevel = T,
+  lv_randomeffect = T,
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  group_id = "schid",
+  stan_options = list(iter = 10, cores = 1, chains = 1)
+)
+```
+
+
 ### FLPS based on multilevel Latent Class analysis
 
+#### Without random effects for latent classes
 
 ```{r}
 binary <- binary %>%
@@ -46,6 +92,7 @@ res <- runFLPS(
          c("cm_sex","cm_race")),               # Level 2 covariates
   lv_type = "lca",
   multilevel = T,
+  lv_randomeffect = F,
   lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
   nclass = 2,
   group_id = "schid",
@@ -53,3 +100,29 @@ res <- runFLPS(
 )
 ```
 
+
+#### With random effects for latent classes
+
+```{r}
+binary <- binary %>%
+  group_by(schid) %>%
+  mutate(cm_sex = mean(sex),
+         cm_race = mean(race))
+
+res <- runFLPS(
+  inp_data = binary,
+  # complied_stan = importModel('irt'),
+  outcome  = "Y",
+  trt      = "trt",
+  covariate =
+    list(c("sex","race","pretest","stdscore"), # Level 1 covariates
+         c("cm_sex","cm_race")),               # Level 2 covariates
+  lv_type = "lca",
+  multilevel = T,
+  lv_randomeffect = T, 
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  nclass = 2,
+  group_id = "schid",
+  stan_options = list(iter = 100, cores = 1, chains = 1)
+)
+```

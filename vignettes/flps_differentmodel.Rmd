@@ -48,6 +48,25 @@ res <- runFLPS(
 )
 ```
 
+### FLPS with multidimensional Rasch model
+
+```{r}
+binary <- binary[c(sample(which(binary$trt == 1), 500), 
+                   sample(which(binary$trt == 0), 500)),]
+
+res <- runFLPS(
+  inp_data = binary,
+  outcome = "Y",
+  trt = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "rasch",
+  lv_model = "
+  F1 =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10
+  F2 =~ q11 + q12 + q13 + q14 + q15 + q16 + q17 + q18 + q19 + q20",
+  stan_options = list(iter = 5000, cores = 1, chains = 2)
+)
+```
+
 ### FLPS with 2PL model
 
 ```{r}
