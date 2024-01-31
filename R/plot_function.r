@@ -34,7 +34,7 @@ flps_plot <- function(object, type = "latent") {
 #' @param object a \code{\link[flps]{flps}} object
 #' @noRd
 #'
-flps_profile <- function(object, ...) {
+flps_profile <- function(object, ...) { # object = res
 
   inputs <- as.list(object$call)
 
@@ -42,8 +42,11 @@ flps_profile <- function(object, ...) {
 
   out1 <- out$summary[grepl("^(p)\\[",rownames(out$summary)), ]
 
-  LatentClass <- paste0("C", gsub("p\\[(\\d+).*", "\\1", rownames(out1)))
+  LatentClass <- paste0("C", gsub("p\\[(\\d+).*", "\\1",
+                                  rownames(out1)))
   param <- gsub("p.*\\,\\s*|\\]", "", rownames(out1))
+
+  levels = unique(param)
 
   out1 <- data.frame(out1, LatentClass, param)
 
@@ -59,6 +62,8 @@ flps_profile <- function(object, ...) {
   probs <- data.frame(out1)
   merged_df <- merge(probs, class_probs, by = "LatentClass", all.x = TRUE)
   merged_df$LatentClass <- paste0(merged_df$LatentClass, ":", merged_df$Freq)
+
+  merged_df$param <- factor(merged_df$param, levels)
 
   p <- ggplot(merged_df) +
 
@@ -133,7 +138,7 @@ flps_causal <- function(object) {
   trt.val <- unlist(inp_data[trt])
   cov.val <- unlist(inp_data[covariate])
 
-  fit <- summary(object)
+  fit <- summary(object, type = 'raw')
 
   if(tolower(inputs$lv_type) %in% c("lca","lpa")) {
 
@@ -163,7 +168,7 @@ flps_causal <- function(object) {
     dt$TRT <- factor(dt$TRT, labels = c("Control","Treatment"))
 
     ggplot(dt) +
-      geom_bar(aes_string("TRT", "Yfitted", fill = "C"), color = "white",
+      geom_bar(aes(TRT, Yfitted, fill = C), color = "white",
                stat = 'summary', fun = mean,
                position = position_dodge()
       ) +
