@@ -187,6 +187,18 @@ res <- runFLPS(
 
 
 # multilevel model --------------------------------------------------------
+
+set.seed(1000)
+
+binary <- binary %>%
+  group_split(trt, schid) %>%
+  map_df(., ~ .x %>% sample_frac(0.5)) %>%
+  arrange(schid, id)
+
+binary %>% count(trt)
+
+for(i in fs::dir_ls("R", regexp = "(r|R)$")) { source(i) }
+
 res <- runFLPS(
   inp_data = binary,
   # compiled_stan = importModel('lca', T, F),
@@ -225,7 +237,7 @@ res <- runFLPS(
 
 res <- runFLPS(
   inp_data = binary,
-  compiled_stan = importModel('irt', T, F),
+  # compiled_stan = importModel('irt', T, F),
   outcome  = "Y",
   trt      = "trt",
   covariate =
@@ -237,6 +249,22 @@ res <- runFLPS(
   lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
   group_id = "schid",
   stan_options = list(iter = 10, cores = 1, chains = 1)
+)
+
+flps_data_class <- makeFLPSdata(inp_data, outcome, trt, covariate,
+                                lv_model, lv_type, multilevel,
+                                nclass = NULL,
+                                group_id = 'schid')
+
+# flps_model <- loadRstan(flps_data_class$lv_type, multilevel, lv_randomeffect)
+# cat(flps_model)
+str(flps_data_class$stan_data)
+
+unique(flps_data_class$stan_data$sch)
+
+rstan::stan(
+  file = "inst/stan/multilevel/multilevel_IRT_noRandom.stan",
+  data = flps_data_class$stan_data
 )
 
 res <- runFLPS(
