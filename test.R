@@ -351,3 +351,50 @@ res <- runFLPS(
 
 
 
+
+# Print test--------------------------------------------------------------
+library(ggplot2); library(rstan)
+for(i in fs::dir_ls("R")) { source(i)}
+
+res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_irt.rds")
+
+res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lca.rds")
+
+
+
+aa <- summary(res, "structures")
+
+summary(res, 'raw')
+
+object$call
+
+calls <- as.list(object$call)
+
+cat(toupper(calls$lv_type), 'used as a measurement model')
+
+
+covariates <- as.list(calls$covariate)
+
+unlist(covariates[-1])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
