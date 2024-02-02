@@ -17,17 +17,17 @@ print.summary.flps <- function(x, type = "structures", ...) {
     cat('-----------------------------------------------\n\n')
   }
 
-    a1 <- results
+  a1 <- results
 
-    for(i in 1:length(a1)) {
-      cat(names(a1)[i],'\n')
+  for(i in 1:length(a1)) {
+    cat(names(a1)[i],'\n')
 
-      print.default(as.matrix(a1[[i]]),
-                    quote = FALSE, right = TRUE, na.print = 'NA')
+    print.default(as.matrix(a1[[i]]),
+                  quote = FALSE, right = TRUE, na.print = 'NA')
 
-      cat('\n')
-      cat('-----------------------------------------------\n\n')
-    }
+    cat('\n')
+    cat('-----------------------------------------------\n\n')
+  }
 }
 
 #' Print results
@@ -65,6 +65,7 @@ print.flps <- function(x, ...) {
 #'  \itemize{
 #'    \item \code{structures} : prints the results of structural parts.
 #'    \item \code{measurement} : prints the results of measurement parts.
+#'    \item \code{latent} : prints the information of individual latent scores
 #'    \item \code{raw} : prints the results via the \code{summary} function of \pkg{rstan} package..
 #'  }
 #' @param ... additional options for future development
@@ -197,7 +198,7 @@ summary.flps <- function(object, type = "structures", ...) {
         "Covariates' effects on latent classes  (betaU)" = betaU,
         "Class proportions for treatment and control group" = out1[grep('alpha', par_name), ],
         'Class memberships for treatment and control group' = memtab
-        )
+      )
 
     }
 
@@ -237,7 +238,21 @@ summary.flps <- function(object, type = "structures", ...) {
   } else if(type == "raw") {
     return(out1)
 
+  } else if(type == 'latent') {
+
+    o <- out1[grep("nu|fsc", par_name),]
+
+    if(any(tolower(object$call$lv_type) %in% c("lca","lpa"))) {
+
+      classp <- o[, "mean"]
+      classp[classp >= 0.5] <- "C1"
+      classp[classp < 0.5] <- "C2"
+
+      o$class_mem <- classp
+    }
+
   }
+
   o = list(results=o, call = calls)
   class(o) = "summary.flps"
   return(o)
