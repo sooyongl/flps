@@ -360,11 +360,18 @@ res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\sin
 
 res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lca.rds")
 
-
-
+summary(res, "structures")
+summary(res, "measurement")
 aa <- summary(res, "structures")
 
-summary(res, 'raw')
+flps_causal(res)
+flps_latent(res)
+
+a1 <- summary(res, 'raw')
+
+a1 <- data.frame(a1)
+
+tail(a1)
 
 object$call
 
@@ -379,8 +386,7 @@ unlist(covariates[-1])
 
 
 
-
-
+0.2139 * 1.7
 
 
 
