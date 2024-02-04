@@ -90,21 +90,26 @@ summary.flps <- function(object, type = "structures", ...) {
 
   covariates <- unlist(covariates[-1])
 
-  lv_model <- getMeasurementItems(calls$lv_model)
+  lv_model <- getMeasurementItems(lv_model = calls$lv_model)
 
   if(is.null(calls$nclass)) {
     nfac <- lv_model$nfac
+    fname <- lv_model$fname
 
-    latents <- paste0("F",1:nfac)
-    covariates_f <- paste0(covariates,".F", 1:nfac)
-    covariates_y <- paste0(covariates,".Y", 1:nfac)
+    latents <- fname
+    covariates_f <- paste0(covariates,".", fname)
+    covariates_y <- paste0(covariates,".Y", fname)
 
     itemslope_name <- paste0(lv_model$item_name)
 
+    item_name <- unlist(lapply(1:length(fname), function(xf) {
+      paste0(lv_model$item_factor[[xf]], ".",fname[xf])
+    }))
+
     if(tolower(calls$lv_type) == "sem") {
-      itemint_name <- itemslope_name
+      itemint_name <- item_name
     } else {
-      itemint_name <- paste0(lv_model$item_name, 1:object$flps_data$stan_data$max_k)
+      itemint_name <- paste0(item_name,".", 1:object$flps_data$stan_data$max_k)
     }
 
   } else {
@@ -178,8 +183,8 @@ summary.flps <- function(object, type = "structures", ...) {
       nu$class_mem <- classp
 
       memtab0 <- table(nu[,c("trt","class_mem")])
-      rownames(memtab0)
-      memtab <- matrix(memtab0)
+      # rownames(memtab0)
+      memtab <- matrix(memtab0, ncol = 2, nrow = 2)
       rownames(memtab) <- rownames(memtab0)
       colnames(memtab) <- colnames(memtab0)
 
