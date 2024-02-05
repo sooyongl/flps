@@ -70,6 +70,8 @@ flps_profile <- function(object, ...) { # object = res
   plinewidth <- ifelse(is.null(add_options$linewidth), 1.5, add_options$linewidth)
   psize <- ifelse(is.null(add_options$size), 2.5, add_options$size)
 
+  ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
+
   p <- ggplot(merged_df) +
 
     geom_line(aes(x = param, y = mean,
@@ -85,7 +87,7 @@ flps_profile <- function(object, ...) { # object = res
     scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
     scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
     scale_y_continuous(expand = c(0, 0)) +
-    theme_bw() +
+    theme_bw(base_size = ptextsize) +
     theme(legend.position="bottom")
 
   if(tolower(inputs$lv_type) == "lca") {
@@ -124,14 +126,16 @@ flps_latent <- function(object, type = "hist", ...) {
   }
 
   inp_data$lscores <- lat.val
-  inp_data$trt <- as.factor(inp_data$trt)
+  inp_data$trt <- factor(inp_data$trt, labels = c("Control","Treatment"))
+
+  ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
+  pgroup <- ifelse(is.null(add_options$group), F, add_options$group)
 
   p <- ggplot(inp_data)
 
   if(type == "hist") {
 
-    if(length(add_options)!=0) {
-      if(add_options$group) {
+      if(pgroup) {
 
         meandata <- aggregate(lscores ~ trt, data = inp_data, FUN = mean)
         names(meandata)[names(meandata) == "lscores"] <- "grp.mean"
@@ -142,8 +146,10 @@ flps_latent <- function(object, type = "hist", ...) {
           geom_vline(data=meandata,
                      aes(xintercept=grp.mean, color=trt),
                      linetype="dashed") +
-          scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
-          theme_bw()
+          scale_color_brewer(name = "",
+                             type = "qual", palette = "Dark2") +
+          labs(x = "Factor scores") +
+          theme_bw(base_size = ptextsize)
       }
 
     } else {
@@ -155,9 +161,10 @@ flps_latent <- function(object, type = "hist", ...) {
           xintercept=mean(inp_data$lscores),
           color='red',
           linetype="dashed", linewidth = 1.2) +
-        theme_bw()
+        labs(x = "Factor scores") +
+        theme_bw(base_size = ptextsize)
     }
-  }
+
 
   p
 }
@@ -211,6 +218,7 @@ flps_causal <- function(object, ...) {
     dt$TRT <- factor(dt$TRT, labels = c("Control","Treatment"))
 
     pwidth <- ifelse(is.null(add_options$width), 0.6, add_options$width)
+    ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
 
     ggplot(dt) +
       geom_bar(aes(TRT, Yfitted, fill = C),
@@ -220,7 +228,8 @@ flps_causal <- function(object, ...) {
                position = position_dodge()
       ) +
       scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
-      theme_bw() + theme(legend.position="bottom") +
+      theme_bw(base_size = ptextsize) +
+      theme(legend.position="bottom") +
       labs(x = "", fill = "")
 
 
@@ -247,17 +256,17 @@ flps_causal <- function(object, ...) {
                            intercept = yint,
                            slope = c(tau0+tau1, tau0))
 
+
+    ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
+
+    plinewidth <- ifelse(is.null(add_options$linewidth), 1.3, add_options$linewidth)
+
+    keep.point <- ifelse(is.null(add_options$keep.point), F, add_options$keep.point)
+
     palpha = 0
-    plinewidth = 1.3
-    if(length(add_options)!=0) {
-
-      plinewidth <- ifelse(is.null(add_options$linewidth), 1.3, add_options$linewidth)
-
-      keep.point <- ifelse(is.null(add_options$keep.point), F, add_options$keep.point)
-      if(keep.point) {
-        palpha <- ifelse(is.null(add_options$alpha), 0.1, add_options$alpha)
-        p <- p + geom_point(alpha = palpha)
-      }
+    if(keep.point) {
+      palpha <- ifelse(is.null(add_options$alpha), 0.1, add_options$alpha)
+      # p <- p + geom_point(alpha = palpha)
     }
 
     p <-
@@ -270,7 +279,7 @@ flps_causal <- function(object, ...) {
       scale_x_continuous(name = "Factor Scores") +
       scale_linetype_discrete(name = "") +
       scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
-      theme_bw() +
+      theme_bw(base_size = ptextsize) +
       theme(legend.position="bottom")
 
 

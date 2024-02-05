@@ -367,13 +367,14 @@ summary(res, "structures")
 summary(res, "measurement")
 aa <- summary(res, "structures")
 
-flps_plot(object = res, type = 'causal', width = 1)
+flps_plot(object = res, type = 'causal', width = 1, textsize = 20)
+flps_plot(res, 'causal', keep.point = T, alpha = 1)
 flps_plot(res, 'causal', keep.point = F)
 flps_plot(res, 'causal', keep.point = T)
 
 flps_plot(res, 'profile', size = 0.2, linewidth = 0.1)
 
-flps_plot(object = res, type = 'latent', group = T)
+flps_plot(object = res, type = 'latent', group = T, textsize = 20)
 
 flps_causal(res)
 flps_latent(res)
