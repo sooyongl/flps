@@ -367,6 +367,7 @@ summary(res, "structures")
 summary(res, "measurement")
 aa <- summary(res, "structures")
 
+flps_plot(object = res, type = 'causal')
 flps_plot(res, 'causal', keep.point = F)
 flps_plot(res, 'causal', keep.point = T)
 

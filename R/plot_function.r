@@ -219,7 +219,7 @@ flps_causal <- function(object, ...) {
       ) +
       scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
       theme_bw() + theme(legend.position="bottom") +
-      labs(x =)
+      labs(x = "", fill = "")
 
 
   } else {
