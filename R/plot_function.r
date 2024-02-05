@@ -17,12 +17,12 @@ flps_plot <- function(object, type = "latent", ...) {
   if(type == "latent") {
 
     flps_latent(object, "hist", ...)
-  }
-  else if(type == "causal") {
+
+  } else if(type == "causal") {
 
     flps_causal(object, ...)
-  }
-  else if(type == "profile") {
+
+  } else if(type == "profile") {
 
     flps_profile(object, ...)
 
@@ -111,36 +111,50 @@ flps_latent <- function(object, type = "hist", ...) {
   trt.val <- inp_data[trt]
   cov.val <- inp_data[covariate]
 
-  fit <- summary(object, type = "measurement")
-  lat.val <- fit[grepl("fsc", rownames(fit)), "mean"]
+  fit <- summary(object, type = "raw")
+
+  if(any(object$flps_data$lv_type %in% c("lca","lpa"))) {
+    lat.val <- fit[grepl("nu", rownames(fit)), "mean"]
+  } else {
+    lat.val <- fit[grepl("fsc", rownames(fit)), "mean"]
+  }
+
   inp_data$lscores <- lat.val
+  inp_data$trt <- as.factor(inp_data$trt)
 
   p <- ggplot(inp_data)
 
   if(type == "hist") {
 
-    if(add_options$group) {
+    if(length(add_options)!=0) {
+      if(add_options$group) {
 
-      meandata <- inp_data %>%
-        group_by(trt) %>%
-        summarize(grp.mean = mean(lscores))
+        meandata <- aggregate(lscores ~ trt, data = inp_data, FUN = mean)
+        names(meandata)[names(meandata) == "lscores"] <- "grp.mean"
 
-      p <-
-        p +
-        geom_histogram(aes(.data$lscores, color = .data$trt), fill = "white") +
+        # meandata <- inp_data %>%
+        #   group_by(trt) %>%
+        #   summarize(grp.mean = mean(lscores))
 
-        geom_vline(data=meandata,
-                   aes(xintercept=grp.mean, color=trt),
-                   linetype="dashed") +
-        theme_bw()
+        p <-
+          p +
+          geom_histogram(aes(.data$lscores, color = .data$trt), fill = "white") +
+          geom_vline(data=meandata,
+                     aes(xintercept=grp.mean, color=trt),
+                     linetype="dashed") +
+          scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
+          theme_bw()
+      }
+
     } else {
+
       p <-
         p +
         geom_histogram(aes(.data$lscores), color = "white") +
         geom_vline(
-                   xintercept=mean(.data$lscores),
-                   color='red',
-                   linetype="dashed") +
+          xintercept=mean(inp_data$lscores),
+          color='red',
+          linetype="dashed", linewidth = 1.2) +
         theme_bw()
     }
   }
@@ -183,7 +197,7 @@ flps_causal <- function(object, ...) {
     tau0 <- fit[grepl("tau0", rownames(fit)), "mean"]
     tau1 <- fit[grepl("tau1", rownames(fit)), "mean"]
 
-    cp <- class_probs$Freq
+    cp <- round(class_probs$Freq, 2)
 
     TRT = rep(c(0,1), 1000)
     C1 = tau1[1]*TRT + tau0[1]
@@ -198,13 +212,14 @@ flps_causal <- function(object, ...) {
 
     ggplot(dt) +
       geom_bar(aes(TRT, Yfitted, fill = C),
-               width = 0.8,
+               width = 0.6,
                color = "white",
                stat = 'summary', fun = mean,
                position = position_dodge()
       ) +
       scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
-      theme_bw() + theme(legend.position="bottom")
+      theme_bw() + theme(legend.position="bottom") +
+      labs(x =)
 
 
   } else {
@@ -219,7 +234,7 @@ flps_causal <- function(object, ...) {
     inp_data$Control <- inp_data$lscores*tau0
     inp_data$Treatment <- inp_data$lscores*(tau0+tau1)
 
-    p <- ggplot(inp_data, aes_string("lscores", outcome))
+    p <- ggplot(inp_data, aes(.data$lscores, .data$Y))
 
     yint <- mean(out.val, na.rm = TRUE) -
       (mean(trt.val, na.rm = TRUE)*tau0 +
@@ -230,20 +245,27 @@ flps_causal <- function(object, ...) {
                            intercept = yint,
                            slope = c(tau0+tau1, tau0))
 
-    p <- p +
+    palpha = 0
+    if(length(add_options)!=0) {
+      if(add_options$keep.point) {
+        palpha <- ifelse(is.null(add_options$alpha), 0.1, add_options$alpha)
+        p <- p + geom_point(alpha = palpha)
+      }
+    }
+
+    p <-
+      p +
+      geom_point(alpha = palpha) +
       geom_abline(data = slp.data,
                   aes(intercept = .data$intercept, slope = .data$slope,
                       color = .data$trt, linetype = .data$trt),
-                  linewidth = 1.2) +
+                  linewidth = 1.5) +
       scale_x_continuous(name = "Factor Scores") +
       scale_linetype_discrete(name = "") +
       scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
       theme_bw() +
       theme(legend.position="bottom")
 
-    if(add_options$keep.point) {
-      p <- p + geom_point(alpha = 0.4)
-    }
 
     p
   }

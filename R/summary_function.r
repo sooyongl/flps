@@ -119,6 +119,11 @@ summary.flps <- function(object, type = "structures", ...) {
     covariates_f <- paste0(covariates,".C")
     covariates_y <- paste0(covariates,".Y")
 
+    tau0s <- out1[grep('tau0', par_name), ]
+    rownames(tau0s) <- paste0("tau0.C",1:(nclass))
+
+    tau1s <- out1[grep('tau1', par_name), ]
+    rownames(tau1s) <- paste0("tau1.C",1:(nclass))
 
     tau1 = out1[grep('b1', par_name), ]
     rownames(tau1) = paste0("tau1.",1:(nclass-1))
@@ -139,6 +144,9 @@ summary.flps <- function(object, type = "structures", ...) {
 
       fsc <- out1[grep("fsc", par_name),]
       fsc$trt <- res$flps_data$stan_data$Z
+
+      tau1 <- out1[grep('tau1', par_name), ]
+      rownames(tau1) <- paste0('tau1.',latents)
 
       omega = out1[grep('omega', par_name), ]
       rownames(omega) <- latents
@@ -161,7 +169,7 @@ summary.flps <- function(object, type = "structures", ...) {
 
       o <- list(
         'Causal effect (tau0)' = out1[grep('tau0', par_name), ],
-        'Principal effect (tau1)' = out1[grep('tau1', par_name), ],
+        'Principal effect (tau1)' = tau1,
         "Latent variables' effects on Y (omega)" = omega,
         "Covariates' effects on Y (betaY)" = betaY,
         "Covariates' effects on latent variables  (betaU)" = betaU,
@@ -195,8 +203,8 @@ summary.flps <- function(object, type = "structures", ...) {
       rownames(betaU) <- covariates_f
 
       o <- list(
-        'Y means differ between classes' = out1[grep('tau0', par_name), ],
-        'Treatment assignemtn effects on Y differ between classes' = out1[grep('tau1', par_name), ],
+        'Y means differ between classes' = tau0s,
+        'Treatment assignemtn effects on Y differ between classes' = tau1s,
         'Principal effect (tau1)' = tau1,
         "Latent class' effects on Y (omega)" = omega,
         "Covariates' effects on Y (betaY)" = betaY,

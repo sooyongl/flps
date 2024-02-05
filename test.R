@@ -360,13 +360,23 @@ res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\sin
 
 res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lca.rds")
 
+res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lca_iter10000.rds")
+
 summary(res, "structures")
 
 summary(res, "measurement")
 aa <- summary(res, "structures")
 
+flps_plot(res, 'causal', keep.point = F)
+flps_plot(res, 'causal', keep.point = T)
+
+flps_plot(res, 'profile')
+
+flps_plot(object = res, type = 'latent', group = T)
+
 flps_causal(res)
 flps_latent(res)
+flps_profile(res)
 
 a1 <- summary(res, 'raw')
 
