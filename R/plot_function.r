@@ -37,6 +37,7 @@ flps_plot <- function(object, type = "latent", ...) {
 #'
 flps_profile <- function(object, ...) { # object = res
 
+  add_options = list(...)
   inputs <- as.list(object$call)
 
   out <- rstan::summary(object$flps_fit, ...)
@@ -66,16 +67,19 @@ flps_profile <- function(object, ...) { # object = res
 
   merged_df$param <- factor(merged_df$param, levels)
 
+  plinewidth <- ifelse(is.null(add_options$linewidth), 1.5, add_options$linewidth)
+  psize <- ifelse(is.null(add_options$size), 2.5, add_options$size)
+
   p <- ggplot(merged_df) +
 
     geom_line(aes(x = param, y = mean,
                   group = LatentClass,
-                  color = LatentClass), linewidth = 1) +
+                  color = LatentClass), linewidth = plinewidth) +
     geom_point(aes(x = param, y = mean,
                    fill = LatentClass),
                colour = "white",
                shape=21, stroke = 1.5,
-               size = 3) +
+               size = psize) +
 
     labs(y = "Probs", x = "Items") +
     scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
@@ -131,10 +135,6 @@ flps_latent <- function(object, type = "hist", ...) {
 
         meandata <- aggregate(lscores ~ trt, data = inp_data, FUN = mean)
         names(meandata)[names(meandata) == "lscores"] <- "grp.mean"
-
-        # meandata <- inp_data %>%
-        #   group_by(trt) %>%
-        #   summarize(grp.mean = mean(lscores))
 
         p <-
           p +
@@ -210,9 +210,11 @@ flps_causal <- function(object, ...) {
 
     dt$TRT <- factor(dt$TRT, labels = c("Control","Treatment"))
 
+    pwidth <- ifelse(is.null(add_options$width), 0.6, add_options$width)
+
     ggplot(dt) +
       geom_bar(aes(TRT, Yfitted, fill = C),
-               width = 0.6,
+               width = pwidth,
                color = "white",
                stat = 'summary', fun = mean,
                position = position_dodge()
@@ -246,8 +248,13 @@ flps_causal <- function(object, ...) {
                            slope = c(tau0+tau1, tau0))
 
     palpha = 0
+    plinewidth = 1.3
     if(length(add_options)!=0) {
-      if(add_options$keep.point) {
+
+      plinewidth <- ifelse(is.null(add_options$linewidth), 1.3, add_options$linewidth)
+
+      keep.point <- ifelse(is.null(add_options$keep.point), F, add_options$keep.point)
+      if(keep.point) {
         palpha <- ifelse(is.null(add_options$alpha), 0.1, add_options$alpha)
         p <- p + geom_point(alpha = palpha)
       }
@@ -259,7 +266,7 @@ flps_causal <- function(object, ...) {
       geom_abline(data = slp.data,
                   aes(intercept = .data$intercept, slope = .data$slope,
                       color = .data$trt, linetype = .data$trt),
-                  linewidth = 1.5) +
+                  linewidth = plinewidth) +
       scale_x_continuous(name = "Factor Scores") +
       scale_linetype_discrete(name = "") +
       scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
