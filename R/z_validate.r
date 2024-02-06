@@ -1,4 +1,25 @@
 #' @noRd
+default_args <- function(all_args) {
+  multilevel <- all_args$multilevel
+  lv_randomeffect <- all_args$lv_randomeffect
+  nclass <- all_args$nclass
+
+  if(is.null(multilevel)) {
+    all_args$multilevel <- FALSE
+    all_args$lv_randomeffect <- FALSE
+    all_args$group_id <- NULL
+  }
+
+  if(is.null(nclass)) {
+    all_args$nclass <- NULL
+  }
+
+  all_args
+
+}
+
+
+#' @noRd
 validate_data <- function(all_args) {
 
   inp_data <- all_args$inp_data

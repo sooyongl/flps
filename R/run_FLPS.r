@@ -15,8 +15,6 @@
 #'  }
 #'
 #' @param lv_type A character string indicating the type of latent variable models.
-#' @param multilevel A logical indicating if a multilevel structure is present.
-#' @param lv_randomeffect A logical indicating whether to estimate random effects for latent variables.
 #' @param priors_input A list specifying the priors or defaults to N(0, 5) if not provided.
 #' Relevant parameters: \code{tau0} (group difference), \code{tau1} (principal effects),
 #' and \code{omega} (effect of latent factors on outcome).
@@ -28,7 +26,13 @@
 #'  }
 #'
 #' @param stan_options A list of options for [rstan::stan()], specified as 'name = value'.
-#' @param ... Additional parameters for the latent variable models, such as \code{nclass = 2}.
+#' @param ... Additional parameters for the latent variable models
+#'  \itemize{
+#'  \item  \code{nclass} A number specifying the number of latent classes.
+#'  \item  \code{multilevel} A logical indicating if a multilevel structure is present.
+#'  \item  \code{lv_randomeffect} A logical indicating whether to estimate random effects for latent variables.
+#'  \item \code{group_id} A string for grouping variable for multilevel structure.
+#' }
 #' @return An object of class \code{flps} encompassing a \code{\link[rstan]{stanfit}} object.
 #' Components include:
 #'  \item{call}{Function call with arguments.}
@@ -76,8 +80,6 @@ runFLPS <- function(inp_data = NULL,
                     covariate = NULL,
                     lv_model = NULL,
                     lv_type = NULL,
-                    multilevel = FALSE,
-                    lv_randomeffect = FALSE,
                     priors_input = NULL,
                     stan_options = list(),
                     ...
@@ -93,16 +95,18 @@ runFLPS <- function(inp_data = NULL,
   all_args <- append(all_args, list(...))
 
   # validate -----------------------------------------------------------
+  all_args <- default_args(all_args)
   validate_data(all_args)
 
   # data and code -------------------------------------------------------
   flps_data_class <- makeFLPSdata(inp_data, outcome, trt, covariate,
-                                  lv_model, lv_type, multilevel,
+                                  lv_model, lv_type,
+                                  all_args$multilevel,
                                   nclass = all_args$nclass,
                                   group_id = all_args$group_id)
 
   if(is.null(compiled_stan)) {
-    flps_model <- loadRstan(flps_data_class$lv_type, multilevel, lv_randomeffect)
+    flps_model <- loadRstan(flps_data_class$lv_type, all_args$multilevel, all_args$lv_randomeffect)
 
   } else {
     flps_model <- compiled_stan

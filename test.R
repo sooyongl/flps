@@ -121,7 +121,17 @@ compiled_stan <- importModel(lv_type = "irt", T)
 # save(graded, file = "data/graded.rda")
 # save(continuous, file = "data/continuous.rda")
 
+all_args <- list(
+  inp_data = binary,
+  outcome  = "Y",
+  trt      = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "2pl",
 
+  lv_model = "F1 =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10
+  F2 =~ q11 + q12 + q13 + q14 + q15 + q16 + q17 + q18 + q19 + q20",
+  stan_options = list(iter = 100, cores = 1, chains = 1)
+)
 # single level ------------------------------------------------------------
 res <- runFLPS(
   inp_data = binary,
@@ -130,7 +140,7 @@ res <- runFLPS(
   trt      = "trt",
   covariate = c("sex","race","pretest","stdscore"),
   lv_type = "2pl",
-  multilevel = F,
+
   lv_model = "F1 =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10
   F2 =~ q11 + q12 + q13 + q14 + q15 + q16 + q17 + q18 + q19 + q20",
   stan_options = list(iter = 100, cores = 1, chains = 1)

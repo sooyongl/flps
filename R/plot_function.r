@@ -338,4 +338,8 @@ plot.flps <- function(x, type = NULL, pars = c("tau0","tau1"), ...) {
   else if(type == "mcse") {
     do.call("stan_mcse", args_ls)
   }
+  else if(type == "autocor") {
+    do.call("stan_ac", args_ls)
+  }
+
 }
