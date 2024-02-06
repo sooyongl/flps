@@ -404,12 +404,16 @@ cat(toupper(calls$lv_type), 'used as a measurement model')
 
 plot(res, type = 'trace', pars = c("tau0", "tau1", "omega"),
      nrow = 3, ncol = 1)
-plot(res, type = 'autocor', pars = c("tau0", "tau1", "omega"), partial = T, lags = 100)
+
+plot(res, type = 'autocor', pars = c("tau1"),
+     fill = "red", width = 0.5,alpha = 0.3, color = 'transparent',
+     lags = 100
+     )
 
 stan_trace(res$flps_fit, pars = c("tau0", "tau1", "omega"))
 
 
-stan_ac(res$flps_fit, pars = c("tau1"), partial = T, lags = 100)
+stan_ac(res$flps_fit, pars = c("tau1"), fill = 'red')
 
 covariates <- as.list(calls$covariate)
 
