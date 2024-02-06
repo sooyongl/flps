@@ -303,9 +303,11 @@ flps_causal <- function(object, ...) {
 plot.flps <- function(x, type = NULL, pars = c("tau0","tau1"), ...) {
 
   args_ls <- mget(names(formals()),sys.frame(sys.nframe()))
+  args_ls <- append(args_ls, list(...))
   args_ls$`...` <- NULL
   args_ls$type <- NULL
   args_ls$object <- x$flps_fit
+  args_ls$x <- NULL
 
 
   if(is.null(type)) {
