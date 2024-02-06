@@ -140,10 +140,10 @@ summary.flps <- function(object, type = "structures", ...) {
 
   if(type == "structures") {
 
-    if(!res$flps_data$lv_type %in% c("lca","lpa")) {
+    if(!object$flps_data$lv_type %in% c("lca","lpa")) {
 
       fsc <- out1[grep("fsc", par_name),]
-      fsc$trt <- res$flps_data$stan_data$Z
+      fsc$trt <- object$flps_data$stan_data$Z
 
       tau1 <- out1[grep('tau1', par_name), ]
       rownames(tau1) <- paste0('tau1.',latents)
@@ -179,7 +179,7 @@ summary.flps <- function(object, type = "structures", ...) {
     } else {
 
       nu <- out1[grep("nu", par_name),]
-      nu$trt <- res$flps_data$stan_data$Z
+      nu$trt <- object$flps_data$stan_data$Z
 
       nu$trt[nu$trt==0] <- 'Control'
       nu$trt[nu$trt==1] <- 'Treatment'
@@ -220,7 +220,7 @@ summary.flps <- function(object, type = "structures", ...) {
     measurement <- out1[grepl("^(loading|intcpt|p)\\[",par_name),]
 
 
-    if(!res$flps_data$lv_type %in% c("lca","lpa")) {
+    if(!object$flps_data$lv_type %in% c("lca","lpa")) {
 
       itemintcpt <- out1[grep('intcpt\\[', par_name), ]
       try(rownames(itemintcpt) <- itemint_name, silent = T)
@@ -237,12 +237,12 @@ summary.flps <- function(object, type = "structures", ...) {
       item_est <- out1[grep('p\\[', par_name), ]
       rownames(item_est) <- item_name
 
-      if(res$flps_data$lv_type %in% c("lca")) {
+      if(object$flps_data$lv_type %in% c("lca")) {
         o <- list(
           'Item probs' = item_est
         )
 
-      } else if(res$flps_data$lv_type %in% c("lpa"))
+      } else if(object$flps_data$lv_type %in% c("lpa"))
         o <- list(
           'Item means' = item_est
         )
