@@ -12,8 +12,6 @@ runFLPS(
   covariate = NULL,
   lv_model = NULL,
   lv_type = NULL,
-  multilevel = FALSE,
-  lv_randomeffect = FALSE,
   priors_input = NULL,
   stan_options = list(),
   ...
@@ -41,10 +39,6 @@ akin to the \pkg{lavaan} package. Key operators include:
 
 \item{lv_type}{A character string indicating the type of latent variable models.}
 
-\item{multilevel}{A logical indicating if a multilevel structure is present.}
-
-\item{lv_randomeffect}{A logical indicating whether to estimate random effects for latent variables.}
-
 \item{priors_input}{A list specifying the priors or defaults to N(0, 5) if not provided.
 Relevant parameters: \code{tau0} (group difference), \code{tau1} (principal effects),
 and \code{omega} (effect of latent factors on outcome).
@@ -57,7 +51,13 @@ Examples:
 
 \item{stan_options}{A list of options for [rstan::stan()], specified as 'name = value'.}
 
-\item{...}{Additional parameters for the latent variable models, such as \code{nclass = 2}.}
+\item{...}{Additional parameters for the latent variable models
+ \itemize{
+ \item  \code{nclass} A number specifying the number of latent classes.
+ \item  \code{multilevel} A logical indicating if a multilevel structure is present.
+ \item  \code{lv_randomeffect} A logical indicating whether to estimate random effects for latent variables.
+ \item \code{group_id} A string for grouping variable for multilevel structure.
+}}
 }
 \value{
 An object of class \code{flps} encompassing a \code{\link[rstan]{stanfit}} object.

@@ -4,12 +4,14 @@
 \alias{flps_plot}
 \title{Make plots related to FLPS models}
 \usage{
-flps_plot(object, type = "latent")
+flps_plot(object, type = "latent", ...)
 }
 \arguments{
 \item{object}{a \code{\link[flps]{flps}} object}
 
 \item{type}{a character indicating the type of plots}
+
+\item{...}{Additional features related to plots}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object that can be further customized

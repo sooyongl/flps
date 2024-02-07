@@ -4,17 +4,23 @@
 \alias{summary.flps}
 \title{Summarize the results}
 \usage{
-\method{summary}{flps}(object, type = "all", ...)
+\method{summary}{flps}(object, type = "structures", ...)
 }
 \arguments{
 \item{object}{an object of class \code{\link[flps]{flps}}}
 
-\item{type}{a string for the part of FLPS model}
+\item{type}{a string for the part of FLPS model
+\itemize{
+  \item \code{structures} : prints the results of structural parts.
+  \item \code{measurement} : prints the results of measurement parts.
+  \item \code{latent} : prints the information of individual latent scores
+  \item \code{raw} : prints the results via the \code{summary} function of \pkg{rstan} package..
+}}
 
 \item{...}{additional options for future development}
 }
 \value{
-Summary of FLPS model are printed via the \pkg{rstan} package.
+Summary of FLPS model are printed.
 }
 \description{
 Summarize the results

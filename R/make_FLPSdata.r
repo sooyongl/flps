@@ -11,10 +11,7 @@
 #'
 #' @returns a S3 class for a corresponding measurement model
 #' @noRd
-makeFLPSdata <- function(inp_data, outcome, trt, covariate, lv_model, lv_type, multilevel,
-                         # nclass = NULL, group_id = NULL
-                         ...
-                         ) {
+makeFLPSdata <- function(inp_data, outcome, trt, covariate, lv_model, lv_type, multilevel, ... ) {
   # flps_data <- dataSetting() ; S3 class
 
   class_name_1 <- paste0('flps', toupper(lv_type))

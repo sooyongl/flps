@@ -60,7 +60,6 @@ setPriors <- function(priors_input, lv_model, stan_options) {
       priors_set$pomega <- matrix(
         unlist(given.priors[names(given.priors)%in%"omega"]), nfac)
     }
-
   }
 
   stan_options$data <- append(stan_options$data, priors_set)

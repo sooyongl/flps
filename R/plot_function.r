@@ -2,7 +2,7 @@
 #'
 #' @param object a \code{\link[flps]{flps}} object
 #' @param type a character indicating the type of plots
-#' @param ... additional features related to plot
+#' @param ... Additional features related to plots
 #'
 #' @return
 #'   A \code{\link[ggplot2]{ggplot}} object that can be further customized
@@ -34,7 +34,6 @@ flps_plot <- function(object, type = "latent", ...) {
 #'
 #' @param object a \code{\link[flps]{flps}} object
 #' @noRd
-#'
 flps_profile <- function(object, ...) { # object = res
 
   add_options = list(...)
@@ -292,7 +291,7 @@ flps_causal <- function(object, ...) {
 #' @param x an object of class \code{\link[flps]{flps}}
 #' @param type a string for the type of plot
 #' @param pars a character vector indicating the target parameters
-#' @param ... additional options for future development
+#' @param ... additional options for \code{stan_plot}
 #'
 #' @return A \code{\link[ggplot2]{ggplot}} object that can be further customized
 #' using the \pkg{ggplot2} package.

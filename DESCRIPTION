@@ -51,6 +51,7 @@ Collate:
 	'sim_gen_structure.r'
 	'sim_gen_standata.r'
 	'sim_make_data.r'
+	'sim_utils.r'
 	'z_utils.r'
 	'z_validate.r'
 	'plot_function.r'

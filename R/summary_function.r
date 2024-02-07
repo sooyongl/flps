@@ -1,4 +1,5 @@
 #' Summary print
+#' @noRd
 print.summary.flps <- function(x, type = "structures", ...) {
 
   calls <- as.list(x$call)
@@ -137,7 +138,6 @@ summary.flps <- function(object, type = "structures", ...) {
     }))
   }
 
-
   if(type == "structures") {
 
     if(!object$flps_data$lv_type %in% c("lca","lpa")) {
@@ -263,7 +263,6 @@ summary.flps <- function(object, type = "structures", ...) {
 
       o$class_mem <- classp
     }
-
   }
 
   o = list(results=o, call = calls)

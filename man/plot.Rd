@@ -13,7 +13,7 @@
 
 \item{pars}{a character vector indicating the target parameters}
 
-\item{...}{additional options for future development}
+\item{...}{additional options for \code{stan_plot}}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}} object that can be further customized
