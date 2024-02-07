@@ -38,6 +38,10 @@ flps_profile <- function(object, ...) { # object = res
 
   add_options = list(...)
   inputs <- as.list(object$call)
+  lv_model <- getMeasurementItems(lv_model = inputs$lv_model)
+  item_name <- lv_model$item_name
+
+  yname <- ifelse(inputs$lv_type == "lpa", "Means", "Probs")
 
   out <- rstan::summary(object$flps_fit, ...)
 
@@ -48,6 +52,7 @@ flps_profile <- function(object, ...) { # object = res
   param <- gsub("p.*\\,\\s*|\\]", "", rownames(out1))
 
   levels = unique(param)
+  labels = item_name
 
   out1 <- data.frame(out1, LatentClass, param)
 
@@ -64,7 +69,7 @@ flps_profile <- function(object, ...) { # object = res
   merged_df <- merge(probs, class_probs, by = "LatentClass", all.x = TRUE)
   merged_df$LatentClass <- paste0(merged_df$LatentClass, ":", merged_df$Freq)
 
-  merged_df$param <- factor(merged_df$param, levels)
+  merged_df$param <- factor(merged_df$param, levels, labels)
 
   plinewidth <- ifelse(is.null(add_options$linewidth), 1.5, add_options$linewidth)
   psize <- ifelse(is.null(add_options$size), 2.5, add_options$size)
@@ -82,7 +87,7 @@ flps_profile <- function(object, ...) { # object = res
                shape=21, stroke = 1.5,
                size = psize) +
 
-    labs(y = "Probs", x = "Items") +
+    labs(y = yname, x = "Items") +
     scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
     scale_fill_brewer(name = "", type = "qual", palette = "Dark2") +
     scale_y_continuous(expand = c(0, 0)) +
