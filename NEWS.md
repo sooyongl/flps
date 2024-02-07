@@ -1,3 +1,10 @@
+# flps 1.1.0
+
+## Updates to Functions
+* `summary()`, `flps_plot()`, and `plot()` functions were revised to work properly.
+* Additional options are available for `summary()`, `flps_plot()`, and `plot()` functions.
+
+
 # flps 1.0.0
 
 ## New Features
