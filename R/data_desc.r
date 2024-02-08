@@ -138,3 +138,49 @@
 #' data(graded)
 #' summary(graded)
 "graded"
+
+#' example1.rda
+#'
+#' A generated data set containing binary items information.
+#'
+#' @format A data frame with variables:
+#' \describe{
+#'   \item{Y}{Outcome}
+#'   \item{trt}{Treatment assignment; 0 = control, 1 = treatment}
+#'   \item{X1}{Continuous covariate 1}
+#'   \item{X2}{Continuous covariate 2}
+#'   \item{q1}{Binary item}
+#'   \item{q2}{Binary item}
+#'   \item{q3}{Binary item}
+#'   \item{q4}{Binary item}
+#'   \item{q5}{Binary item}
+#'   \item{q6}{Binary item}
+#'   \item{q7}{Binary item}
+#'   \item{q8}{Binary item}
+#'   \item{q9}{Binary item}
+#'   \item{q10}{Binary item}
+#' }
+"example1"
+
+#' example2.rda
+#'
+#' A generated data set containing continuous items information.
+#'
+#' @format A data frame with variables:
+#' \describe{
+#'   \item{Y}{Outcome}
+#'   \item{trt}{Treatment assignment; 0 = control, 1 = treatment}
+#'   \item{X1}{Continuous covariate 1}
+#'   \item{X2}{Continuous covariate 2}
+#'   \item{q1}{Continuous item}
+#'   \item{q2}{Continuous item}
+#'   \item{q3}{Continuous item}
+#'   \item{q4}{Continuous item}
+#'   \item{q5}{Continuous item}
+#'   \item{q6}{Continuous item}
+#'   \item{q7}{Continuous item}
+#'   \item{q8}{Continuous item}
+#'   \item{q9}{Continuous item}
+#'   \item{q10}{Continuous item}
+#' }
+"example2"
