@@ -147,15 +147,26 @@ res <- runFLPS(
   stan_options = list(iter = 100, cores = 2, chains = 2)
 )
 
-res <- runFLPS(
-  inp_data = binary,
-  compiled_stan = importModel('rasch'),
+all_args <- list(
+  inp_data = flps::binary,
+  outcome  = "Y",
+  trt      = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "rasch",
+
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 10, cores = 2, chains = 2)
+)
+
+res <- flps::runFLPS(
+  inp_data = flps::binary,
+  # compiled_stan = importModel('rasch'),
   outcome  = "Y",
   trt      = "trt",
   covariate = c("sex","race","pretest","stdscore"),
   lv_type = "rasch",
   lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
-  stan_options = list(iter = 10, cores = 1, chains = 1)
+  stan_options = list(iter = 10, cores = 2, chains = 2)
 )
 
 res <- runFLPS(
