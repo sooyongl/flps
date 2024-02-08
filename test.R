@@ -147,6 +147,40 @@ res <- runFLPS(
   stan_options = list(iter = 100, cores = 2, chains = 2)
 )
 
+library(dplyr); library(purrr)
+testdata <- data.table::fread("C:/Users/lee/Desktop/test_mixture.csv")
+names(testdata) <- c(paste0("q",1:10), "Y","trt","X1","X2", "cm")
+table(testdata$trt)
+testdata <- testdata %>%
+  mutate_at(vars(matches("^q")),
+    ~ if_else(trt == 0, NA, .x)
+  )
+
+res <- flps::runFLPS(
+  inp_data = testdata,
+  # compiled_stan = importModel('rasch'),
+  outcome  = "Y",
+  trt      = "trt",
+  covariate = c("X1","X2"),
+  lv_type = "rasch",
+  lv_model = "F =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 10, cores = 2, chains = 2)
+)
+summary(res)
+res <- flps::runFLPS(
+  inp_data = testdata,
+  # compiled_stan = importModel('rasch'),
+  outcome  = "Y",
+  trt      = "trt",
+  covariate = c("X1","X2"),
+  lv_type = "lca",
+  nclass = 2,
+  lv_model = "C =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 10, cores = 2, chains = 2)
+)
+summary(res)
+
+
 all_args <- list(
   inp_data = flps::binary,
   outcome  = "Y",
