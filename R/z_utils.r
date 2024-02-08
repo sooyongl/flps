@@ -96,7 +96,7 @@ stanOptions <- function(stan_options, ...) {
   # replace a missing value in a list -------------
   dots <- list(...)
 
-  if(!"chain" %in% names(stan_options)) {
+  if(!"chains" %in% names(stan_options)) {
     stan_options$chains <- 1
   }
 
