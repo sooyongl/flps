@@ -34,7 +34,8 @@ parameters{
   vector[nclass] tau0;           // Intercept for Y for each class
   vector[nclass] tau1;           // Coefficient for Z for each class
   vector<lower=0>[nclass] sigY; // Standard deviations for Y for each class
-  vector<lower=0>[nitem] sigR; // Standard deviations for indicators for each class
+  // vector<lower=0>[nitem] sigR; // Standard deviations for indicators for each class
+  real<lower=0> sigR[nclass, nitem];  // Item Response
 }
  
 transformed parameters{
@@ -46,9 +47,9 @@ transformed parameters{
   }
 
   // PS effects-Difference in Y on Z coefficient between classes
-  // real b1 = tau1[2] - tau1[1]; 
+   real b1 = tau1[2] - tau1[1]; 
   // Omega-Difference in intercept in Y between classes
-  // real a1 = tau0[2] - tau0[1]; 
+   real a1 = tau0[2] - tau0[1]; 
 }
  
 model {
@@ -66,8 +67,8 @@ model {
  // likelihood for item data'
  for (w in 1:nitemWorked) {
    target += log_mix(nu[stud_idx[w]], 
-                      normal_lpdf(grad[w] | p[1,item_idx[w]], sigR[item_idx[w]]),
-                      normal_lpdf(grad[w] | p[2,item_idx[w]], sigR[item_idx[w]])
+                      normal_lpdf(grad[w] | p[1,item_idx[w]], sigR[1, item_idx[w]]),
+                      normal_lpdf(grad[w] | p[2,item_idx[w]], sigR[2, item_idx[w]])
                );
  }
  
@@ -79,12 +80,13 @@ model {
  tau0 ~ normal(0, 2);
  tau1 ~ normal(0, 1);
  sigY ~ cauchy(0, 2.5);
- 
+  
   mu_p ~ normal(0, 2);
   sigma_p ~ cauchy(0, 2.5);;
   for (k in 1:nclass) {
     for (j in 1:nitem) {
       p[k, j] ~ normal(mu_p, sigma_p);
+	  sigR[k, j] ~ cauchy(0, 2.5);
    }
  }
 

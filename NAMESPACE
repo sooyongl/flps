@@ -2,6 +2,7 @@
 
 S3method(plot,flps)
 S3method(print,flps)
+S3method(print,summary.flps)
 S3method(summary,flps)
 export(flps_plot)
 export(importModel)

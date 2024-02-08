@@ -36,9 +36,16 @@ flps_plot <- function(object, type = "latent", ...) {
 #' @noRd
 flps_profile <- function(object, ...) { # object = res
 
+  if(!object$flps_data$lv_type %in% c('lca',"lpa")) {
+    stop("flps_profile() works with LCA or LPA")
+  }
+
   add_options = list(...)
   inputs <- as.list(object$call)
   lv_model <- getMeasurementItems(lv_model = inputs$lv_model)
+
+  fname <- lv_model$fname
+  cname <- c(paste0(fname,"1"),paste0(fname,"2"))
   item_name <- lv_model$item_name
 
   yname <- ifelse(inputs$lv_type == "lpa", "Means", "Probs")
@@ -47,7 +54,7 @@ flps_profile <- function(object, ...) { # object = res
 
   out1 <- out$summary[grepl("^(p)\\[",rownames(out$summary)), ]
 
-  LatentClass <- paste0("C", gsub("p\\[(\\d+).*", "\\1",
+  LatentClass <- paste0(fname, gsub("p\\[(\\d+).*", "\\1",
                                   rownames(out1)))
   param <- gsub("p.*\\,\\s*|\\]", "", rownames(out1))
 
@@ -59,8 +66,11 @@ flps_profile <- function(object, ...) { # object = res
   out2 <- out$summary[grepl("^(nu)\\[",rownames(out$summary)), ]
 
   LatentClass <- out2[, "mean"]
-  LatentClass[LatentClass >= 0.5] <- "C1"
-  LatentClass[LatentClass < 0.5] <- "C2"
+  LatentClass[LatentClass >= 0.5] <- 1
+  LatentClass[LatentClass < 0.5] <- 0
+
+  LatentClass[LatentClass == 1] <- cname[1]
+  LatentClass[LatentClass == 0] <- cname[2]
 
   class_counts = table(LatentClass) / sum(table(LatentClass))
   class_probs <- data.frame(class_counts)
@@ -108,6 +118,10 @@ flps_profile <- function(object, ...) { # object = res
 #' @noRd
 flps_latent <- function(object, type = "hist", ...) {
 
+  # if(!object$flps_data$lv_type %in% c('lca',"lpa")) {
+  #   stop("flps_profile() works with LCA or LPA")
+  # }
+
   add_options <- list(...)
   inputs <- as.list(object$call)
 
@@ -125,8 +139,10 @@ flps_latent <- function(object, type = "hist", ...) {
 
   if(any(object$flps_data$lv_type %in% c("lca","lpa"))) {
     lat.val <- fit[grepl("nu", rownames(fit)), "mean"]
+    xname <- "Class membership prob"
   } else {
     lat.val <- fit[grepl("fsc", rownames(fit)), "mean"]
+    xname <- "Factor scores"
   }
 
   inp_data$lscores <- lat.val
@@ -165,7 +181,7 @@ flps_latent <- function(object, type = "hist", ...) {
           xintercept=mean(inp_data$lscores),
           color='red',
           linetype="dashed", linewidth = 1.2) +
-        labs(x = "Factor scores") +
+        labs(x = xname) +
         theme_bw(base_size = ptextsize)
     }
 

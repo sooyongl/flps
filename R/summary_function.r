@@ -1,5 +1,46 @@
-#' Summary print
-#' @noRd
+#' Print results
+#'
+#' @param x an object of class \code{\link[flps]{flps}}
+#' @param ... additional options for future development
+#'
+#' @return Summary of FLPS model are printed.
+#'
+#' @method print flps
+#' @rdname print
+#' @export
+print.flps <- function(x, ...) {
+  # rstan::show(x$flps_fit, ...)
+
+  calls <- as.list(x$call)
+
+  cat(toupper(calls$lv_type), ' used as a measurement model\n')
+  cat('\n')
+
+  if(is.null(calls$nclass)) {
+    cat(getMeasurementItems(calls$lv_model)$nfac, 'factor model was fitted\n')
+    cat('-----------------------------------------------\n\n')
+
+  } else {
+    cat(calls$nclass, 'class model was fitted\n')
+    cat('-----------------------------------------------\n\n')
+  }
+}
+
+#' Print summary of results
+#'
+#' @param object an object of class \code{\link[flps]{flps}}
+#' @param type a string for the part of FLPS model
+#'  \itemize{
+#'    \item \code{structures} : prints the results of structural parts.
+#'    \item \code{measurement} : prints the results of measurement parts.
+#'    \item \code{latent} : prints the information of individual latent scores
+#'    \item \code{raw} : prints the results via the \code{summary} function of \pkg{rstan} package..
+#'  }
+#' @param ... additional options for future development
+#'
+#' @return Summary of FLPS model are printed.
+#' @rdname print.summary.flps
+#' @export
 print.summary.flps <- function(x, type = "structures", ...) {
 
   calls <- as.list(x$call)
@@ -27,34 +68,6 @@ print.summary.flps <- function(x, type = "structures", ...) {
                   quote = FALSE, right = TRUE, na.print = 'NA')
 
     cat('\n')
-    cat('-----------------------------------------------\n\n')
-  }
-}
-
-#' Print results
-#'
-#' @param x an object of class \code{\link[flps]{flps}}
-#' @param ... additional options for future development
-#'
-#' @return Summary of FLPS model are printed.
-#'
-#' @method print flps
-#' @rdname print
-#' @export
-print.flps <- function(x, ...) {
-  # rstan::show(x$flps_fit, ...)
-
-  calls <- as.list(x$call)
-
-  cat(toupper(calls$lv_type), ' used as a measurement model\n')
-  cat('\n')
-
-  if(is.null(calls$nclass)) {
-    cat(getMeasurementItems(calls$lv_model)$nfac, 'factor model was fitted\n')
-    cat('-----------------------------------------------\n\n')
-
-  } else {
-    cat(calls$nclass, 'class model was fitted\n')
     cat('-----------------------------------------------\n\n')
   }
 }
@@ -98,10 +111,13 @@ summary.flps <- function(object, type = "structures", ...) {
     fname <- lv_model$fname
 
     latents <- fname
-    covariates_f <- paste0(covariates,".", fname)
-    covariates_y <- paste0(covariates,".Y", fname)
+    covariates_f <- unlist(lapply(fname, function(x) {paste0(covariates,".", x) }))
+    covariates_y <- paste0(covariates,".Y")
 
-    itemslope_name <- paste0(lv_model$item_name)
+    itemslope_name <- lv_model$item_name
+    #   unlist(lapply(1:length(fname), function(xf) {
+    #   paste0(lv_model$item_factor[[xf]], ".",fname[xf])
+    # }))
 
     item_name <- unlist(lapply(1:length(fname), function(xf) {
       paste0(lv_model$item_factor[[xf]], ".",fname[xf])
@@ -114,17 +130,18 @@ summary.flps <- function(object, type = "structures", ...) {
     }
 
   } else {
-    nclass = calls$nclass
+    nclass <- calls$nclass
+    fname <- lv_model$fname
 
-    latents <- paste0("C",2:nclass)
-    covariates_f <- paste0(covariates,".C")
+    latents <- paste0(fname,2:nclass)
+    covariates_f <- paste0(covariates,".",fname)
     covariates_y <- paste0(covariates,".Y")
 
     tau0s <- out1[grep('tau0', par_name), ]
-    rownames(tau0s) <- paste0("tau0.C",1:(nclass))
+    rownames(tau0s) <- paste0("tau0.",fname,1:(nclass))
 
     tau1s <- out1[grep('tau1', par_name), ]
-    rownames(tau1s) <- paste0("tau1.C",1:(nclass))
+    rownames(tau1s) <- paste0("tau1.",fname,1:(nclass))
 
     tau1 = out1[grep('b1', par_name), ]
     rownames(tau1) = paste0("tau1.",1:(nclass-1))
@@ -132,9 +149,9 @@ summary.flps <- function(object, type = "structures", ...) {
     omega = out1[grep('a1', par_name), ]
     rownames(omega) = paste0("omega.",1:(nclass-1))
 
-
+    item_name0 <- lv_model$item_name
     item_name <- unlist(lapply(1:nclass, function(xxx) {
-      paste0(lv_model$item_name,".",xxx)
+      paste0(lv_model$item_name,".",fname,xxx)
     }))
   }
 
@@ -142,8 +159,33 @@ summary.flps <- function(object, type = "structures", ...) {
 
     if(!object$flps_data$lv_type %in% c("lca","lpa")) {
 
-      fsc <- out1[grep("fsc", par_name),]
-      fsc$trt <- object$flps_data$stan_data$Z
+      fsc <- out1[grep("fsc", par_name),]; # dim(fsc)
+
+      sepby <- ifelse(nfac > 1, 2, 1)
+      findex <- lapply(1:nfac, function(fi) {
+        seq(from = fi, to = dim(fsc)[1], by = sepby)
+      })
+
+      fsc_list <- lapply(findex, function(findexed) {
+        temp0 <- fsc[findexed, ]
+        temp0$trt <- object$flps_data$stan_data$Z
+        temp0
+      })
+
+      fmeans <- data.frame(lapply(fsc_list, function(fsc_list_i) {
+        round(
+          c(mean(fsc_list_i[fsc_list_i$trt == 1, "mean"]),
+            mean(fsc_list_i[fsc_list_i$trt == 0, "mean"])),3
+        )
+      }))
+      names(fmeans) <- paste0(fname, ".Mean")
+      fvars <- data.frame(lapply(fsc_list, function(fsc_list_i) {
+        round(
+          c(var(fsc_list_i[fsc_list_i$trt == 1, "mean"]),
+            var(fsc_list_i[fsc_list_i$trt == 0, "mean"])),3
+        )
+      }))
+      names(fvars) <- paste0(fname, ".Var")
 
       tau1 <- out1[grep('tau1', par_name), ]
       rownames(tau1) <- paste0('tau1.',latents)
@@ -151,20 +193,13 @@ summary.flps <- function(object, type = "structures", ...) {
       omega = out1[grep('omega', par_name), ]
       rownames(omega) <- latents
 
-      betaY <- out1[grep('betaY', par_name), ]
-      rownames(betaY) <- covariates_y
+      betaY <- out1[grep('betaY|sigY', par_name), ]
+      rownames(betaY) <- c(covariates_y,"sig.Y")
 
       betaU <- out1[grep('betaU', par_name), ]
       rownames(betaU) <- covariates_f
 
-      lmv <- data.frame(
-        "Mean" = round(
-          c(mean(fsc[fsc$trt == 1, "mean"]),mean(fsc[fsc$trt == 0, "mean"])),3
-        ),
-        "Var" = round(
-          c(var(fsc[fsc$trt == 1, "mean"]),var(fsc[fsc$trt == 0, "mean"])),3
-        )
-      )
+      lmv <- cbind(fmeans, fvars)
       rownames(lmv) <- c("Treatment", "Control")
 
       o <- list(
@@ -178,6 +213,9 @@ summary.flps <- function(object, type = "structures", ...) {
 
     } else {
 
+      fname <- lv_model$fname
+      cname <- c(paste0(fname,"1"),paste0(fname,"2"))
+
       nu <- out1[grep("nu", par_name),]
       nu$trt <- object$flps_data$stan_data$Z
 
@@ -185,19 +223,30 @@ summary.flps <- function(object, type = "structures", ...) {
       nu$trt[nu$trt==1] <- 'Treatment'
 
       classp <- nu[, "mean"]
-      classp[classp >= 0.5] <- "C1"
-      classp[classp < 0.5] <- "C2"
+      classp[classp >= 0.5] <- 1
+      classp[classp < 0.5] <- 0
+
+      classp[classp == 1] <- cname[1]
+      classp[classp == 0] <- cname[2]
 
       nu$class_mem <- classp
 
       memtab0 <- table(nu[,c("trt","class_mem")])
+
+      if(Reduce(`-`, cname %in% colnames(memtab0)) < 0) {
+        memtab0 <- cbind(0, memtab0)
+      } else if(Reduce(`-`, cname %in% colnames(memtab0)) > 0) {
+        memtab0 <- cbind(memtab0,0)
+      }
+      colnames(memtab0) <- cname
+
       # rownames(memtab0)
       memtab <- matrix(memtab0, ncol = 2, nrow = 2)
       rownames(memtab) <- rownames(memtab0)
       colnames(memtab) <- colnames(memtab0)
 
-      betaY <- out1[grep('betaY', par_name), ]
-      rownames(betaY) <- covariates_y
+      betaY <- out1[grep('betaY|sigY', par_name), ]
+      rownames(betaY) <- c(covariates_y,paste0('sig.Y.', cname))
 
       betaU <- out1[grep('betaU', par_name), ]
       rownames(betaU) <- covariates_f
@@ -217,8 +266,7 @@ summary.flps <- function(object, type = "structures", ...) {
 
   } else if(type == "measurement") {
 
-    measurement <- out1[grepl("^(loading|intcpt|p)\\[",par_name),]
-
+    # measurement <- out1[grepl("^(loading|intcpt|p)\\[",par_name),]
 
     if(!object$flps_data$lv_type %in% c("lca","lpa")) {
 
@@ -226,16 +274,47 @@ summary.flps <- function(object, type = "structures", ...) {
       try(rownames(itemintcpt) <- itemint_name, silent = T)
 
       itemslope <- out1[grep('loading\\[', par_name), ]
-      try(rownames(itemslope) <- itemslope_name, silent = T)
 
-      o <- list(
-        'Item intercepts' = itemintcpt,
-        'Item slopes' = itemslope
-      )
+      if(object$flps_data$lv_type != "rasch") {
+        seqby <- ifelse(nfac > 1, 2, 1)
+        itemindex <- lapply(1:nfac, function(fi) {
+          seq(from = fi, to = dim(itemslope)[1], by = seqby)
+        })
+
+        itemslope_list <- lapply(itemindex, function(iindexed) {
+          itemslope[iindexed, ]
+        })
+        itemslope <- do.call('rbind', itemslope_list)
+        itemslope_name <- unlist(lapply(fname, function(fname_i) {
+          paste0(itemslope_name, ".", fname_i)
+        }))
+        try(rownames(itemslope) <- itemslope_name, silent = T)
+      }
+
+      sigR <- out1[grep('sigR\\[', par_name), ]
+      try(rownames(sigR) <- lv_model$item_name, silent = T)
+
+      if(object$flps_data$lv_type == "sem") {
+        o <- list(
+          'Item intercepts' = itemintcpt,
+          'Item slopes' = itemslope,
+          'Item SD' = sigR
+        )
+      } else {
+        o <- list(
+          'Item intercepts' = itemintcpt,
+          'Item slopes' = itemslope
+        )
+      }
+
+
     } else {
 
       item_est <- out1[grep('p\\[', par_name), ]
       rownames(item_est) <- item_name
+
+      item_sigR <- out1[grep('sigR', par_name), ]
+      try(rownames(item_sigR) <- item_name, silent = T)
 
       if(object$flps_data$lv_type %in% c("lca")) {
         o <- list(
@@ -244,7 +323,8 @@ summary.flps <- function(object, type = "structures", ...) {
 
       } else if(object$flps_data$lv_type %in% c("lpa"))
         o <- list(
-          'Item means' = item_est
+          'Item means' = item_est,
+          'Item SD' = item_sigR
         )
     }
 
@@ -257,9 +337,12 @@ summary.flps <- function(object, type = "structures", ...) {
 
     if(any(tolower(object$call$lv_type) %in% c("lca","lpa"))) {
 
-      classp <- o[, "mean"]
-      classp[classp >= 0.5] <- "C1"
-      classp[classp < 0.5] <- "C2"
+      classp <- nu[, "mean"]
+      classp[classp >= 0.5] <- 1
+      classp[classp < 0.5] <- 0
+
+      classp[classp == 1] <- cname[1]
+      classp[classp == 0] <- cname[2]
 
       o$class_mem <- classp
     }

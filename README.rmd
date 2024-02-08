@@ -101,7 +101,7 @@ Retrieve summaries and visualize results with the following:
 
 ```{r eval = F}
 
-summary(res, type = "causal")
+summary(res)
 
 ```
 

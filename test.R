@@ -359,22 +359,58 @@ res <- runFLPS(
   stan_options = list(iter = 10, cores = 1, chains = 1)
 )
 
+res <- runFLPS(
+  inp_data = flps::continuous,
+  # complied_stan = importModel('sem', T, F),
+  outcome  = "Y",
+  trt      = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "sem",
+  lv_model = "F1 =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 10, cores = 1, chains = 1)
+)
 
+res <- runFLPS(
+  inp_data = flps::continuous,
+  # complied_stan = importModel('sem', T, F),
+  outcome  = "Y",
+  trt      = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "sem",
+  lv_model = "F2 =~ q5 + q6 + q7 + q8 + q9 + q10 + q1 + q2 + q3 + q4",
+  # lv_model = "F1 =~ q1 + q2 + q3 + q4
+  # F2 =~ q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 10, cores = 1, chains = 1)
+)
 
+res <- runFLPS(
+  inp_data = flps::continuous,
+  # complied_stan = importModel('sem', T, F),
+  outcome  = "Y",
+  trt      = "trt",
+  covariate = c("sex","race","pretest","stdscore"),
+  lv_type = "lpa",
+  lv_model = "C =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  nclass = 2,
+  stan_options = list(iter = 10, cores = 1, chains = 1)
+)
 
 # Print test--------------------------------------------------------------
 library(ggplot2); library(rstan)
 for(i in fs::dir_ls("R")) { source(i)}
 
+library(flps)
 res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_irt.rds")
 
 res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lca.rds")
 
 res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lca_iter10000.rds")
 
-summary(res, "structures")
+class(res)
 
+summary(res, "structures")
 summary(res, "measurement")
+
 aa <- summary(res, "structures")
 
 flps_plot(object = res, type = 'causal', width = 1, textsize = 20)
@@ -382,7 +418,7 @@ flps_plot(res, 'causal', keep.point = T, alpha = 1)
 flps_plot(res, 'causal', keep.point = F)
 flps_plot(res, 'causal', keep.point = T)
 
-flps_plot(res, 'profile', size = 0.2, linewidth = 0.1)
+flps_plot(res, 'profile', size = 1.2, linewidth = 0.1)
 
 flps_plot(object = res, type = 'latent', group = T, textsize = 20)
 
