@@ -30,7 +30,7 @@
     stop("Install the latest version of rstan")
   }
 
-  packageStartupMessage("Version: 1.0.0\n\nIt is a demo.\nAcknowledgements. It is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.")
+  packageStartupMessage("Version: 1.1.0\n\nIt is a demo.\nAcknowledgements. It is supported by the Institute of Education Sciences, U.S. Department of Education, through Grant R305D210036.")
 
 }
 
