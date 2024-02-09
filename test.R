@@ -463,6 +463,9 @@ res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\sin
 
 res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lca_iter10000.rds")
 
+
+res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lpa.rds")
+
 class(res)
 
 summary(res, "structures")
