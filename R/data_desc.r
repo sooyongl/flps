@@ -139,6 +139,34 @@
 #' summary(graded)
 "graded"
 
+#' example0.rda
+#'
+#' A generated data set for rasch FLPS to mimic CTA1 data.
+#'
+#' @format A data frame with variables:
+#' \describe{
+#'   \item{Y}{Outcome}
+#'   \item{trt}{Treatment assignment; 0 = control, 1 = treatment}
+#'   \item{sex}{0 = boys; 1 = girls}
+#'   \item{race}{0 = White; 1 = Others}
+#'   \item{pretest}{Pre test scores}
+#'   \item{stdscore}{Standardized scores}
+#'   \item{V1}{Binary item}
+#'   \item{V2}{Binary item}
+#'   \item{V3}{Binary item}
+#'   \item{V4}{Binary item}
+#'   \item{V5}{Binary item}
+#'   \item{V6}{Binary item}
+#'   \item{V7}{Binary item}
+#'   \item{V8}{Binary item}
+#'   \item{V9}{Binary item}
+#'   \item{V10}{Binary item}
+#'   \item{V11}{Binary item}
+#'   \item{V12}{Binary item}
+#' }
+"example0"
+
+
 #' example1.rda
 #'
 #' A generated data set containing binary items information.
