@@ -118,9 +118,9 @@ flps_profile <- function(object, ...) { # object = res
 #' @noRd
 flps_latent <- function(object, type = "hist", ...) {
 
-  # if(!object$flps_data$lv_type %in% c('lca',"lpa")) {
-  #   stop("flps_profile() works with LCA or LPA")
-  # }
+  if(object$flps_data$lv_type %in% c('lca',"lpa")) {
+    stop("flps_latent() works with IRT or SEM")
+  }
 
   add_options <- list(...)
   inputs <- as.list(object$call)
@@ -141,10 +141,8 @@ flps_latent <- function(object, type = "hist", ...) {
   fit <- summary(object, type = "raw")
 
   if(any(object$flps_data$lv_type %in% c("lca","lpa"))) {
-    lat.val <- fit[grepl("nu", rownames(fit)), "mean"]
-    xname <- "Class membership prob"
-
-
+    # lat.val <- fit[grepl("nu", rownames(fit)), "mean"]
+    # xname <- "Class membership prob"
   } else {
     nfac <- lv_model$nfac
 
@@ -276,7 +274,7 @@ flps_causal <- function(object, ...) {
     pwidth <- ifelse(is.null(add_options$width), 0.6, add_options$width)
     ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
 
-    ggplot(dt) +
+    p <- ggplot(dt) +
       geom_bar(aes(TRT, Yfitted, fill = C),
                width = pwidth,
                color = "white",
@@ -287,6 +285,8 @@ flps_causal <- function(object, ...) {
       theme_bw(base_size = ptextsize) +
       theme(legend.position="bottom") +
       labs(x = "", fill = "")
+
+    return(p)
 
 
   } else {
