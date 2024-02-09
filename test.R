@@ -630,7 +630,7 @@ object <- runFLPS(
 saveRDS(object, "testrds/lpa.rds") #
 
 # -------------------------------------------------------------------------
-# readRDS("testrds/lca.rds")
+# object <- readRDS("testrds/lpa.rds")
 
 summary(object, 'structures')
 summary(object, 'measurement')
