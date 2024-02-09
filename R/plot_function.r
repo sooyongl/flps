@@ -196,26 +196,25 @@ flps_latent <- function(object, type = "hist", ...) {
         scale_color_brewer(name = "",
                            type = "qual", palette = "Dark2") +
         facet_grid(. ~ fname) +
-        labs(x = "Factor scores") +
+        labs(x = xname, color = "") +
+        theme_bw(base_size = ptextsize)
+
+    } else {
+
+      meandata <- aggregate(lscores ~ fname, data = fvalues, FUN = mean)
+      names(meandata)[names(meandata) == "lscores"] <- "grp.mean"
+
+      p <-
+        p +
+        geom_histogram(aes(.data$lscores), color = "white") +
+        geom_vline(data=meandata,
+                   aes(xintercept=grp.mean, color=trt),
+                   linetype="dashed") +
+        labs(x = xname, color = "") +
+        facet_grid(. ~ fname) +
         theme_bw(base_size = ptextsize)
     }
-
-  } else {
-
-    meandata <- aggregate(lscores ~ fname, data = fvalues, FUN = mean)
-    names(meandata)[names(meandata) == "lscores"] <- "grp.mean"
-
-    p <-
-      p +
-      geom_histogram(aes(.data$lscores), color = "white") +
-      geom_vline(data=meandata,
-                 aes(xintercept=grp.mean, color=trt),
-                 linetype="dashed") +
-      labs(x = xname) +
-      facet_grid(. ~ fname) +
-      theme_bw(base_size = ptextsize)
   }
-
 
   p
 }

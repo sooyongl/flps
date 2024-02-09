@@ -28,7 +28,7 @@ parameters{
   
   vector[nclass] alpha;             // Intercept for class proportion
   vector[ncov] betaY;     // Coefficients for the outcome Y
-  vector[ncov] betaU;     // Coefficients for class membership
+  vector[ncov] gammaU;     // Coefficients for class membership
       
   vector[nclass] tau0;           // Intercept for Y for each class
   vector[nclass] tau1;           // Coefficient for Z for each class
@@ -44,7 +44,7 @@ transformed parameters{
   // Individual class membership probabilities conditional on covariates
   for (n in 1:nstud) {
     for (k in 1:nclass) {
-      eta[n, k] = alpha[k] + dot_product(X[n], betaU);
+      eta[n, k] = alpha[k] + dot_product(X[n], gammaU);
     }
     nu[n] = softmax(to_vector(eta[n, ]));
   }
@@ -83,7 +83,7 @@ model {
  
  // Priors
  alpha ~ normal(0, 2.5);
- betaU ~ normal(0, 5);
+ gammaU ~ normal(0, 5);
  
  betaY ~ normal(0, 2);
  tau0 ~ normal(0, 2);

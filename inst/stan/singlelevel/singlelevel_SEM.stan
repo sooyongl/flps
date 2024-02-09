@@ -37,7 +37,7 @@ parameters{
   matrix[nitem, nfac] loading_free;      // Item slopes
   real intcpt[nitem];               // Item intercepts
 
-  matrix[ncov, nfac] betaU;
+  matrix[ncov, nfac] gammaU;
   vector[ncov] betaY;
   
   real intcptY;
@@ -79,7 +79,7 @@ model {
 
   // FLPS model
   for(i in 1:nstud) {
-    muEta[i] = to_vector(X[i, ] * betaU);
+    muEta[i] = to_vector(X[i, ] * gammaU);
     muY0[i] = intcptY 
             + dot_product(to_row_vector(omega), fsc[i]) 
             + Z[i] * (tau0 + dot_product(to_row_vector(tau1), fsc[i]));
@@ -98,7 +98,7 @@ model {
     linPred[j] = intcpt[item_idx[j]] 
                + dot_product(loading[item_idx[j], 1:nfac], fsc[stud_idx[j]]);
 			   
-	grad[j] ~ normal(linPred[j], item_idx[j]);
+	grad[j] ~ normal(linPred[j], sigR[item_idx[j]]);
   }
   
 
@@ -115,10 +115,9 @@ model {
   betaY ~ normal(0, 5);
   intcptY ~ normal(0, 5);
   tau0 ~ normal(ptau0[1, 1], ptau0[1, 2]);
-
+  
   for(i in 1:nfac) {
-    betaU[:, i] ~ normal(0, 5);
-
+    gammaU[:, i] ~ normal(0, 5);
     omega[i] ~ normal(pomega[i, 1], pomega[i, 2]);
     tau1[i] ~ normal(ptau1[i, 1], ptau1[i, 2]);
   }

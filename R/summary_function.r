@@ -196,8 +196,8 @@ summary.flps <- function(object, type = "structures", ...) {
       betaY <- out1[grep('betaY|sigY', par_name), ]
       rownames(betaY) <- c(covariates_y,"sig.Y")
 
-      betaU <- out1[grep('betaU', par_name), ]
-      rownames(betaU) <- covariates_f
+      gammaU <- out1[grep('gammaU', par_name), ]
+      rownames(gammaU) <- covariates_f
 
       lmv <- cbind(fmeans, fvars)
       rownames(lmv) <- c("Treatment", "Control")
@@ -207,7 +207,7 @@ summary.flps <- function(object, type = "structures", ...) {
         'Principal effect (tau1)' = tau1,
         "Latent variables' effects on Y (omega)" = omega,
         "Covariates' effects on Y (betaY)" = betaY,
-        "Covariates' effects on latent variables  (betaU)" = betaU,
+        "Covariates' effects on latent variables  (gammaU)" = gammaU,
         "Latent means and variances for treatment and control group" = lmv
       )
 
@@ -248,8 +248,8 @@ summary.flps <- function(object, type = "structures", ...) {
       betaY <- out1[grep('betaY|sigY', par_name), ]
       rownames(betaY) <- c(covariates_y,paste0('sig.Y.', cname))
 
-      betaU <- out1[grep('betaU', par_name), ]
-      rownames(betaU) <- covariates_f
+      gammaU <- out1[grep('gammaU', par_name), ]
+      rownames(gammaU) <- covariates_f
 
       o <- list(
         'Y means differ between classes' = tau0s,
@@ -257,7 +257,7 @@ summary.flps <- function(object, type = "structures", ...) {
         'Principal effect (tau1)' = tau1,
         "Latent class' effects on Y (omega)" = omega,
         "Covariates' effects on Y (betaY)" = betaY,
-        "Covariates' effects on latent classes  (betaU)" = betaU,
+        "Covariates' effects on latent classes  (gammaU)" = gammaU,
         "Class proportions for treatment and control group" = out1[grep('alpha', par_name), ],
         'Class memberships for treatment and control group' = memtab
       )

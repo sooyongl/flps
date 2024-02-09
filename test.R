@@ -523,6 +523,120 @@ unlist(covariates[-1])
 
 
 
+# -------------------------------------------------------------------------
+library(flps); library(tidyverse)
+# for(i in fs::dir_ls("R")) { source(i)}
+data(example1)
+object <- runFLPS(
+  inp_data = example1,
+  outcome = "Y",
+  trt = "trt",
+  covariate = c("X1","X2"),
+  lv_type = "rasch",
+  lv_model = "F1 =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 500, cores = 1, chains = 1)
+)
+saveRDS(object, "testrds/rasch.rds") #
+
+data(example3)
+
+binary_multi <- example3 %>%
+  mutate_at(vars(matches("^V")), ~ if_else(.x < 0, 0, 1))
+object <- runFLPS(
+  inp_data = binary_multi,
+  outcome = "Y",
+  trt = "Z",
+  covariate = c("X1","X2","X3","X4"),
+  lv_type = "rasch",
+  lv_model = "F1 =~ V1 + V2 + V3 + V4 + V5 + V6
+  F2 =~ V7 + V8 + V9 + V10 + V11 + V12",
+  stan_options = list(iter = 500, cores = 1, chains = 1)
+)
+saveRDS(object, "testrds/rasch_multi.rds") #
+
+object <- runFLPS(
+  inp_data = binary_multi,
+  outcome = "Y",
+  trt = "Z",
+  covariate = c("X1","X2","X3","X4"),
+  lv_type = "2pl",
+  lv_model = "F1 =~ V1 + V2 + V3 + V4 + V5 + V6",
+  stan_options = list(iter = 500, cores = 1, chains = 1)
+)
+saveRDS(object, "testrds/2pl.rds") #
+
+object <- runFLPS(
+  inp_data = binary_multi,
+  outcome = "Y",
+  trt = "Z",
+  covariate = c("X1","X2","X3","X4"),
+  lv_type = "2pl",
+  lv_model = "F1 =~ V1 + V2 + V3 + V4 + V5 + V6
+  F2 =~ V7 + V8 + V9 + V10 + V11 + V12",
+  stan_options = list(iter = 500, cores = 1, chains = 1)
+)
+saveRDS(object, "testrds/2pl_multi.rds") #
+
+object <- runFLPS(
+  inp_data = example3,
+  outcome = "Y",
+  trt = "Z",
+  covariate = c("X1","X2","X3","X4"),
+  lv_type = "sem",
+  lv_model = "F2 =~ V7 + V8 + V9 + V10 + V11 + V12",
+  stan_options = list(iter = 500, cores = 1, chains = 1)
+)
+# with 1000 samples, 100 sec??; no diff
+saveRDS(object, "testrds/sem.rds") #
+
+object <- runFLPS(
+  inp_data = example3,
+  outcome = "Y",
+  trt = "Z",
+  covariate = c("X1","X2","X3","X4"),
+  lv_type = "sem",
+  lv_model = "F1 =~ V1 + V2 + V3 + V4 + V5 + V6
+  F2 =~ V7 + V8 + V9 + V10 + V11 + V12",
+  stan_options = list(iter = 500, cores = 1, chains = 1)
+)
+# with 1000 samples, 100 sec??; no diff
+saveRDS(object, "testrds/sem_multi.rds") #
+
+
+object <- runFLPS(
+  inp_data = example1,
+  outcome = "Y",
+  trt = "trt",
+  covariate = c("X1","X2"),
+  lv_type = "lca",
+  nclass = 2,
+  lv_model = "C =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 500, cores = 1, chains = 1)
+)
+# with 1000 samples, 100 sec??; no diff
+saveRDS(object, "testrds/lca.rds") #
+
+object <- runFLPS(
+  inp_data = example2,
+  outcome = "Y",
+  trt = "trt",
+  covariate = c("X1","X2"),
+  lv_type = "lpa",
+  nclass = 2,
+  lv_model = "C =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 500, cores = 1, chains = 1)
+)
+# with 1000 samples, 100 sec??; no diff
+saveRDS(object, "testrds/lpa.rds") #
+
+# -------------------------------------------------------------------------
+# readRDS("testrds/lca.rds")
+
+summary(object, 'structures')
+summary(object, 'measurement')
+flps_plot(object, "causal")
+flps_plot(object, "latent", group=T)
+flps_plot(object, "profile")
 
 
 
