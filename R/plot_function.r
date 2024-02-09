@@ -55,7 +55,7 @@ flps_profile <- function(object, ...) { # object = res
   out1 <- out$summary[grepl("^(p)\\[",rownames(out$summary)), ]
 
   LatentClass <- paste0(fname, gsub("p\\[(\\d+).*", "\\1",
-                                  rownames(out1)))
+                                    rownames(out1)))
   param <- gsub("p.*\\,\\s*|\\]", "", rownames(out1))
 
   levels = unique(param)
@@ -125,6 +125,9 @@ flps_latent <- function(object, type = "hist", ...) {
   add_options <- list(...)
   inputs <- as.list(object$call)
 
+  lv_model <- getMeasurementItems(lv_model = inputs$lv_model)
+  fname <- lv_model$fname
+
   outcome <- inputs$outcome
   trt <- inputs$trt
   covariate <- unlist(as.list(inputs$covariate[-1]))
@@ -140,50 +143,80 @@ flps_latent <- function(object, type = "hist", ...) {
   if(any(object$flps_data$lv_type %in% c("lca","lpa"))) {
     lat.val <- fit[grepl("nu", rownames(fit)), "mean"]
     xname <- "Class membership prob"
+
+
   } else {
+    nfac <- lv_model$nfac
+
     lat.val <- fit[grepl("fsc", rownames(fit)), "mean"]
     xname <- "Factor scores"
+
+    sepby <- ifelse(nfac > 1, 2, 1)
+    findex <- lapply(1:nfac, function(fi) {
+      seq(from = fi, to = length(lat.val), by = sepby)
+    })
+
+    fsc_list <- lapply(1:length(findex), function(findexed) {
+      temp0 <- lat.val[findex[[findexed]]]
+
+      temp1 <- data.frame(
+        fname = fname[[findexed]],
+        lscores = temp0,
+        trt = object$flps_data$stan_data$Z)
+
+      temp1
+    })
+
+    fvalues <- do.call('rbind', fsc_list)
+
   }
 
-  inp_data$lscores <- lat.val
-  inp_data$trt <- factor(inp_data$trt, labels = c("Control","Treatment"))
+  # inp_data$lscores <- lat.val
+  # inp_data$trt <- factor(inp_data$trt, labels = c("Control","Treatment"))
+
+  fvalues$trt <- factor(fvalues$trt, labels = c("Control","Treatment"))
 
   ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
   pgroup <- ifelse(is.null(add_options$group), F, add_options$group)
 
-  p <- ggplot(inp_data)
+  # p <- ggplot(inp_data)
+  p <- ggplot(fvalues)
 
   if(type == "hist") {
 
-      if(pgroup) {
+    if(pgroup) {
 
-        meandata <- aggregate(lscores ~ trt, data = inp_data, FUN = mean)
-        names(meandata)[names(meandata) == "lscores"] <- "grp.mean"
-
-        p <-
-          p +
-          geom_histogram(aes(.data$lscores, color = .data$trt), fill = "white") +
-          geom_vline(data=meandata,
-                     aes(xintercept=grp.mean, color=trt),
-                     linetype="dashed") +
-          scale_color_brewer(name = "",
-                             type = "qual", palette = "Dark2") +
-          labs(x = "Factor scores") +
-          theme_bw(base_size = ptextsize)
-      }
-
-    } else {
+      meandata <- aggregate(lscores ~ trt + fname, data = fvalues, FUN = mean)
+      names(meandata)[names(meandata) == "lscores"] <- "grp.mean"
 
       p <-
         p +
-        geom_histogram(aes(.data$lscores), color = "white") +
-        geom_vline(
-          xintercept=mean(inp_data$lscores),
-          color='red',
-          linetype="dashed", linewidth = 1.2) +
-        labs(x = xname) +
+        geom_histogram(aes(.data$lscores, color = .data$trt), fill = "white") +
+        geom_vline(data=meandata,
+                   aes(xintercept=grp.mean, color=trt),
+                   linetype="dashed") +
+        scale_color_brewer(name = "",
+                           type = "qual", palette = "Dark2") +
+        facet_grid(. ~ fname) +
+        labs(x = "Factor scores") +
         theme_bw(base_size = ptextsize)
     }
+
+  } else {
+
+    meandata <- aggregate(lscores ~ fname, data = fvalues, FUN = mean)
+    names(meandata)[names(meandata) == "lscores"] <- "grp.mean"
+
+    p <-
+      p +
+      geom_histogram(aes(.data$lscores), color = "white") +
+      geom_vline(data=meandata,
+                 aes(xintercept=grp.mean, color=trt),
+                 linetype="dashed") +
+      labs(x = xname) +
+      facet_grid(. ~ fname) +
+      theme_bw(base_size = ptextsize)
+  }
 
 
   p
@@ -197,6 +230,9 @@ flps_causal <- function(object, ...) {
 
   add_options <- list(...)
   inputs <- as.list(object$call)
+
+  lv_model <- getMeasurementItems(lv_model = inputs$lv_model)
+  fname <- lv_model$fname
 
   outcome <- inputs$outcome
   trt <- inputs$trt
@@ -256,54 +292,78 @@ flps_causal <- function(object, ...) {
   } else {
 
     lat.val <- fit[grepl("fsc", rownames(fit)), "mean"]
-    inp_data$lscores <- lat.val
 
-    tau0 <- fit[grepl("tau0", rownames(fit)), "mean"]
-    tau1 <- fit[grepl("tau1", rownames(fit)), "mean"]
-    omega <- fit[grepl("omega", rownames(fit)), "mean"]
+    nfac <- lv_model$nfac
+    sepby <- ifelse(nfac > 1, 2, 1)
+    findex <- lapply(1:nfac, function(fi) {
+      seq(from = fi, to = length(lat.val), by = sepby)
+    })
 
-    inp_data$Control <- inp_data$lscores*tau0
-    inp_data$Treatment <- inp_data$lscores*(tau0+tau1)
+    fsc_list <- lapply(1:length(findex), function(findexed) {
+      temp0 <- lat.val[findex[[findexed]]]
+      temp0
+      # temp1 <- data.frame(
+      #   fname = fname[[findexed]],
+      #   lscores = temp0,
+      #   trt = object$flps_data$stan_data$Z)
+      #
+      # temp1
+    })
+    # fvalues <- do.call('rbind', fsc_list)
 
-    p <- ggplot(inp_data, aes(.data$lscores, .data$Y))
+    plist <- vector('list', length(fsc_list))
+    for(fl in 1:length(fsc_list)) {
 
-    yint <- mean(out.val, na.rm = TRUE) -
-      (mean(trt.val, na.rm = TRUE)*tau0 +
-         mean(lat.val, na.rm = TRUE)*omega + mean(trt.val*lat.val, na.rm = TRUE)*tau1)
+      lat.val <- fsc_list[[fl]]; # fl = 1
+      inp_data$lscores <- lat.val
 
-    slp.data <- data.frame(trt = factor(c("Treatment", "Contrl"),
-                                        c("Treatment", "Contrl")),
-                           intercept = yint,
-                           slope = c(tau0+tau1, tau0))
+      tau0 <- fit[grepl("tau0", rownames(fit)), "mean"]
+      tau1 <- fit[grepl("tau1", rownames(fit)), "mean"][fl]
+      omega <- fit[grepl("omega", rownames(fit)), "mean"][fl]
+
+      inp_data$Control <- inp_data$lscores*tau0
+      inp_data$Treatment <- inp_data$lscores*(tau0+tau1)
+
+      p <- ggplot(inp_data, aes(.data$lscores, .data$Y))
+
+      yint <- mean(out.val, na.rm = TRUE) -
+        (mean(trt.val, na.rm = TRUE)*tau0 +
+           mean(lat.val, na.rm = TRUE)*omega + mean(trt.val*lat.val, na.rm = TRUE)*tau1)
+
+      slp.data <- data.frame(trt = factor(c("Treatment", "Contrl"),
+                                          c("Treatment", "Contrl")),
+                             intercept = yint,
+                             slope = c(tau0+tau1, tau0))
 
 
-    ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
+      ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
 
-    plinewidth <- ifelse(is.null(add_options$linewidth), 1.3, add_options$linewidth)
+      plinewidth <- ifelse(is.null(add_options$linewidth), 1.3, add_options$linewidth)
 
-    keep.point <- ifelse(is.null(add_options$keep.point), F, add_options$keep.point)
+      keep.point <- ifelse(is.null(add_options$keep.point), F, add_options$keep.point)
 
-    palpha = 0
-    if(keep.point) {
-      palpha <- ifelse(is.null(add_options$alpha), 0.1, add_options$alpha)
-      # p <- p + geom_point(alpha = palpha)
+      palpha = 0
+      if(keep.point) {
+        palpha <- ifelse(is.null(add_options$alpha), 0.1, add_options$alpha)
+        # p <- p + geom_point(alpha = palpha)
+      }
+
+      plist[[fl]] <-
+        p +
+        geom_point(alpha = palpha) +
+        geom_abline(data = slp.data,
+                    aes(intercept = .data$intercept, slope = .data$slope,
+                        color = .data$trt, linetype = .data$trt),
+                    linewidth = plinewidth) +
+        scale_x_continuous(name = paste(fname[fl], "Factor Scores")) +
+        scale_linetype_discrete(name = "") +
+        scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
+        theme_bw(base_size = ptextsize) +
+        theme(legend.position="bottom")
+
     }
 
-    p <-
-      p +
-      geom_point(alpha = palpha) +
-      geom_abline(data = slp.data,
-                  aes(intercept = .data$intercept, slope = .data$slope,
-                      color = .data$trt, linetype = .data$trt),
-                  linewidth = plinewidth) +
-      scale_x_continuous(name = "Factor Scores") +
-      scale_linetype_discrete(name = "") +
-      scale_color_brewer(name = "", type = "qual", palette = "Dark2") +
-      theme_bw(base_size = ptextsize) +
-      theme(legend.position="bottom")
-
-
-    p
+    return(plist)
   }
 }
 

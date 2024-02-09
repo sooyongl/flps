@@ -466,21 +466,23 @@ res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\sin
 
 res <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_lpa.rds")
 
+object <- readRDS("G:\\My Drive\\project\\1ing_FLPS_package\\examples\\stanres\\single_multi.rds")
+
 class(res)
 
-summary(res, "structures")
-summary(res, "measurement")
+summary(object, "structures")
+summary(object, "measurement")
 
 aa <- summary(res, "structures")
 
-flps_plot(object = res, type = 'causal', width = 1, textsize = 20)
-flps_plot(res, 'causal', keep.point = T, alpha = 1)
+flps_plot(object = object, type = 'causal', width = 1, textsize = 20)
+flps_plot(object, 'causal', keep.point = T, alpha = 1)
 flps_plot(res, 'causal', keep.point = F)
 flps_plot(res, 'causal', keep.point = T)
 
 flps_plot(res, 'profile', size = 1.2, linewidth = 0.1)
 
-flps_plot(object = res, type = 'latent', group = T, textsize = 20)
+flps_plot(object, type = 'latent', group = T, textsize = 20)
 
 flps_causal(res)
 flps_latent(res)
