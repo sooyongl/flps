@@ -30,6 +30,7 @@ importModel <- function(lv_type, multilevel = FALSE, lv_randomeffect = FALSE) {
   stanfiles <- stan_list[grepl("RDS$", stan_list)]
 
   stanfiles <- stanfiles[!grepl("threeclass", stanfiles)]
+  stanfiles <- stanfiles[!grepl("deprecated", stanfiles)]
 
   stanfiles <- stanfiles[grepl(level, stanfiles)]
   stanfiles <- stanfiles[grepl(randomeff, stanfiles)]
@@ -78,6 +79,7 @@ modelBuilder <- function(lv_type, multilevel = FALSE, lv_randomeffect = FALSE) {
   stanfiles <- stan_list[grepl("stan$", stan_list)]
 
   stanfiles <- stanfiles[!grepl("threeclass", stanfiles)]
+  stanfiles <- stanfiles[!grepl("deprecated", stanfiles)]
 
   stanfiles <- stanfiles[grepl(level, stanfiles)]
   stanfiles <- stanfiles[grepl(randomeff, stanfiles)]
@@ -133,6 +135,7 @@ loadRstan <- function(lv_type = "2PL", multilevel = FALSE, lv_randomeffect = FAL
   stanfiles <- stan_list[grepl("stan$", stan_list)]
 
   stanfiles <- stanfiles[!grepl("threeclass", stanfiles)]
+  stanfiles <- stanfiles[!grepl("deprecated", stanfiles)]
 
   stanfiles <- stanfiles[grepl(level, stanfiles)]
   stanfiles <- stanfiles[grepl(randomeff, stanfiles)]

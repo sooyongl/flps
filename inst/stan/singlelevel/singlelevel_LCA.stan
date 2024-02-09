@@ -73,11 +73,11 @@ model {
  
  // Priors
  alpha ~ normal(0, 2.5);
- betaU ~ normal(0, 5);
+ betaU ~ normal(0, 5.5);
  
- betaY ~ normal(0, 2);
- tau0 ~ normal(0, 2);
- tau1 ~ normal(0, 1);
+ betaY ~ normal(0, 2.5);
+ tau0 ~ normal(0, 2.5);
+ tau1 ~ normal(0, 2.5);
  sigY ~ cauchy(0, 2.5);
  
   mu_p ~ beta(2, 2);
