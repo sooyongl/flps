@@ -258,7 +258,7 @@ summary.flps <- function(object, type = "structures", ...) {
         "Latent class' effects on Y (omega)" = omega,
         "Covariates' effects on Y (betaY)" = betaY,
         "Covariates' effects on latent classes  (gammaU)" = gammaU,
-        "Class proportions for treatment and control group" = out1[grep('alpha', par_name), ],
+        # "Class proportions for treatment and control group" = out1[grep('alpha', par_name), ],
         'Class memberships for treatment and control group' = memtab
       )
 
