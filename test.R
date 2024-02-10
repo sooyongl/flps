@@ -611,7 +611,7 @@ all_args <- list(
   lv_type = "lca",
 
   lv_model = "C =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
-  stan_options = list(iter = 100, cores = 1, chains = 1)
+  stan_options = list(iter = 5000, cores = 1, chains = 1)
 )
 
 # Mixture model reference
