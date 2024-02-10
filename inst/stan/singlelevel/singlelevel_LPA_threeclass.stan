@@ -24,7 +24,7 @@ data {
 parameters{
   real p[nclass, nitem];  // Item Response
   real<lower=0, upper=1> mu_p;  // hyper parameter
-  real<lower=0> sigma_p;        // hyper parameter
+  //real<lower=0> sigma_p;        // hyper parameter
   
   vector[nclass] alpha;             // Intercept for class proportion
   vector[ncov] betaY;     // Coefficients for the outcome Y
@@ -101,11 +101,11 @@ model {
  tau1 ~ normal(0, 1);
  sigY ~ cauchy(0, 2.5);
  
-  mu_p ~ normal(0, 2);
-  sigma_p ~ cauchy(0, 2.5);;
+  mu_p ~ normal(0, 5);
+  //sigma_p ~ cauchy(0, 2.5);;
   for (k in 1:nclass) {
     for (j in 1:nitem) {
-      p[k, j] ~ normal(mu_p, sigma_p);
+      p[k, j] ~ normal(mu_p, 1);
    }
  }
 }
