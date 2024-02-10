@@ -53,16 +53,34 @@ transformed parameters{
  
 model {
  // likelihood for the outcome 'Y' 
- for (n in 1:nstud) {
-    // Compute likelihood for Y
-   real mu_class1 = tau0[1] + tau1[1] * Z[n] + dot_product(X[n], betaY);
-   real mu_class2 = tau0[2] + tau1[2] * Z[n] + dot_product(X[n], betaY);
-   target += log_mix(nu[n], 
-             normal_lpdf(Y[n] | mu_class1, sigY[1]),
-             normal_lpdf(Y[n] | mu_class2, sigY[2])
-             );
- }
- 
+// for (n in 1:nstud) {
+//    // Compute likelihood for Y
+//   real mu_class1 = tau0[1] + tau1[1] * Z[n] + dot_product(X[n], betaY);
+//   real mu_class2 = tau0[2] + tau1[2] * Z[n] + dot_product(X[n], betaY);
+//   target += log_mix(nu[n], 
+//             normal_lpdf(Y[n] | mu_class1, sigY[1]),
+//             normal_lpdf(Y[n] | mu_class2, sigY[2])
+//             );
+// }
+  // likelihood for the outcome 'Y' 
+  vector[nstud] cov_eff;
+  for (n in 1:nstud) {
+    cov_eff[n] = dot_product(X[n], betaY);
+  }
+  
+  for (n in 1:nstud) {
+    real lpdf_class[nclass];
+    //real cov_eff = dot_product(X[n], betaY);
+    
+    for (k in 1:nclass) {
+      //real mu_class = tau00[k] + tau01[k] * Z[n] + cov_eff[n];
+      //lpdf_class[k] = log(nu[n][k]) + normal_lpdf(Y[n] | tau0[k] + tau1[k] * Z[n] + cov_eff[n], sigY[k]);
+	  lpdf_class[k] = normal_lpdf(Y[n] | tau0[k] + tau1[k] * Z[n] + cov_eff[n], sigY[k]);
+    }
+    
+    target += log_sum_exp(lpdf_class);
+  }
+  
  // likelihood for item data'
  for (w in 1:nitemWorked) {
    target += log_mix(nu[stud_idx[w]], 

@@ -106,7 +106,7 @@ runFLPS <- function(inp_data = NULL,
                                   group_id = all_args$group_id)
 
   if(is.null(compiled_stan)) {
-    flps_model <- loadRstan(flps_data_class$lv_type, all_args$multilevel, all_args$lv_randomeffect)
+    flps_model <- loadRstan(flps_data_class$lv_type, all_args$multilevel, all_args$lv_randomeffect) # cat(flps_model)
 
   } else {
     flps_model <- compiled_stan

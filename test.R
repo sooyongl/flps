@@ -603,6 +603,22 @@ object <- runFLPS(
 saveRDS(object, "testrds/sem_multi.rds") #
 
 
+all_args <- list(
+  inp_data = flps::example1,
+  outcome  = "Y",
+  trt      = "trt",
+  covariate = c("X1","X2"),
+  lv_type = "lca",
+
+  lv_model = "C =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
+  stan_options = list(iter = 100, cores = 1, chains = 1)
+)
+
+# Mixture model reference
+# https://mc-stan.org/users/documentation/case-studies/Latent_class_case_study.html
+# https://discourse.mc-stan.org/t/identification-issues-with-latent-class-analysis-mixture-model/23452/3
+# https://mc-stan.org/users/documentation/case-studies/identifying_mixture_models.html
+
 object <- runFLPS(
   inp_data = example1,
   outcome = "Y",
@@ -615,6 +631,22 @@ object <- runFLPS(
 )
 # with 1000 samples, 100 sec??; no diff
 saveRDS(object, "testrds/lca.rds") #
+library(rstan); library(tidyverse)
+summary(object)
+
+fit <-summary(object$flps_fit)[[1]]
+fit <- data.frame(fit)
+
+fit[str_detect(rownames(fit), "nu"),]
+fit[str_detect(rownames(fit), "alpha"),]
+fit[str_detect(rownames(fit), "tau"),]
+fit[str_detect(rownames(fit), "gamma"),]
+fit[str_detect(rownames(fit), "beta"),]
+fit[str_detect(rownames(fit), "p\\["),]
+
+head(object$flps_data$lv_data, 10)
+object$flps_data$stan_data$item_idx
+object$flps_data$stan_data$grad[501:510]
 
 object <- runFLPS(
   inp_data = example2,
@@ -629,6 +661,8 @@ object <- runFLPS(
 # with 1000 samples, 100 sec??; no diff
 saveRDS(object, "testrds/lpa.rds") #
 
+summary(object,'measurement')
+flps_plot(object, "profile")
 # -------------------------------------------------------------------------
 # object <- readRDS("testrds/lpa.rds")
 
