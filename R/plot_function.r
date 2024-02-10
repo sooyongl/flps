@@ -9,7 +9,7 @@
 #'   using the \pkg{ggplot2} package.
 #'
 #' @export
-flps_plot <- function(object, type = "latent", ...) {
+flps_plot <- function(object, type = "causal", ...) {
 
   type <- tolower(type)
   type <- match.arg(type, c("latent","hist","causal","profile"))

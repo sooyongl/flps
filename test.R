@@ -627,7 +627,7 @@ object <- runFLPS(
   lv_type = "lca",
   nclass = 2,
   lv_model = "C =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
-  stan_options = list(iter = 500, cores = 1, chains = 1)
+  stan_options = list(iter = 5000, cores = 1, chains = 1)
 )
 # with 1000 samples, 100 sec??; no diff
 saveRDS(object, "testrds/lca.rds") #
@@ -656,12 +656,14 @@ object <- runFLPS(
   lv_type = "lpa",
   nclass = 2,
   lv_model = "C =~ q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8 + q9 + q10",
-  stan_options = list(iter = 500, cores = 1, chains = 1)
+  stan_options = list(iter = 5000, cores = 1, chains = 1)
 )
 # with 1000 samples, 100 sec??; no diff
 saveRDS(object, "testrds/lpa.rds") #
 
+summary(object)
 summary(object,'measurement')
+flps_plot(object, 'causal')
 flps_plot(object, "profile")
 # -------------------------------------------------------------------------
 # object <- readRDS("testrds/lpa.rds")
