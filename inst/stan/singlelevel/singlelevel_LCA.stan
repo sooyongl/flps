@@ -107,8 +107,8 @@ model {
   for (k in 1:nclass) {
     for (j in 1:nitem) {
       //p[k, j] ~ beta(mu_p * (1/sigma_p^2 - 1), (1 - mu_p) * (1/sigma_p^2 - 1));
-      //p[k, j] ~ beta(0.5, 0.5);
-      p[k, j] ~ uniform(0.001, 0.999);
+      p[k, j] ~ beta(0.5, 0.5);
+      //p[k, j] ~ uniform(0.001, 0.999);
    }
  }
 
