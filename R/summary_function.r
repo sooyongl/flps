@@ -97,7 +97,9 @@ summary.flps <- function(object, type = "structures", ...) {
 
   out1 <- round(data.frame(out1),4)
   par_name <- rownames(out1)
-  out1 <- out1[, c(1,3,4,5,6,7,8,10)]
+
+  out1 <- out1[!grepl("_free", par_name), c(1,3,4,5,6,7,8,10)]
+  par_name <- rownames(out1)
 
   calls <- as.list(object$call)
   covariates <- as.list(calls$covariate)
@@ -137,16 +139,16 @@ summary.flps <- function(object, type = "structures", ...) {
     covariates_f <- paste0(covariates,".",fname)
     covariates_y <- paste0(covariates,".Y")
 
-    tau0s <- out1[grep('tau0', par_name), ]
+    tau0s <- out1[grepl('tau0', par_name), ]
     rownames(tau0s) <- paste0("tau0.",fname,1:(nclass))
 
-    tau1s <- out1[grep('tau1', par_name), ]
+    tau1s <- out1[grepl('tau1', par_name), ]
     rownames(tau1s) <- paste0("tau1.",fname,1:(nclass))
 
-    tau1 = out1[grep('b1', par_name), ]
+    tau1 = out1[grepl('b1', par_name), ]
     rownames(tau1) = paste0("tau1.",1:(nclass-1))
 
-    omega = out1[grep('a1', par_name), ]
+    omega = out1[grepl('a1', par_name), ]
     rownames(omega) = paste0("omega.",1:(nclass-1))
 
     item_name0 <- lv_model$item_name

@@ -634,6 +634,7 @@ saveRDS(object, "testrds/lca.rds") #
 library(rstan); library(tidyverse)
 summary(object)
 
+flps_plot(object, 'profile')
 fit <-summary(object$flps_fit)[[1]]
 fit <- data.frame(fit)
 

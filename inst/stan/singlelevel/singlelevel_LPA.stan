@@ -24,14 +24,14 @@ data {
 
 parameters{
   real p[nclass, nitem];  // Item Response
-  real<lower=0, upper=1> mu_p;  // hyper parameter
+  //real<lower=0, upper=1> mu_p;  // hyper parameter
   //real<lower=0> sigma_p;        // hyper parameter
 
   real alpha;             // Intercept for class proportion
   vector[ncov] betaY;     // Coefficients for the outcome Y
   vector[ncov] gammaU;     // Coefficients for class membership
 
-  vector[nclass] tau0;           // Intercept for Y for each class
+  vector[nclass] tau0_free;           // Intercept for Y for each class
   vector[nclass] tau1;           // Coefficient for Z for each class
   vector<lower=0>[nclass] sigY; // Standard deviations for Y for each class
   // vector<lower=0>[nitem] sigR; // Standard deviations for indicators for each class
@@ -40,12 +40,17 @@ parameters{
 
 transformed parameters{
   vector[nstud] nu; // Probability of class membership for all students
-
+  vector[nclass] tau0;           // Intercept for Y for each class
+  
   // Individual class membership probabilities conditional on covariates
   for (n in 1:nstud) {
     nu[n] = inv_logit(alpha + dot_product(X[n], gammaU));
   }
 
+  for (i in 1:nclass) {
+    tau0[i] = (i == 1) ? 0 : tau0_free[i];
+  }
+  
   // PS effects-Difference in Y on Z coefficient between classes
    real b1 = tau1[2] - tau1[1];
   // Omega-Difference in intercept in Y between classes
@@ -95,15 +100,15 @@ model {
  gammaU ~ normal(0, 2);
 
  betaY ~ normal(0, 2);
- tau0 ~ normal(0, 2);
+ tau0_free ~ normal(0, 2);
  tau1 ~ normal(0, 2);
  sigY ~ cauchy(0, 2.5);
 
-  mu_p ~ normal(0, 5);
+  //mu_p ~ normal(0, 5);
   //sigma_p ~ cauchy(0, 2.5);
   for (k in 1:nclass) {
     for (j in 1:nitem) {
-      p[k, j] ~ normal(mu_p, 1);
+      //p[k, j] ~ normal(mu_p, 1);
 	    sigR[k, j] ~ cauchy(0, 2.5);
    }
  }

@@ -50,7 +50,7 @@ flps_profile <- function(object, ...) { # object = res
 
   yname <- ifelse(inputs$lv_type == "lpa", "Means", "Probs")
 
-  out <- rstan::summary(object$flps_fit, ...)
+  out <- summary(object, 'raw')
 
   out1 <- out$summary[grepl("^(p)\\[",rownames(out$summary)), ]
 
@@ -124,6 +124,7 @@ flps_latent <- function(object, type = "hist", ...) {
 
   add_options <- list(...)
   inputs <- as.list(object$call)
+  fit <- summary(object, type = "raw")
 
   lv_model <- getMeasurementItems(lv_model = inputs$lv_model)
   fname <- lv_model$fname
@@ -138,7 +139,6 @@ flps_latent <- function(object, type = "hist", ...) {
   trt.val <- inp_data[trt]
   cov.val <- inp_data[covariate]
 
-  fit <- summary(object, type = "raw")
 
   if(any(object$flps_data$lv_type %in% c("lca","lpa"))) {
     # lat.val <- fit[grepl("nu", rownames(fit)), "mean"]
@@ -227,6 +227,7 @@ flps_causal <- function(object, ...) {
 
   add_options <- list(...)
   inputs <- as.list(object$call)
+  fit <- summary(object, type = 'raw')
 
   lv_model <- getMeasurementItems(lv_model = inputs$lv_model)
   fname <- lv_model$fname
@@ -241,8 +242,6 @@ flps_causal <- function(object, ...) {
   trt.val <- unlist(inp_data[trt])
   cov.val <- unlist(inp_data[covariate])
 
-  fit <- summary(object, type = 'raw')
-
   if(tolower(inputs$lv_type) %in% c("lca","lpa")) {
 
     # message("Plots for mixture models are soon ready")
@@ -254,7 +253,7 @@ flps_causal <- function(object, ...) {
     class_counts = table(LatentClass) / sum(table(LatentClass))
     class_probs <- data.frame(class_counts)
 
-    tau0 <- fit[grepl("tau0", rownames(fit)), "mean"]
+    tau0 <- fit[grepl("tau0\\[", rownames(fit)), "mean"]
     tau1 <- fit[grepl("tau1", rownames(fit)), "mean"]
 
     cp <- round(class_probs$Freq, 2)

@@ -32,17 +32,21 @@ parameters{
  vector[ncov] betaY;     // Coefficients for the outcome Y
  vector[ncov] gammaU;     // Coefficients for class membership
 
- vector[nclass] tau0;           // Intercept for Y for each class
+ vector[nclass] tau0_free;           // Intercept for Y for each class
  vector[nclass] tau1;           // Coefficient for Z for each class
  vector<lower=0>[nclass] sigY; // Standard deviations for Y for each class
 }
 
 transformed parameters{
   vector[nstud] nu; // Probability of class membership for all students
-
+  vector[nclass] tau0;           // Intercept for Y for each class
   // Individual class membership probabilities conditional on covariates
   for (n in 1:nstud) {
     nu[n] = inv_logit(alpha + dot_product(X[n], gammaU));
+  }
+
+  for (i in 1:nclass) {
+    tau0[i] = (i == 1) ? 0 : tau0_free[i];
   }
 
   // PS effects-Difference in Y on Z coefficient between classes
@@ -94,7 +98,7 @@ model {
  gammaU ~ normal(0, 5.5);
 
  betaY ~ normal(0, 2.5);
- tau0 ~ normal(0, 2.5);
+ tau0_free ~ normal(0, 2.5);
  tau1 ~ normal(0, 2.5);
  sigY ~ cauchy(0, 2.5);
 
@@ -103,8 +107,8 @@ model {
   for (k in 1:nclass) {
     for (j in 1:nitem) {
       //p[k, j] ~ beta(mu_p * (1/sigma_p^2 - 1), (1 - mu_p) * (1/sigma_p^2 - 1));
-      p[k, j] ~ beta(0.5, 0.5);
-      //p[k, j] ~ uniform(0.001, 0.999);
+      //p[k, j] ~ beta(0.5, 0.5);
+      p[k, j] ~ uniform(0.001, 0.999);
    }
  }
 
