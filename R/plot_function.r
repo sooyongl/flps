@@ -52,7 +52,7 @@ flps_profile <- function(object, ...) { # object = res
 
   out <- summary(object, 'raw')
 
-  out1 <- out$summary[grepl("^(p)\\[",rownames(out$summary)), ]
+  out1 <- out[grepl("^(p)\\[",rownames(out)), ]
 
   LatentClass <- paste0(fname, gsub("p\\[(\\d+).*", "\\1",
                                     rownames(out1)))
@@ -63,7 +63,7 @@ flps_profile <- function(object, ...) { # object = res
 
   out1 <- data.frame(out1, LatentClass, param)
 
-  out2 <- out$summary[grepl("^(nu)\\[",rownames(out$summary)), ]
+  out2 <- out[grepl("^(nu)\\[",rownames(out)), ]
 
   LatentClass <- out2[, "mean"]
   LatentClass[LatentClass >= 0.5] <- 1
