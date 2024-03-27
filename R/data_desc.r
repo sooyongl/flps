@@ -225,17 +225,17 @@
 #'   \item{X2}{Continuous covariate 2}
 #'   \item{X3}{Continuous covariate 2}
 #'   \item{X4}{Continuous covariate 2}
-#'   \item{q1}{Continuous item}
-#'   \item{q2}{Continuous item}
-#'   \item{q3}{Continuous item}
-#'   \item{q4}{Continuous item}
-#'   \item{q5}{Continuous item}
-#'   \item{q6}{Continuous item}
-#'   \item{q7}{Continuous item}
-#'   \item{q8}{Continuous item}
-#'   \item{q9}{Continuous item}
-#'   \item{q10}{Continuous item}
-#'   \item{q11}{Continuous item}
-#'   \item{q12}{Continuous item}
+#'   \item{V1}{Continuous item}
+#'   \item{V2}{Continuous item}
+#'   \item{V3}{Continuous item}
+#'   \item{V4}{Continuous item}
+#'   \item{V5}{Continuous item}
+#'   \item{V6}{Continuous item}
+#'   \item{V7}{Continuous item}
+#'   \item{V8}{Continuous item}
+#'   \item{V9}{Continuous item}
+#'   \item{V10}{Continuous item}
+#'   \item{V11}{Continuous item}
+#'   \item{V12}{Continuous item}
 #' }
 "example3"

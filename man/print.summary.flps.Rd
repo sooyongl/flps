@@ -7,6 +7,8 @@
 \method{print}{summary.flps}(x, type = "structures", ...)
 }
 \arguments{
+\item{x}{an object of class \code{\link[flps]{flps}}}
+
 \item{type}{a string for the part of FLPS model
 \itemize{
   \item \code{structures} : prints the results of structural parts.
@@ -16,8 +18,6 @@
 }}
 
 \item{...}{additional options for future development}
-
-\item{object}{an object of class \code{\link[flps]{flps}}}
 }
 \value{
 Summary of FLPS model are printed.

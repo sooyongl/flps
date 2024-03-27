@@ -4,7 +4,7 @@
 \alias{flps_plot}
 \title{Make plots related to FLPS models}
 \usage{
-flps_plot(object, type = "latent", ...)
+flps_plot(object, type = "causal", ...)
 }
 \arguments{
 \item{object}{a \code{\link[flps]{flps}} object}

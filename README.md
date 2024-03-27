@@ -54,42 +54,45 @@ data(binary)
 data.table::data.table(binary)
 ```
 
-    ##       schid   id sex race pretest stdscore    cm_sex   cm_race cm_pretest
-    ##    1:     1 2383   0    1      20  -0.3296 0.4406780 0.9322034   14.81356
-    ##    2:     1 2384   1    0       8   1.1597 0.4406780 0.9322034   14.81356
-    ##    3:     1 2385   0    1      14  -0.7385 0.4406780 0.9322034   14.81356
-    ##    4:     1 2387   0    1      12  -1.3518 0.4406780 0.9322034   14.81356
-    ##    5:     1 2388   0    1       6  -1.2057 0.4406780 0.9322034   14.81356
-    ##   ---                                                                    
-    ## 4762:    63 4761   0    1      16   0.6457 0.4860558 0.3944223   17.03187
-    ## 4763:    63 4763   0    0      11   0.3168 0.4860558 0.3944223   17.03187
-    ## 4764:    63 4764   0    0      18  -0.4114 0.4860558 0.3944223   17.03187
-    ## 4765:    63 4765   1    0      31   2.2116 0.4860558 0.3944223   17.03187
-    ## 4766:    63 4766   1    1      13  -0.0668 0.4860558 0.3944223   17.03187
-    ##       cm_stdscore trt      Y q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 q14 q15
-    ##    1:  -0.4068119   1 -0.487  0 NA  1  1  1  1  1 NA NA  NA  NA  NA  NA  NA  NA
-    ##    2:  -0.4068119   1  0.487  1 NA  1  1  1  1  1  1  1   1   1   1  NA  NA  NA
-    ##    3:  -0.4068119   1 -1.073  0 NA  1  1  0 NA NA NA NA  NA  NA  NA  NA  NA  NA
-    ##    4:  -0.4068119   1 -1.087  0 NA  1  1  1 NA NA NA NA  NA  NA  NA  NA  NA  NA
-    ##    5:  -0.4068119   1 -1.171  0 NA  1  1 NA NA NA NA NA  NA  NA  NA  NA  NA  NA
-    ##   ---                                                                          
-    ## 4762:   0.0997502   0 -0.114  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA
-    ## 4763:   0.0997502   0 -0.438  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA
-    ## 4764:   0.0997502   0 -1.047  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA
-    ## 4765:   0.0997502   0  0.765  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA
-    ## 4766:   0.0997502   0  0.539  0 NA NA NA NA NA NA NA NA  NA  NA  NA  NA  NA  NA
-    ##       q16 q17 q18 q19 q20
-    ##    1:  NA  NA  NA  NA  NA
-    ##    2:  NA  NA  NA  NA  NA
-    ##    3:  NA  NA  NA  NA  NA
-    ##    4:  NA  NA  NA  NA  NA
-    ##    5:  NA  NA  NA  NA  NA
-    ##   ---                    
-    ## 4762:  NA  NA  NA  NA  NA
-    ## 4763:  NA  NA  NA  NA  NA
-    ## 4764:  NA  NA  NA  NA  NA
-    ## 4765:  NA  NA  NA  NA  NA
-    ## 4766:  NA  NA  NA  NA  NA
+    ##       schid    id   sex  race pretest stdscore    cm_sex   cm_race cm_pretest
+    ##       <int> <int> <int> <int>   <int>    <num>     <num>     <num>      <num>
+    ##    1:     1  2383     0     1      20  -0.3296 0.4406780 0.9322034   14.81356
+    ##    2:     1  2384     1     0       8   1.1597 0.4406780 0.9322034   14.81356
+    ##    3:     1  2385     0     1      14  -0.7385 0.4406780 0.9322034   14.81356
+    ##    4:     1  2387     0     1      12  -1.3518 0.4406780 0.9322034   14.81356
+    ##    5:     1  2388     0     1       6  -1.2057 0.4406780 0.9322034   14.81356
+    ##   ---                                                                        
+    ## 4762:    63  4761     0     1      16   0.6457 0.4860558 0.3944223   17.03187
+    ## 4763:    63  4763     0     0      11   0.3168 0.4860558 0.3944223   17.03187
+    ## 4764:    63  4764     0     0      18  -0.4114 0.4860558 0.3944223   17.03187
+    ## 4765:    63  4765     1     0      31   2.2116 0.4860558 0.3944223   17.03187
+    ## 4766:    63  4766     1     1      13  -0.0668 0.4860558 0.3944223   17.03187
+    ##       cm_stdscore   trt      Y    q1    q2    q3    q4    q5    q6    q7    q8
+    ##             <num> <int>  <num> <int> <int> <int> <int> <int> <int> <int> <int>
+    ##    1:  -0.4068119     1 -0.487     0    NA     1     1     1     1     1    NA
+    ##    2:  -0.4068119     1  0.487     1    NA     1     1     1     1     1     1
+    ##    3:  -0.4068119     1 -1.073     0    NA     1     1     0    NA    NA    NA
+    ##    4:  -0.4068119     1 -1.087     0    NA     1     1     1    NA    NA    NA
+    ##    5:  -0.4068119     1 -1.171     0    NA     1     1    NA    NA    NA    NA
+    ##   ---                                                                         
+    ## 4762:   0.0997502     0 -0.114     0    NA    NA    NA    NA    NA    NA    NA
+    ## 4763:   0.0997502     0 -0.438     0    NA    NA    NA    NA    NA    NA    NA
+    ## 4764:   0.0997502     0 -1.047     0    NA    NA    NA    NA    NA    NA    NA
+    ## 4765:   0.0997502     0  0.765     0    NA    NA    NA    NA    NA    NA    NA
+    ## 4766:   0.0997502     0  0.539     0    NA    NA    NA    NA    NA    NA    NA
+    ##          q9   q10   q11   q12   q13   q14   q15   q16   q17   q18   q19   q20
+    ##       <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+    ##    1:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+    ##    2:     1     1     1     1    NA    NA    NA    NA    NA    NA    NA    NA
+    ##    3:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+    ##    4:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+    ##    5:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+    ##   ---                                                                        
+    ## 4762:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+    ## 4763:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+    ## 4764:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+    ## 4765:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+    ## 4766:    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
 
 ### Model Fitting with FLPS
 
@@ -144,7 +147,7 @@ res <- runFLPS(
 Retrieve summaries and visualize results with the following:
 
 ``` r
-summary(res, type = "causal")
+summary(res)
 ```
 
 The `flps_plot()` shows the plot related to FLPS models

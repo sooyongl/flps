@@ -3,8 +3,8 @@ library(devtools)
 library(pkgdown)
 library(testthat)
 
-pkgdown::build_articles()
-pkgdown::build_site()
+# pkgdown::build_articles()
+# pkgdown::build_site()
 
 # devtools::test()
 # devtools::check()

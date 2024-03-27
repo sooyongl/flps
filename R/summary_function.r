@@ -28,7 +28,7 @@ print.flps <- function(x, ...) {
 
 #' Print summary of results
 #'
-#' @param object an object of class \code{\link[flps]{flps}}
+#' @param x an object of class \code{\link[flps]{flps}}
 #' @param type a string for the part of FLPS model
 #'  \itemize{
 #'    \item \code{structures} : prints the results of structural parts.
