@@ -191,7 +191,7 @@ flps_latent <- function(object, type = "hist", ...) {
         p +
         geom_histogram(aes(.data$lscores, color = .data$trt), fill = "white") +
         geom_vline(data=meandata,
-                   aes(xintercept=grp.mean, color=trt),
+                   aes(xintercept=.data$grp.mean, color=trt),
                    linetype="dashed") +
         scale_color_brewer(name = "",
                            type = "qual", palette = "Dark2") +
@@ -208,7 +208,7 @@ flps_latent <- function(object, type = "hist", ...) {
         p +
         geom_histogram(aes(.data$lscores), color = "white") +
         geom_vline(data=meandata,
-                   aes(xintercept=grp.mean, color=trt),
+                   aes(xintercept=.data$grp.mean, color=trt),
                    linetype="dashed") +
         labs(x = xname, color = "") +
         facet_grid(. ~ fname) +
@@ -273,7 +273,7 @@ flps_causal <- function(object, ...) {
     ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
 
     p <- ggplot(dt) +
-      geom_bar(aes(TRT, Yfitted, fill = C),
+      geom_bar(aes(.data$TRT, .data$Yfitted, fill = .data$C),
                width = pwidth,
                color = "white",
                stat = 'summary', fun = mean,
@@ -300,14 +300,9 @@ flps_causal <- function(object, ...) {
     fsc_list <- lapply(1:length(findex), function(findexed) {
       temp0 <- lat.val[findex[[findexed]]]
       temp0
-      # temp1 <- data.frame(
-      #   fname = fname[[findexed]],
-      #   lscores = temp0,
-      #   trt = object$flps_data$stan_data$Z)
-      #
-      # temp1
+
     })
-    # fvalues <- do.call('rbind', fsc_list)
+
 
     plist <- vector('list', length(fsc_list))
     for(fl in 1:length(fsc_list)) {
@@ -335,7 +330,6 @@ flps_causal <- function(object, ...) {
 
 
       ptextsize <- ifelse(is.null(add_options$textsize), 14, add_options$textsize)
-
       plinewidth <- ifelse(is.null(add_options$linewidth), 1.3, add_options$linewidth)
 
       keep.point <- ifelse(is.null(add_options$keep.point), F, add_options$keep.point)
